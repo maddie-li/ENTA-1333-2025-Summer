@@ -31,6 +31,8 @@ public class CameraMovement : MonoBehaviour
     private float maxHeight = 50f;
     [SerializeField]
     private float zoomSpeed = 2f;
+    [SerializeField]
+    private float zoomSensitivity = 2f;
 
     [Header("Rotation")]
     [SerializeField]
@@ -55,21 +57,36 @@ public class CameraMovement : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        GetKeyboardMovement();
+
+        UpdateVelocity();
+        UpdateBasePosition();
+        UpdateCameraPosition();
+    }
+
     private void OnEnable()
     {
+        zoomHeight = cameraTransform.localPosition.y;
         cameraTransform.LookAt(this.transform);
 
         lastPosition = this.transform.position;
 
         movement = cameraActions.Camera.MoveCamera;
+        cameraActions.Camera.RotateCamera.performed += RotateCamera;
+        cameraActions.Camera.ZoomCamera.performed += ZoomCamera;
         cameraActions.Camera.Enable();
     }
 
     private void OnDisable()
     {
+        cameraActions.Camera.RotateCamera.performed -= RotateCamera;
+        cameraActions.Camera.ZoomCamera.performed -= ZoomCamera;
         cameraActions.Camera.Disable();
     }
 
+    // CAMERA MOVEMENT
     private Vector3 GetCameraForward()
     {
         Vector3 forward = cameraTransform.forward;
@@ -120,12 +137,41 @@ public class CameraMovement : MonoBehaviour
 
     }
 
-    private void Update()
+    // CAMERA ROTATION
+    private void RotateCamera(InputAction.CallbackContext obj)
     {
-        GetKeyboardMovement();
+        if (!Mouse.current.rightButton.isPressed)
+            return;
 
-        UpdateVelocity();
-        UpdateBasePosition();
+        float inputValue = obj.ReadValue<Vector2>().x;
+        transform.rotation = Quaternion.Euler(0f, inputValue * maxRotationSpeed + transform.rotation.eulerAngles.y, 0f);
+    }
+
+    // CAMERA ZOOM
+    private void ZoomCamera(InputAction.CallbackContext obj)
+    {
+        float inputValue = -obj.ReadValue<Vector2>().y / zoomSensitivity;
+
+        if (Mathf.Abs(inputValue) > 0.1f)
+        {
+            zoomHeight = cameraTransform.localPosition.y + inputValue * stepSize;
+
+            if (zoomHeight < minHeight)
+                zoomHeight = minHeight;
+            else if (zoomHeight > maxHeight)
+                zoomHeight = maxHeight;
+        }
+    }
+
+    private void UpdateCameraPosition()
+    {
+        // set target
+        Vector3 zoomTarget = new Vector3(cameraTransform.localPosition.x, zoomHeight, cameraTransform.localPosition.z);
+        // add vector for fwd/bkd zoom
+        zoomTarget -= zoomSpeed * (zoomHeight - cameraTransform.localPosition.y) * Vector3.forward;
+
+        cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, zoomTarget, Time.deltaTime * zoomDampening);
+        cameraTransform.LookAt(this.transform);
     }
 
 }
