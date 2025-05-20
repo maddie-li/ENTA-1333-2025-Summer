@@ -150,6 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSettings: {fileID: 11400000, guid: 470d63936b9a1514cb4d470d4f53ef62, type: 2}
   defaultTerrainType: {fileID: 11400000, guid: 21a3f2ccebfe9fa4c86d7d5b0290ffb3, type: 2}
+  terrainTypes:
+  - {fileID: 11400000, guid: 21a3f2ccebfe9fa4c86d7d5b0290ffb3, type: 2}
+  - {fileID: 11400000, guid: 5c41fca73cc29b042993e5b50745efbc, type: 2}
+  - {fileID: 11400000, guid: baf3e8dd14250e743a2eb862b3df2c4e, type: 2}
   AllNodes: []
 --- !u!4 &94197269
 Transform:
@@ -632,7 +636,7 @@ MonoBehaviour:
   maxHeight: 10
   zoomSpeed: 2
   zoomSensitivity: 2
-  maxRotationSpeed: 1
+  maxRotationSpeed: 0.25
   edgeTolerance: 0.05
 --- !u!1 &1657904824
 GameObject:
@@ -977,12 +981,12 @@ GameObject:
   - component: {fileID: 1986939925}
   - component: {fileID: 1986939924}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: CameraVisualise
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1986939923
 Transform:
   m_ObjectHideFlags: 0

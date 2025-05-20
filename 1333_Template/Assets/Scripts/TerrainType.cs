@@ -10,15 +10,8 @@ public class TerrainType : ScriptableObject
     [SerializeField] bool walkable = true;
     [SerializeField] private int movementCost = 1;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string TerrainName => terrainName;
+    public Color GizmoColor => gizmoColor;
+    public bool IsWalkable => walkable;
+    public int MovementCost => movementCost;
 }
