@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -59,8 +60,12 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
+        // input
         GetKeyboardMovement();
+        CheckMouseAtScreenEdge();
+        DragCamera();
 
+        // move
         UpdateVelocity();
         UpdateBasePosition();
         UpdateCameraPosition();
@@ -137,6 +142,46 @@ public class CameraMovement : MonoBehaviour
 
     }
 
+    // SCREEN EDGE MOVEMENT
+    private void CheckMouseAtScreenEdge()
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Vector3 moveDirection = Vector3.zero;
+
+        // horizontal
+        if (mousePosition.x < edgeTolerance * Screen.width)
+            moveDirection += -GetCameraRight();
+        else if (mousePosition.x > (1f - edgeTolerance) * Screen.width)
+            moveDirection += GetCameraRight();
+
+        // vertical
+        if (mousePosition.y < edgeTolerance * Screen.height)
+            moveDirection += -GetCameraForward();
+        else if (mousePosition.y > (1f - edgeTolerance) * Screen.height)
+            moveDirection += GetCameraForward();
+
+        targetPosition += moveDirection;
+    }
+
+    // DRAG MOVEMENT
+    private void DragCamera()
+    {
+        if (!Mouse.current.middleButton.isPressed)
+            return;
+
+        // create plane to raycast to
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (plane.Raycast(ray, out float distance))
+        {
+            if (Mouse.current.middleButton.wasPressedThisFrame)
+                startDrag = ray.GetPoint(distance);
+            else
+                targetPosition += startDrag - ray.GetPoint(distance);
+        }
+    }
+
     // CAMERA ROTATION
     private void RotateCamera(InputAction.CallbackContext obj)
     {
@@ -173,5 +218,7 @@ public class CameraMovement : MonoBehaviour
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, zoomTarget, Time.deltaTime * zoomDampening);
         cameraTransform.LookAt(this.transform);
     }
+
+   
 
 }
