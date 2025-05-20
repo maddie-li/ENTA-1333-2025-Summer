@@ -17,17 +17,4 @@ public class GridSettings : ScriptableObject
     public int GridSizeY => gridSizeY;
     public float NodeSize => nodeSize;
     public bool UseXYZPlane => useXYZPlane;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

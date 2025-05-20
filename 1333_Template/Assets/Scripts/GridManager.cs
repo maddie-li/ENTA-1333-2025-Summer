@@ -34,19 +34,16 @@ public class GridManager : MonoBehaviour
 
                 TerrainType ChosenTerrain = terrainTypes[Random.Range(0, terrainTypes.Count)];
 
-                GridNode node = new GridNode
-                {
-                    Name = $"Cell_{x}_{y}",
-                    WorldPosition = worldPos,
-                    TerrainType = ChosenTerrain,
-                    Walkable = ChosenTerrain.IsWalkable,
-                    Weight = ChosenTerrain.MovementCost
-                };
+                GridNode node = new GridNode(new Vector2Int(x, y), worldPos, ChosenTerrain);
+
                 gridNodes[x, y] = node;
+
                 AllNodes.Add(node);
 
             }
         }
+
+        AssignNeighbours();
 
         IsInitialized = true;
     }
@@ -60,6 +57,28 @@ public class GridManager : MonoBehaviour
     {
 
     }*/
+
+    private void AssignNeighbours()
+    {
+        for (int x = 0; x < gridSettings.GridSizeX; x++)
+        {
+            for (int y = 0; y < gridSettings.GridSizeY; y++)
+            {
+                GridNode node = gridNodes[x, y];
+
+                node.Neighbours = new GridNode[4];
+
+                if (x > 0)                                  // left
+                    node.Neighbours[0] = gridNodes[x - 1, y];
+                if (x < gridSettings.GridSizeX - 1)         // right
+                    node.Neighbours[1] = gridNodes[x + 1, y];
+                if (y > 0)                                  // up
+                    node.Neighbours[2] = gridNodes[x, y - 1];
+                if (y > gridSettings.GridSizeY - 1)         // down
+                    node.Neighbours[3] = gridNodes[x, y + 1];
+            }
+        }
+    }
 
     private void OnDrawGizmos()
     {

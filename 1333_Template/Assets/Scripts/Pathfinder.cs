@@ -10,4 +10,6 @@ public class Pathfinder : MonoBehaviour
     // brute force
     // unweighted bfs
     // dijkstra
+
+    // BREADTH FIRST SEARCH
 }
