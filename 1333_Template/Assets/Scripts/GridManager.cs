@@ -11,6 +11,7 @@ public class GridManager : MonoBehaviour
     public GridSettings GridSettings => gridSettings;
 
     private GridNode[,] gridNodes;
+    public GridNode[,] GridNodes => gridNodes;
 
 #if UNITY_EDITOR
     [Header("Debug for editor playmode only")]
@@ -24,7 +25,9 @@ public class GridManager : MonoBehaviour
         gridNodes = new GridNode[gridSettings.GridSizeX, gridSettings.GridSizeY];
         AllNodes = new List<GridNode>();
 
-        for(int x = 0; x < gridSettings.GridSizeX; x++)
+        Debug.Log($"Initializing grid: {gridSettings.GridSizeX}x{gridSettings.GridSizeY}");
+
+        for (int x = 0; x < gridSettings.GridSizeX; x++)
         {
             for(int y = 0; y < gridSettings.GridSizeY; y++)
             {
@@ -48,15 +51,18 @@ public class GridManager : MonoBehaviour
         IsInitialized = true;
     }
 
-    /*public GridNode GetNode(int x, int y)
+    public GridNode GetNode(int x, int y)
     {
+        return gridNodes[x, y];
+    }
 
-    }*/
+    public GridNode GetNode(Vector2Int gridPos) => GetNode(gridPos.x, gridPos.y);
 
-    /*public void SetWalkable(int x, int y, bool walkable)
+    public void SetWalkable(int x, int y, bool walkable)
     {
-
-    }*/
+        GridNode node = GetNode(x, y);
+        if (node != null) node.Walkable = walkable;
+    }
 
     private void AssignNeighbours()
     {
@@ -74,7 +80,7 @@ public class GridManager : MonoBehaviour
                     node.Neighbours[1] = gridNodes[x + 1, y];
                 if (y > 0)                                  // up
                     node.Neighbours[2] = gridNodes[x, y - 1];
-                if (y > gridSettings.GridSizeY - 1)         // down
+                if (y < gridSettings.GridSizeY - 1)         // down
                     node.Neighbours[3] = gridNodes[x, y + 1];
             }
         }

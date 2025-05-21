@@ -41,6 +41,8 @@ public class CameraMovement : MonoBehaviour
 
     [Header("Edge Movement")]
     [SerializeField]
+    private bool useEdgeMovement;
+    [SerializeField]
     [Range(0f, 0.1f)]
     private float edgeTolerance = 0.05f;
 
@@ -145,22 +147,27 @@ public class CameraMovement : MonoBehaviour
     // SCREEN EDGE MOVEMENT
     private void CheckMouseAtScreenEdge()
     {
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Vector3 moveDirection = Vector3.zero;
+        if (useEdgeMovement)
+        {
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+            Vector3 moveDirection = Vector3.zero;
 
-        // horizontal
-        if (mousePosition.x < edgeTolerance * Screen.width)
-            moveDirection += -GetCameraRight();
-        else if (mousePosition.x > (1f - edgeTolerance) * Screen.width)
-            moveDirection += GetCameraRight();
+            // horizontal
+            if (mousePosition.x < edgeTolerance * Screen.width)
+                moveDirection += -GetCameraRight();
+            else if (mousePosition.x > (1f - edgeTolerance) * Screen.width)
+                moveDirection += GetCameraRight();
 
-        // vertical
-        if (mousePosition.y < edgeTolerance * Screen.height)
-            moveDirection += -GetCameraForward();
-        else if (mousePosition.y > (1f - edgeTolerance) * Screen.height)
-            moveDirection += GetCameraForward();
+            // vertical
+            if (mousePosition.y < edgeTolerance * Screen.height)
+                moveDirection += -GetCameraForward();
+            else if (mousePosition.y > (1f - edgeTolerance) * Screen.height)
+                moveDirection += GetCameraForward();
 
-        targetPosition += moveDirection;
+            targetPosition += moveDirection;
+        }
+
+        
     }
 
     // DRAG MOVEMENT
