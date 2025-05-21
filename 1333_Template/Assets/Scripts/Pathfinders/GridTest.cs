@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework.Interfaces;
@@ -5,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.Sprites;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 public class GridTest : MonoBehaviour
 {
@@ -80,8 +82,8 @@ public class GridTest : MonoBehaviour
 
         while (randomNode == null || !randomNode.Walkable)
         {
-            int randomX = Random.Range(0, width);
-            int randomY = Random.Range(0, height);
+            int randomX = UnityEngine.Random.Range(0, width);
+            int randomY = UnityEngine.Random.Range(0, height);
             randomNode = gridManager.GetNode(randomX, randomY);
         }
 
@@ -93,6 +95,21 @@ public class GridTest : MonoBehaviour
         GameObject marker = Instantiate(prefab, nodePosition.WorldPosition, Quaternion.identity, this.transform);
         marker.transform.localScale = Vector3.one * markerScale;
         return marker;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (path == null || path.Count < 2)
+        {
+            return;
+        }
+
+        Gizmos.color = Color.blue; 
+
+        for (int i = 0; i < path.Count - 1; i++)
+        {
+            Gizmos.DrawLine(path[i].WorldPosition, path[i + 1].WorldPosition);
+        }
     }
 
 
