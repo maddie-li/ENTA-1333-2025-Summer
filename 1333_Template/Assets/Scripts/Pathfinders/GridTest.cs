@@ -27,7 +27,23 @@ public class GridTest : MonoBehaviour
     [SerializeField] private GameObject goalPrefab;
     [SerializeField] private float markerScale;
 
-    void Start()
+    private GameObject startMarker;
+    private GameObject goalMarker;
+
+    private void Start()
+    {
+        GenerateGridTest(); 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GenerateGridTest();
+        }
+    }
+
+    void GenerateGridTest()
     {
         // set random
         GridNode startNode = GetRandomNode();
@@ -55,8 +71,8 @@ public class GridTest : MonoBehaviour
         Debug.Log($"Goal Set: {goalNode.GridPosition} at {goalNode.WorldPosition}");
 
         // spawn markers
-        SpawnMarker(startPrefab, startNode);
-        SpawnMarker(goalPrefab, goalNode);
+        SpawnMarker(startPrefab, startNode, ref startMarker);
+        SpawnMarker(goalPrefab, goalNode, ref goalMarker);
 
         // run pathfinding
         path = pathfinder.FindPath(startNode, goalNode);
@@ -90,10 +106,16 @@ public class GridTest : MonoBehaviour
         return randomNode;
     }
 
-    private GameObject SpawnMarker(GameObject prefab, GridNode nodePosition)
+    private GameObject SpawnMarker(GameObject prefab, GridNode nodePosition, ref GameObject marker)
     {
-        GameObject marker = Instantiate(prefab, nodePosition.WorldPosition, Quaternion.identity, this.transform);
+        if (marker != null)
+        {
+            Destroy(marker);
+        }
+
+        marker = Instantiate(prefab, nodePosition.WorldPosition, Quaternion.identity, this.transform);
         marker.transform.localScale = Vector3.one * markerScale;
+
         return marker;
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreadthFirstSearch : Pathfinder
+public class Dijkstra : Pathfinder
 {
     public override List<GridNode> FindPath(GridNode start, GridNode goal)
     {
