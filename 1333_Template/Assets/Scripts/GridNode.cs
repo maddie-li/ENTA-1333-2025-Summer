@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -36,5 +37,10 @@ public class GridNode
         TerrainType = terrain;
         Walkable = terrain.IsWalkable;
         Weight = terrain.MovementCost;
+    }
+
+    public bool IsOccupied()
+    {
+        return CurrentUnit != null;
     }
 }

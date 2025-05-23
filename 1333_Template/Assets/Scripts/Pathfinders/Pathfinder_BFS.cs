@@ -37,7 +37,7 @@ public class BreadthFirstSearch : Pathfinder
 
             foreach (GridNode next in current.Neighbours)
             {
-                if (next != null && !visited.Contains(next))
+                if (next != null && !next.IsOccupied() && !visited.Contains(next))
                 {
                     frontier.Enqueue(next);
                     visited.Add(next);
