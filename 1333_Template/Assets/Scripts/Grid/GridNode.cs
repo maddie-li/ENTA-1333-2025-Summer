@@ -21,8 +21,6 @@ public class GridNode
     public float hCost;                  // estimated distance to goal
     public float fCost => gCost + hCost; // total estimated cost
 
-    public GridNode CameFrom;            // previous node
-
     [Header("Neighbours")]
     public GridNode[] Neighbours = new GridNode[4];
 

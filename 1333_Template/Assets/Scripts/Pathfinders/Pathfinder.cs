@@ -7,6 +7,7 @@ public abstract class Pathfinder : MonoBehaviour
     [SerializeField] protected GridManager gridManager;
     protected List<GridNode> frontier = new List<GridNode>();
     protected Dictionary<GridNode, GridNode> visitedFrom = new Dictionary<GridNode, GridNode>();
+    protected Dictionary<GridNode, int> costSoFar = new Dictionary<GridNode, int>();
     
     public abstract List<GridNode> FindPath(GridNode start, GridNode goal); 
     public List<GridNode> RecallPath(GridNode start, GridNode goal)
@@ -17,8 +18,7 @@ public abstract class Pathfinder : MonoBehaviour
         while (current != null && current != start)
         {
             path.Add(current);
-            current = current.CameFrom;
-            //current = visitedFrom[current];
+            current = visitedFrom[current];
         }
 
         path.Add(start);
@@ -41,27 +41,35 @@ public abstract class Pathfinder : MonoBehaviour
             Debug.Log("Unable to dequeue - frontier empty");
             return null;
         }
+
         first = frontier[0]; 
         frontier.RemoveAt(0);
-        return first;
-    }
 
-    /*public void FrontierPriorityEnqueue(GridNode node)
-    {
-        frontier.Add(node);
+        return first;
     }
 
     public GridNode FrontierPriorityDequeue()
     {
-        GridNode first;
+        GridNode lowest;
 
         if (frontier.Count == 0)
         {
             Debug.Log("Unable to dequeue - frontier empty");
             return null;
         }
-        first = frontier[0];
-        frontier.RemoveAt(0);
-        return first;
-    }*/
+
+        lowest = frontier[0];
+
+        foreach (GridNode node in frontier)
+        {
+            if (costSoFar[node] < costSoFar[lowest])
+            {
+                lowest = node;
+            }
+        }
+
+        frontier.Remove(lowest);
+
+        return lowest;
+    }
 }
