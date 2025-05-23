@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class Pathfinder : MonoBehaviour
 {
     [SerializeField] protected GridManager gridManager;
-    protected Queue<GridNode> frontier = new Queue<GridNode>();
-    protected HashSet<GridNode> visited = new HashSet<GridNode>();
+    protected List<GridNode> frontier = new List<GridNode>();
+    protected Dictionary<GridNode, GridNode> visitedFrom = new Dictionary<GridNode, GridNode>();
     
     public abstract List<GridNode> FindPath(GridNode start, GridNode goal); 
     public List<GridNode> RecallPath(GridNode start, GridNode goal)
@@ -18,6 +18,7 @@ public abstract class Pathfinder : MonoBehaviour
         {
             path.Add(current);
             current = current.CameFrom;
+            //current = visitedFrom[current];
         }
 
         path.Add(start);
@@ -25,4 +26,42 @@ public abstract class Pathfinder : MonoBehaviour
 
         return path;
     }
+
+    public void FrontierEnqueue(GridNode node)
+    {
+        frontier.Add(node);
+    }
+
+    public GridNode FrontierDequeue()
+    {
+        GridNode first;
+
+        if (frontier.Count == 0)
+        {
+            Debug.Log("Unable to dequeue - frontier empty");
+            return null;
+        }
+        first = frontier[0]; 
+        frontier.RemoveAt(0);
+        return first;
+    }
+
+    /*public void FrontierPriorityEnqueue(GridNode node)
+    {
+        frontier.Add(node);
+    }
+
+    public GridNode FrontierPriorityDequeue()
+    {
+        GridNode first;
+
+        if (frontier.Count == 0)
+        {
+            Debug.Log("Unable to dequeue - frontier empty");
+            return null;
+        }
+        first = frontier[0];
+        frontier.RemoveAt(0);
+        return first;
+    }*/
 }

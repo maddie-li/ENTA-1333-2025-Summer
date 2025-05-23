@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
     public string Name;
     public Vector3 WorldPosition;       // position in 3D space
     public Vector2Int GridPosition;     // grid coordinates
+
     public GridNode CurrentNode;
 
     public void Initialize(GridNode node)

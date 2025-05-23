@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,12 +24,12 @@ public class BreadthFirstSearch : Pathfinder
         visited.Clear();
 
         // set start
-        frontier.Enqueue(start);
+        frontier.Add(start);
         start.CameFrom = null;
 
         while (frontier.Count > 0)
         {
-            GridNode current = frontier.Dequeue();
+            GridNode current = FrontierDequeue();
 
             if (current == goal)
             {
@@ -37,9 +38,9 @@ public class BreadthFirstSearch : Pathfinder
 
             foreach (GridNode next in current.Neighbours)
             {
-                if (next != null && !next.IsOccupied() && !visited.Contains(next))
+                if (next != null && !next.IsOccupied() && next.Walkable && !visited.Contains(next))
                 {
-                    frontier.Enqueue(next);
+                    FrontierEnqueue(next);
                     visited.Add(next);
                     next.CameFrom = current;
                 }

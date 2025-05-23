@@ -79,9 +79,9 @@ public class GridManager : MonoBehaviour
                     node.Neighbours[0] = gridNodes[x - 1, y];
                 if (x < gridSettings.GridSizeX - 1)         // right
                     node.Neighbours[1] = gridNodes[x + 1, y];
-                if (y > 0)                                  // up
+                if (y > 0)                                  // down
                     node.Neighbours[2] = gridNodes[x, y - 1];
-                if (y < gridSettings.GridSizeY - 1)         // down
+                if (y < gridSettings.GridSizeY - 1)         // up
                     node.Neighbours[3] = gridNodes[x, y + 1];
             }
         }
