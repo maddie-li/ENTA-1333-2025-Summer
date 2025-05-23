@@ -62,6 +62,7 @@ public class GridManager : MonoBehaviour
     {
         GridNode node = GetNode(x, y);
         if (node != null) node.Walkable = walkable;
+
     }
 
     private void AssignNeighbours()

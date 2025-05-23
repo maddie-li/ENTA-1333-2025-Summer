@@ -25,6 +25,9 @@ public class GridNode
     [Header("Neighbours")]
     public GridNode[] Neighbours = new GridNode[4];
 
+    [Header("Occupancy")]
+    public Unit CurrentUnit;
+
     public GridNode(Vector2Int gridPos, Vector3 worldPos, TerrainType terrain)
     {
         Name = $"Cell_{gridPos.x}_{gridPos.y}";
