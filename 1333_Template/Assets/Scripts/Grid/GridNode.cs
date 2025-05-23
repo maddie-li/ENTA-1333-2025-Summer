@@ -16,11 +16,6 @@ public class GridNode
     public bool Walkable;
     public int Weight;
 
-    [Header("Pathfinding")]
-    public float gCost;                  // distance from start
-    public float hCost;                  // estimated distance to goal
-    public float fCost => gCost + hCost; // total estimated cost
-
     [Header("Neighbours")]
     public GridNode[] Neighbours = new GridNode[4];
 

@@ -152,7 +152,6 @@ MonoBehaviour:
   defaultTerrainType: {fileID: 11400000, guid: 21a3f2ccebfe9fa4c86d7d5b0290ffb3, type: 2}
   terrainTypes:
   - {fileID: 11400000, guid: 21a3f2ccebfe9fa4c86d7d5b0290ffb3, type: 2}
-  - {fileID: 11400000, guid: 5c41fca73cc29b042993e5b50745efbc, type: 2}
   - {fileID: 11400000, guid: baf3e8dd14250e743a2eb862b3df2c4e, type: 2}
   AllNodes: []
 --- !u!4 &94197269
@@ -592,7 +591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1163605388}
-  - component: {fileID: 1163605389}
+  - component: {fileID: 1163605392}
   m_Layer: 0
   m_Name: Pathfinder
   m_TagString: Untagged
@@ -615,7 +614,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 94197269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1163605389
+--- !u!114 &1163605392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -624,7 +623,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1163605387}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82e9fb55f9158a14b87abebe50576612, type: 3}
+  m_Script: {fileID: 11500000, guid: 430ef8c02bc86484caaece3cbe419378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 94197268}
@@ -1109,7 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 94197268}
-  pathfinder: {fileID: 1163605389}
+  pathfinder: {fileID: 1163605392}
   useRandomPositions: 1
   startPos: {x: 0, y: 0}
   goalPos: {x: 0, y: 0}

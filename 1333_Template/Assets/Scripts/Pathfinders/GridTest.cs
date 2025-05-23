@@ -15,6 +15,7 @@ public class GridTest : MonoBehaviour
     [SerializeField] private Pathfinder pathfinder; 
 
     [Header("Path Settings")]
+
     [SerializeField] private bool useRandomPositions = true;
 
     public Vector2Int startPos;

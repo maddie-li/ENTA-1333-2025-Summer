@@ -58,6 +58,20 @@ public class GridManager : MonoBehaviour
 
     public GridNode GetNode(Vector2Int gridPos) => GetNode(gridPos.x, gridPos.y);
 
+    public GridNode GetNodeFromWorldPosition(Vector3 position)
+    {
+        // determine axes
+        int x = gridSettings.UseXYZPlane ? Mathf.RoundToInt(f: position.x / gridSettings.NodeSize) : Mathf.RoundToInt(f:position.x / gridSettings.NodeSize);
+        int y = gridSettings.UseXYZPlane ? Mathf.RoundToInt(f: position.z / gridSettings.NodeSize) : Mathf.RoundToInt(f: position.y / gridSettings.NodeSize);
+
+        // clamp to grid bounds
+        x = Mathf.Clamp(x, min: 0, max: gridSettings.GridSizeX - 1);
+        y = Mathf.Clamp(x, min: 0, max: gridSettings.GridSizeY - 1);
+
+        return GetNode(x,y);
+
+    }
+
     public void SetWalkable(int x, int y, bool walkable)
     {
         GridNode node = GetNode(x, y);

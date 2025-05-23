@@ -14,18 +14,11 @@ public class BreadthFirstSearch : Pathfinder
             return new List<GridNode>();
         }
 
-        // reset
-        foreach (GridNode node in gridManager.GridNodes)
-        {
-            node.CameFrom = null;
-        }
-
         frontier.Clear();
         visitedFrom.Clear();
 
         // set start
         frontier.Add(start);
-        start.CameFrom = null;
 
         while (frontier.Count > 0)
         {
@@ -38,7 +31,7 @@ public class BreadthFirstSearch : Pathfinder
 
             foreach (GridNode next in current.Neighbours)
             {
-                if (next != null && !next.IsOccupied() && next.Walkable && !visitedFrom.ContainsKey(next))
+                if (IsWalkable(next))
                 {
                     FrontierEnqueue(next);
                     visitedFrom.Add(next, current);

@@ -10,6 +10,12 @@ public abstract class Pathfinder : MonoBehaviour
     protected Dictionary<GridNode, int> costSoFar = new Dictionary<GridNode, int>();
     
     public abstract List<GridNode> FindPath(GridNode start, GridNode goal); 
+
+    public bool IsWalkable(GridNode node)
+    {
+        return (node != null && !node.IsOccupied() && node.Walkable && !visitedFrom.ContainsKey(node));
+    }
+
     public List<GridNode> RecallPath(GridNode start, GridNode goal)
     {
         GridNode current = goal;
@@ -58,18 +64,15 @@ public abstract class Pathfinder : MonoBehaviour
             return null;
         }
 
+        frontier.Sort((a, b) => costSoFar[a].CompareTo(costSoFar[b]));
         lowest = frontier[0];
-
-        foreach (GridNode node in frontier)
-        {
-            if (costSoFar[node] < costSoFar[lowest])
-            {
-                lowest = node;
-            }
-        }
-
-        frontier.Remove(lowest);
+        frontier.RemoveAt(0);
 
         return lowest;
+    }
+
+    public int Distance(GridNode a, GridNode b)
+    {
+        return Mathf.Abs(b.GridPosition.x - a.GridPosition.x) + Mathf.Abs(b.GridPosition.y - a.GridPosition.y);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dijkstra : Pathfinder
+public class AStar : Pathfinder
 {
     public override List<GridNode> FindPath(GridNode start, GridNode goal)
     {
@@ -36,7 +36,7 @@ public class Dijkstra : Pathfinder
 
                 if (IsWalkable(next))
                 {
-                    int newCost = costSoFar[current] + next.Weight;
+                    int newCost = costSoFar[current] + next.Weight + Distance(next,goal);
 
                     if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next])
                     {
