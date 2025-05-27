@@ -12,7 +12,20 @@ public class GridTest : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GridManager gridManager;
-    [SerializeField] private Pathfinder pathfinder; 
+
+
+    [Header("Pathfinder")]
+    [SerializeField] private Pathfinder pathfinder;
+    private Pathfinder[] pathfinders;
+
+    private enum SelectedPathfinder
+    {
+        BreadthFirst,
+        Dijkstra,
+        AStar
+    }
+
+    [SerializeField] private SelectedPathfinder selectedPathfinder; 
 
     [Header("Path Settings")]
 
@@ -31,14 +44,45 @@ public class GridTest : MonoBehaviour
     private GameObject startMarker;
     private GameObject goalMarker;
 
+    private void Awake()
+    {
+        pathfinders = GetComponentsInChildren<Pathfinder>();
+
+        GenerateGridTest();
+    }
+
+    private void OnValidate()
+    {
+        switch (selectedPathfinder)
+        {
+            case SelectedPathfinder.BreadthFirst:
+
+                pathfinder = pathfinders[0];
+                break;
+
+            case SelectedPathfinder.Dijkstra:
+
+                pathfinder = pathfinders[1];
+                break;
+
+            case SelectedPathfinder.AStar:
+
+                pathfinder = pathfinders[2];
+                break;
+        }
+
+        Debug.Log(pathfinder);
+
+        GenerateGridTest();
+    }
+
     private void Start()
     {
-        GenerateGridTest(); 
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && pathfinder != null)
         {
             GenerateGridTest();
         }
