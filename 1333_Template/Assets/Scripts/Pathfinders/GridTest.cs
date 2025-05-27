@@ -53,6 +53,7 @@ public class GridTest : MonoBehaviour
 
     private void OnValidate()
     {
+
         switch (selectedPathfinder)
         {
             case SelectedPathfinder.BreadthFirst:
@@ -104,6 +105,9 @@ public class GridTest : MonoBehaviour
             {
                 goalNode = GetRandomNode();
             }
+
+            startPos = startNode.GridPosition;
+            goalPos = goalNode.GridPosition;
         }
         else
         {
