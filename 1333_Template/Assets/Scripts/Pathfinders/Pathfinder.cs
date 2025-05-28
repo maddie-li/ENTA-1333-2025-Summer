@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public abstract class Pathfinder : MonoBehaviour
@@ -74,5 +75,28 @@ public abstract class Pathfinder : MonoBehaviour
     public int Distance(GridNode a, GridNode b)
     {
         return Mathf.Abs(b.GridPosition.x - a.GridPosition.x) + Mathf.Abs(b.GridPosition.y - a.GridPosition.y);
+    }
+
+    private void OnDrawGizmos()
+    {
+        /*if (frontier!=null)
+        {
+            Gizmos.color = Color.green;
+
+            foreach (GridNode node in frontier)
+            {
+                Gizmos.DrawCube(node.WorldPosition, Vector3.one / 5);
+            }
+        }*/
+
+        if (visitedFrom != null)
+        {
+            Gizmos.color = Color.red;
+
+            foreach (GridNode node in visitedFrom.Keys)
+            {
+                Gizmos.DrawCube(node.WorldPosition, Vector3.one / 10);
+            }
+        }
     }
 }
