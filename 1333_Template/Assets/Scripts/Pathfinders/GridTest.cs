@@ -15,26 +15,27 @@ public class GridTest : MonoBehaviour
 
 
     [Header("Pathfinder")]
-    [SerializeField] private Pathfinder pathfinder;
     private Pathfinder[] pathfinders;
 
     private enum SelectedPathfinder
     {
         BreadthFirst,
         Dijkstra,
-        AStar
+        AStar,
+        All
     }
 
-    [SerializeField] private SelectedPathfinder selectedPathfinder; 
+    [SerializeField] private SelectedPathfinder selectedPathfinder;
+
+    [SerializeField] private bool useRandomPositions = true;
 
     [Header("Path Settings")]
 
-    [SerializeField] private bool useRandomPositions = true;
 
     public Vector2Int startPos;
     public Vector2Int goalPos;
 
-    private List<GridNode> path;
+    private List<List<GridNode>> allPaths = new List<List<GridNode>>();
 
     [Header("Visualization")]
     [SerializeField] private GameObject startPrefab;
@@ -53,27 +54,6 @@ public class GridTest : MonoBehaviour
 
     private void OnValidate()
     {
-
-        switch (selectedPathfinder)
-        {
-            case SelectedPathfinder.BreadthFirst:
-
-                pathfinder = pathfinders[0];
-                break;
-
-            case SelectedPathfinder.Dijkstra:
-
-                pathfinder = pathfinders[1];
-                break;
-
-            case SelectedPathfinder.AStar:
-
-                pathfinder = pathfinders[2];
-                break;
-        }
-
-        Debug.Log(pathfinder);
-
         GenerateGridTest();
     }
 
@@ -83,7 +63,7 @@ public class GridTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && pathfinder != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             GenerateGridTest();
         }
@@ -123,18 +103,49 @@ public class GridTest : MonoBehaviour
         SpawnMarker(startPrefab, startNode, ref startMarker);
         SpawnMarker(goalPrefab, goalNode, ref goalMarker);
 
-        // run pathfinding
-        path = pathfinder.FindPath(startNode, goalNode);
+        allPaths.Clear();
+
+        switch (selectedPathfinder)
+        {
+            case SelectedPathfinder.BreadthFirst:
+
+                RunPathfinding(pathfinders[0], startNode, goalNode);
+                break;
+
+            case SelectedPathfinder.Dijkstra:
+
+                RunPathfinding(pathfinders[1], startNode, goalNode);
+                break;
+
+            case SelectedPathfinder.AStar:
+
+                RunPathfinding(pathfinders[2], startNode, goalNode);
+                break;
+
+            default:
+
+                for (int i = 0; i < pathfinders.Length; i++)
+                {
+                    RunPathfinding(pathfinders[i], startNode, goalNode);
+                }
+                break;
+        }
+
+    }
+
+    private void RunPathfinding(Pathfinder pathfinder, GridNode startNode, GridNode goalNode)
+    {
+        List<GridNode> path = pathfinder.FindPath(startNode, goalNode);
+        allPaths.Add(path);
 
         if (path == null || path.Count == 0)
         {
-            Debug.LogWarning("No path :(");
+            Debug.LogWarning($"{pathfinder.GetType().Name} found no path :)");
         }
         else
         {
-            Debug.Log($"Yes path! {path.Count} nodes long");
+            Debug.Log($"{pathfinder.GetType().Name} found a path! {path.Count} nodes long");
         }
-
     }
 
     private GridNode GetRandomNode()
@@ -170,18 +181,21 @@ public class GridTest : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (path == null || path.Count < 2)
+        if (allPaths != null || allPaths.Count != 0)
         {
-            return;
-        }
+            for (int i = 0; i < allPaths.Count; i++)
+            {
+                List<GridNode> path = allPaths[i];
 
-        Gizmos.color = Color.blue; 
+                Gizmos.color = pathfinders[i].PathColor;
 
-        for (int i = 0; i < path.Count - 1; i++)
-        {
-            Gizmos.DrawLine(path[i].WorldPosition, path[i + 1].WorldPosition);
+                for (int j = 0; j < path.Count - 1; j++)
+                {
+                    Gizmos.DrawLine(path[j].WorldPosition, path[j + 1].WorldPosition);
+                }
+            }
         }
+        
     }
-
 
 }

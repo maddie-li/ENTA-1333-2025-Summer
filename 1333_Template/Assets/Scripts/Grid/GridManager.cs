@@ -111,7 +111,7 @@ public class GridManager : MonoBehaviour
             {
                 GridNode node = gridNodes[x, y];
                 Gizmos.color = node.Walkable? node.TerrainType.GizmoColor : Color.red;
-                Gizmos.DrawWireCube(node.WorldPosition, Vector3.one * gridSettings.NodeSize * 0.9f);
+                Gizmos.DrawCube(node.WorldPosition, Vector3.one * gridSettings.NodeSize * 0.9f);
             }
         }
     }

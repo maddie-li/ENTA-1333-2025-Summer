@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AStar : Pathfinder
 {
+    public void Awake()
+    {
+        PathColor = Color.yellow;
+    }
     public override List<GridNode> FindPath(GridNode start, GridNode goal)
     {
         // check if null

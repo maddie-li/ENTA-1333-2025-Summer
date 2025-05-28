@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Dijkstra : Pathfinder
 {
+    public void Awake()
+    {
+        PathColor = Color.red;
+    }
     public override List<GridNode> FindPath(GridNode start, GridNode goal)
     {
         // check if null

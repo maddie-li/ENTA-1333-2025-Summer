@@ -5,7 +5,10 @@ using UnityEngine;
 
 public abstract class Pathfinder : MonoBehaviour
 {
+    public Color PathColor;
+
     [SerializeField] protected GridManager gridManager;
+
     protected List<GridNode> frontier = new List<GridNode>();
     protected Dictionary<GridNode, GridNode> visitedFrom = new Dictionary<GridNode, GridNode>();
     protected Dictionary<GridNode, int> costSoFar = new Dictionary<GridNode, int>();
@@ -77,9 +80,9 @@ public abstract class Pathfinder : MonoBehaviour
         return Mathf.Abs(b.GridPosition.x - a.GridPosition.x) + Mathf.Abs(b.GridPosition.y - a.GridPosition.y);
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
-        /*if (frontier!=null)
+        *//*if (frontier!=null)
         {
             Gizmos.color = Color.green;
 
@@ -87,7 +90,7 @@ public abstract class Pathfinder : MonoBehaviour
             {
                 Gizmos.DrawCube(node.WorldPosition, Vector3.one / 5);
             }
-        }*/
+        }*//*
 
         if (visitedFrom != null)
         {
@@ -98,5 +101,5 @@ public abstract class Pathfinder : MonoBehaviour
                 Gizmos.DrawCube(node.WorldPosition, Vector3.one / 10);
             }
         }
-    }
+    }*/
 }

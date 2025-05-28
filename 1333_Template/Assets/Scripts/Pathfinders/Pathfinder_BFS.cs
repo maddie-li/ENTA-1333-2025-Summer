@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class BreadthFirstSearch : Pathfinder
 {
+    public void Awake()
+    {
+        PathColor = Color.blue;
+    }
     public override List<GridNode> FindPath(GridNode start, GridNode goal)
     {
         // check if null
