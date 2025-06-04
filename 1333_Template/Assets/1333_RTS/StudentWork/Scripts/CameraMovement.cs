@@ -125,6 +125,9 @@ public class CameraMovement : MonoBehaviour
         if (inputValue.sqrMagnitude > 0.1f)
             targetPosition += inputValue;
 
+        bool isSprinting = cameraActions.Camera.SprintCamera.IsPressed();
+        maxSpeed = isSprinting ? 10f : 5f;
+
     }
 
     private void UpdateBasePosition()

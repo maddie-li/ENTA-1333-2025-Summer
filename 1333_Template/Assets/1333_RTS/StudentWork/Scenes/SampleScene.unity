@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 94197268}
-  prefab: {fileID: 5052818118991279127, guid: 115c965bdc4de2242ba76961fd658962, type: 3}
+  prefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
   nodePosition: {x: 3, y: 3}
 --- !u!1 &1477195186
 GameObject:
@@ -726,7 +726,7 @@ MonoBehaviour:
   stepSize: 2
   zoomDampening: 7.5
   minHeight: 5
-  maxHeight: 10
+  maxHeight: 20
   zoomSpeed: 2
   zoomSensitivity: 2
   maxRotationSpeed: 0.25
@@ -1171,7 +1171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1953104612
 Transform:
   m_ObjectHideFlags: 0
