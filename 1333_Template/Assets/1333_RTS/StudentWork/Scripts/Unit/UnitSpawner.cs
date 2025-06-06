@@ -7,7 +7,7 @@ namespace RTS_1333
         [SerializeField] private GridManager gridManager;
         [SerializeField] private Pathfinder pathfinder;
         [SerializeField] private GameObject prefab;
-        [SerializeField] private Vector2Int nodePosition;
+        [SerializeField] private Vector2Int[] nodePosition;
 
         private void Update()
         {
@@ -17,17 +17,22 @@ namespace RTS_1333
 
         private void TestSpawn()
         {
-            GridNode node = gridManager.GetNode(nodePosition);
-            if (node == null || node.CurrentUnit != null) return;
-
-            GameObject unitObject = Instantiate(prefab);
-            UnitInstance unit = unitObject.GetComponent<UnitInstance>();
-
-            if (unit != null)
+            foreach (Vector2Int pos in nodePosition)
             {
-                unit.Initialize(pathfinder, gridManager);
-                unit.SetNodePos(node);
+                GridNode node = gridManager.GetNode(pos);
+                if (node == null || node.CurrentUnit != null) return;
+
+                GameObject unitObject = Instantiate(prefab);
+                UnitInstance unit = unitObject.GetComponent<UnitInstance>();
+
+                if (unit != null)
+                {
+                    unit.Initialize(pathfinder, gridManager);
+                    unit.SetNodePos(node);
+                }
             }
+
+            
         }
     }
 }

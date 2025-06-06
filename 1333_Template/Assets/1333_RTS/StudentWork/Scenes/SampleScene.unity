@@ -674,7 +674,9 @@ MonoBehaviour:
   gridManager: {fileID: 94197268}
   pathfinder: {fileID: 1588116039}
   prefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
-  nodePosition: {x: 3, y: 3}
+  nodePosition:
+  - {x: 3, y: 3}
+  - {x: 2, y: 1}
 --- !u!1 &1477195186
 GameObject:
   m_ObjectHideFlags: 0

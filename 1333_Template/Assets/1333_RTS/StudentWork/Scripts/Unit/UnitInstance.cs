@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace RTS_1333
 {
@@ -16,6 +17,8 @@ namespace RTS_1333
         private int pathIndex = 0;
         private bool isMoving = false;
 
+        private Vector3 nextWaypoint;
+
         public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
         {
             pathfinder = _pathfinder;
@@ -24,36 +27,67 @@ namespace RTS_1333
 
         private void Update()
         {
-            if (!isMoving || currentPath.Count == 0 || pathIndex >= currentPath.Count) return;
 
-            Vector3 nextWaypoint = currentPath[pathIndex].WorldPosition;
-            float step = moveSpeed * Time.deltaTime;
-
-            transform.position = Vector3.MoveTowards(transform.position, nextWaypoint, step);
-
-            if (Vector3.Distance(transform.position, nextWaypoint) < 0.05f)
-            {
-                pathIndex++;
-                isMoving = pathIndex < currentPath.Count;
-            }
         }
 
         public void SetTarget(GridNode targetNode)
         {
-            if (gridManager == null || pathfinder == null) return;
-
-            if (targetNode.CurrentUnit != null) return;
+            if (gridManager == null || pathfinder == null || targetNode.CurrentUnit != null) return;
 
             currentPath = pathfinder.FindPath(CurrentNode, targetNode);
             pathIndex = 0;
-            isMoving = currentPath.Count > 0;
 
-            for (int i = 0; i < currentPath.Count - 1; i++)
+            if (currentPath.Count > 0)
             {
-                UpdateCurrentNode(currentPath[i]);
-                Debug.DrawLine(currentPath[i].WorldPosition, currentPath[i + 1].WorldPosition, Color.red, 5f);
+                DrawPath();
 
+                if (isMoving)
+                    StopCoroutine(WalkPath());
+
+                StartCoroutine(WalkPath());
             }
         }
+
+        private IEnumerator WalkPath()
+        {
+            isMoving = true;
+
+            while (pathIndex < currentPath.Count)
+            {
+                nextWaypoint = currentPath[pathIndex].WorldPosition;
+                Debug.Log($"Moving to Waypoint {pathIndex}: {nextWaypoint}");
+
+                while (Vector3.Distance(transform.position, nextWaypoint) > 0.05f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, nextWaypoint, moveSpeed * Time.deltaTime);
+                    yield return null;
+                }
+
+                if (pathIndex < currentPath.Count - 1)
+                {
+                    pathIndex++;
+                    UpdateCurrentNode(currentPath[pathIndex]); 
+                }
+                else
+                {
+                    Debug.Log("Path complete! Unit has reached the final destination.");
+                    break; 
+                }
+            }
+
+            isMoving = false;
+        }
+
+
+        private void DrawPath()
+        {
+            for (int i = 0; i < currentPath.Count - 1; i++)
+            {
+                Debug.DrawLine(currentPath[i].WorldPosition, currentPath[i + 1].WorldPosition, Color.red, 5f);
+            }
+        }
+
     }
+
+
 }

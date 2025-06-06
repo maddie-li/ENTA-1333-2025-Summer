@@ -14,7 +14,7 @@ public class Selector : MonoBehaviour
     private List<BaseUnit> selectedUnits = new List<BaseUnit>();
 
     private InputSystem_Actions interactActions;
-    //private Vector3 lastClickPosition;
+    private Vector3 lastClickPosition;
 
     public void Initialize(GridManager _gridManager)
     {
@@ -110,9 +110,9 @@ public class Selector : MonoBehaviour
         }
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue; 
         Gizmos.DrawSphere(lastClickPosition, 0.2f); 
-    }*/
+    }
 }
