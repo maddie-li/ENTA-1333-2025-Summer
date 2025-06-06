@@ -14,7 +14,7 @@ public class Selector : MonoBehaviour
     private List<BaseUnit> selectedUnits = new List<BaseUnit>();
 
     private InputSystem_Actions interactActions;
-    private Vector3 lastClickPosition;
+    //private Vector3 lastClickPosition;
 
     public void Initialize(GridManager _gridManager)
     {
@@ -86,7 +86,7 @@ public class Selector : MonoBehaviour
         if (cam == null || gridManager == null) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos); 
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 5f);
+        //Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 5f);
         Plane ground = new(Vector3.up, Vector3.zero);
 
         if (ground.Raycast(ray, out float enter))
@@ -110,9 +110,9 @@ public class Selector : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue; 
         Gizmos.DrawSphere(lastClickPosition, 0.2f); 
-    }
+    }*/
 }
