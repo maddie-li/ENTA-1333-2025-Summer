@@ -8,6 +8,7 @@ namespace RTS_1333
     public class UnitSpawner : MonoBehaviour
     {
         [SerializeField] private GridManager gridManager;
+        [SerializeField] private Pathfinder pathfinder;
 
         [SerializeField] private GameObject prefab;
         [SerializeField] private Vector2Int nodePosition;
@@ -44,6 +45,13 @@ namespace RTS_1333
             if (unit != null)
             {
                 unit.Initialize(node);
+            }
+
+            UnitInstance unitInstance = unitObject.GetComponent<UnitInstance>();
+
+            if (unitInstance != null)
+            {
+                unitInstance.Initialize(pathfinder, gridManager);
             }
         }
     }

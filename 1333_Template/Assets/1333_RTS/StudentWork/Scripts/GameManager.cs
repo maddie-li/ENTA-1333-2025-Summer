@@ -8,11 +8,13 @@ namespace RTS_1333
     {
 
         [SerializeField] private GridManager gridManager;
+        [SerializeField] private Selector selector;
         //[SerializeField] private UnitManager unitManager;
 
         private void Awake()
         {
             gridManager.InitializeGrid();
+            selector.Initialize(gridManager);
 
             //unitManager.SpawnDummyUnit();
         }

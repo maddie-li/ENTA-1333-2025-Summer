@@ -26,16 +26,16 @@ public class UnitInstance : BaseUnit
     public bool IsMoving => isMoving;
     public List<GridNode> CurrentPath => currentPath;
 
-    public void Initialize(Pathfinder _pathfinder, UnitType _unitType)
+    public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
     {
         pathfinder = _pathfinder;
-        unitType = _unitType;
+        gridManager = _gridManager;
 
     }
 
     private void Update()
     {
-        if (!isMoving || currentPath == null || currentPath.Count == 0 || pathIndex >= currentPath.Count)
+        /*if (!isMoving || currentPath == null || currentPath.Count == 0 || pathIndex >= currentPath.Count)
             return;
 
         // get next
@@ -54,12 +54,17 @@ public class UnitInstance : BaseUnit
             {
                 isMoving = false;
             }
-        }
+        }*/
     }
 
     public void SetTarget(Vector3 worldPosition)
     {
         targetWorldPosition = worldPosition;
+
+        if(gridManager == null)
+        {
+            Debug.Log("GridManager null");
+        }
         
         if (gridManager.GetNodeFromWorldPosition(worldPosition).CurrentUnit != null)
         {

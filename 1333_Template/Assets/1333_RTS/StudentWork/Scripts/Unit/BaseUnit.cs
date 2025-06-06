@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RTS_1333
 {
-    public abstract class BaseUnit : MonoBehaviour
+    public abstract class BaseUnit : MonoBehaviour, ISelectableObject
     {
         [Header("Unit")]
         [SerializeField] protected UnitType unitType;
