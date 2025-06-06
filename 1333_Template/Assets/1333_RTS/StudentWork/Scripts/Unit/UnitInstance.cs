@@ -1,88 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
-using RTS_1333;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class UnitInstance : BaseUnit
+namespace RTS_1333
 {
-    [Header("References")]
-    [SerializeField] private GridManager gridManager;
-
-    [Header("Prefab")]
-    [SerializeField] private Animator characterAnimator;
-    [SerializeField] private GameObject unitSkins;
-    [SerializeField] private ParticleSystem hurtParticles;
-
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 3f;
-
-    private Pathfinder pathfinder;
-    private List<GridNode> currentPath = new();
-    private int pathIndex = 0;
-
-    private Vector3? targetWorldPosition = null;
-    private bool isMoving = false;
-
-    public bool IsMoving => isMoving;
-    public List<GridNode> CurrentPath => currentPath;
-
-    public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
+    public class UnitInstance : BaseUnit, ISelectableObject
     {
-        pathfinder = _pathfinder;
-        gridManager = _gridManager;
+        [Header("References")]
+        [SerializeField] private GridManager gridManager;
+        [SerializeField] private Pathfinder pathfinder;
 
-    }
+        [Header("Movement")]
+        [SerializeField] private float moveSpeed = 3f;
 
-    private void Update()
-    {
-        /*if (!isMoving || currentPath == null || currentPath.Count == 0 || pathIndex >= currentPath.Count)
-            return;
+        private List<GridNode> currentPath = new();
+        private int pathIndex = 0;
+        private bool isMoving = false;
 
-        // get next
-        Vector3 nextWaypoint = currentPath[pathIndex].WorldPosition;
-        // go to next
-        Vector3 direction = (nextWaypoint - transform.position).normalized;
-        float step = moveSpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, nextWaypoint, step);
-
-        //check if there
-        if (Vector3.Distance(transform.position, nextWaypoint) < 0.05f)
+        public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
         {
-            pathIndex++;
+            pathfinder = _pathfinder;
+            gridManager = _gridManager;
+        }
 
-            if (pathIndex >= currentPath.Count)
+        private void Update()
+        {
+            if (!isMoving || currentPath.Count == 0 || pathIndex >= currentPath.Count) return;
+
+            Vector3 nextWaypoint = currentPath[pathIndex].WorldPosition;
+            float step = moveSpeed * Time.deltaTime;
+
+            transform.position = Vector3.MoveTowards(transform.position, nextWaypoint, step);
+
+            if (Vector3.Distance(transform.position, nextWaypoint) < 0.05f)
             {
-                isMoving = false;
+                pathIndex++;
+                isMoving = pathIndex < currentPath.Count;
             }
-        }*/
-    }
-
-    public void SetTarget(Vector3 worldPosition)
-    {
-        targetWorldPosition = worldPosition;
-
-        if(gridManager == null)
-        {
-            Debug.Log("GridManager null");
         }
-        
-        if (gridManager.GetNodeFromWorldPosition(worldPosition).CurrentUnit != null)
-        {
-            Debug.Log("Move failed, target node is occupied");
-            return;
 
+        public void SetTarget(GridNode targetNode)
+        {
+            if (gridManager == null || pathfinder == null) return;
+
+            if (targetNode.CurrentUnit != null) return;
+
+            currentPath = pathfinder.FindPath(CurrentNode, targetNode);
+            pathIndex = 0;
+            isMoving = currentPath.Count > 0;
+
+            for (int i = 0; i < currentPath.Count - 1; i++)
+            {
+                UpdateCurrentNode(currentPath[i]);
+                Debug.DrawLine(currentPath[i].WorldPosition, currentPath[i + 1].WorldPosition, Color.red, 5f);
+
+            }
         }
-        // pathfind
-        currentPath = pathfinder.FindPath(gridManager.GetNodeFromWorldPosition(transform.position), gridManager.GetNodeFromWorldPosition(worldPosition));
-        pathIndex = 0;
-        isMoving = currentPath != null && currentPath.Count > 1;
-    }
-    public void SetTarget(GridNode node)
-    {
-        SetTarget(node.WorldPosition);
-    }
-    public override void MoveTo(GridNode targetNode)
-    {
-        SetTarget(targetNode);
     }
 }

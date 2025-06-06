@@ -1,22 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace RTS_1333
 {
-    public abstract class BaseUnit : MonoBehaviour, ISelectableObject
+    public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit")]
         [SerializeField] protected UnitType unitType;
 
-        public string Name;
-        public Vector3 WorldPosition;       // position in 3D space
-        public Vector2Int GridPosition;     // grid coordinates
+        public string Name { get; private set; }
+        public Vector3 WorldPosition { get; private set; }
+        public Vector2Int GridPosition { get; private set; }
+        public GridNode CurrentNode { get; private set; }
 
-        public GridNode CurrentNode;
-
-        [Header("Size")]
         public virtual int Width => unitType != null ? unitType.Width : 1;
         public virtual int Length => unitType != null ? unitType.Length : 1;
 
@@ -27,28 +22,25 @@ namespace RTS_1333
             WorldPosition = node.WorldPosition;
             CurrentNode = node;
 
-            MoveTo(node);
         }
 
-        public virtual void MoveTo(GridNode newNode)
+        public virtual void SetNodePos(GridNode newNode)
         {
-            if (newNode.CurrentUnit != null)
-            {
-                Debug.Log("Move failed, node is occupied");
-                return;
-            }
+            UpdateCurrentNode(newNode);
+
+            WorldPosition = newNode.WorldPosition;
+            transform.position = WorldPosition;
+        }
+
+        public virtual void UpdateCurrentNode(GridNode newNode)
+        {
+            if (newNode.CurrentUnit != null) return;
 
             if (CurrentNode != null)
-            {
-                CurrentNode.CurrentUnit = null; // remove this from current node
-            }
+                CurrentNode.CurrentUnit = null;
 
             CurrentNode = newNode;
-            CurrentNode.CurrentUnit = this;
-
-            // CHANGE POSITION
-            gameObject.transform.position = WorldPosition;
+            newNode.CurrentUnit = this;
         }
     }
-
 }

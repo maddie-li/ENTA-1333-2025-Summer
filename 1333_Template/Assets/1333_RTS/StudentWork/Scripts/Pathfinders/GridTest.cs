@@ -51,12 +51,12 @@ namespace RTS_1333
         {
             pathfinders = GetComponentsInChildren<Pathfinder>();
 
-            GenerateGridTest();
+            //GenerateGridTest();
         }
 
         private void OnValidate()
         {
-            GenerateGridTest();
+            //GenerateGridTest();
         }
 
         private void Start()
