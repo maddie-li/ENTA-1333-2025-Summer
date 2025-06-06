@@ -16,8 +16,8 @@ namespace RTS_1333
         private List<GridNode> currentPath = new();
         private int pathIndex = 0;
         private bool isMoving = false;
-
-        private Vector3 nextWaypoint;
+        private Vector3 nextWaypoint; 
+        private Coroutine movementCoroutine;
 
         public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
         {
@@ -33,29 +33,32 @@ namespace RTS_1333
         public void SetTarget(GridNode targetNode)
         {
             if (gridManager == null || pathfinder == null || targetNode.CurrentUnit != null) return;
-
+            
             currentPath = pathfinder.FindPath(CurrentNode, targetNode);
             pathIndex = 0;
 
             if (currentPath.Count > 0)
             {
-                DrawPath();
 
-                if (isMoving)
-                    StopCoroutine(WalkPath());
+                if (movementCoroutine != null)
+                {
+                    StopCoroutine(movementCoroutine);
+                    isMoving = false;
+                }
 
-                StartCoroutine(WalkPath());
+                movementCoroutine = StartCoroutine(WalkPath());
             }
         }
 
         private IEnumerator WalkPath()
         {
+            DrawPath();
             isMoving = true;
 
             while (pathIndex < currentPath.Count)
             {
                 nextWaypoint = currentPath[pathIndex].WorldPosition;
-                Debug.Log($"Moving to Waypoint {pathIndex}: {nextWaypoint}");
+                //Debug.Log($"Moving to Waypoint {pathIndex}: {nextWaypoint}");
 
                 while (Vector3.Distance(transform.position, nextWaypoint) > 0.05f)
                 {
@@ -66,7 +69,8 @@ namespace RTS_1333
                 if (pathIndex < currentPath.Count - 1)
                 {
                     pathIndex++;
-                    UpdateCurrentNode(currentPath[pathIndex]); 
+                    UpdateCurrentNode(currentPath[pathIndex]);
+                    Debug.Log(CurrentNode.GridPosition);
                 }
                 else
                 {
