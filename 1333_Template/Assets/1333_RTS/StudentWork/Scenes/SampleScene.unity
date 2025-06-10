@@ -1482,6 +1482,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1737000492}
   - component: {fileID: 1737000493}
+  - component: {fileID: 1737000494}
   m_Layer: 0
   m_Name: Selector
   m_TagString: Untagged
@@ -1517,6 +1518,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 330585545}
+  minDragSize: 3
+--- !u!114 &1737000494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737000491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 813b558b04733704a82f1745c0aa42a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DragStart: {x: 0, y: 0}
+  DragEnd: {x: 0, y: 0}
+  IsDragging: 0
 --- !u!1 &1953104611
 GameObject:
   m_ObjectHideFlags: 0

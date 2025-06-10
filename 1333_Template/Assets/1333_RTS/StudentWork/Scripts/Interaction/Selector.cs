@@ -10,35 +10,76 @@ public class Selector : MonoBehaviour
 {
     public Camera cam; 
     private GridManager gridManager;
+    private SelectorBox selectorBox;
 
     private List<BaseUnit> selectedUnits = new List<BaseUnit>();
 
     private InputSystem_Actions interactActions;
     private Vector3 lastClickPosition;
 
+    [SerializeField] private float minDragSize = 3f;
+
     public void Initialize(GridManager _gridManager)
     {
-        gridManager = _gridManager; 
+        gridManager = _gridManager;
         interactActions = new InputSystem_Actions();
+        selectorBox = GetComponent<SelectorBox>();
+        selectorBox.minDragSize = minDragSize;
     }
     private void OnEnable()
     {
-        interactActions.UI.Click.performed += HandleLeftClick;
         interactActions.UI.RightClick.performed += HandleRightClick;
         interactActions.UI.Enable();
     }
 
     private void OnDisable()
     {
-        interactActions.UI.Click.performed -= HandleLeftClick;
         interactActions.UI.RightClick.performed -= HandleRightClick;
         interactActions.UI.Disable();
     }
 
-    private void HandleLeftClick(InputAction.CallbackContext ctx)
+    private void Update()
     {
-        SingleClickSelect(interactActions.UI.Point.ReadValue<Vector2>());
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            HandleLeftClick();
+        }
+
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            HandleLeftRelease();
+        }
+
+        if (selectorBox.IsDragging)
+        {
+            selectorBox.UpdateDrag(interactActions.UI.Point.ReadValue<Vector2>());
+        }
     }
+
+    private void HandleLeftClick()
+    {
+        Debug.Log("Left click detected!");
+        selectorBox.BeginDrag(interactActions.UI.Point.ReadValue<Vector2>());
+    }
+
+    private void HandleLeftRelease()
+    {
+        if (selectorBox.IsDragging)
+        {
+            selectorBox.EndDrag(Mouse.current.position.ReadValue());
+
+            if (selectorBox.DragDistance < minDragSize)
+            {
+                SingleClickSelect(selectorBox.DragEnd);
+            }
+            else
+            {
+                DragSelect(selectorBox.DragStart, selectorBox.DragEnd);
+            }
+        }
+
+    }
+
     private void HandleRightClick(InputAction.CallbackContext ctx)
     {
         Debug.Log("Right click detected!");
@@ -64,7 +105,28 @@ public class Selector : MonoBehaviour
 
         ClearSelection();
     }
-    
+
+    private void DragSelect(Vector2 start, Vector2 end)
+    {
+        if (cam == null || gridManager == null) return;
+
+        Rect rect = selectorBox.GetScreenRect(start, end);
+        ClearSelection();
+
+        // REMOVE LATER 
+        List<BaseUnit> units = new(FindObjectsByType<BaseUnit>(FindObjectsSortMode.None));
+
+        foreach (BaseUnit unit in units)
+        {
+            Vector3 screenPoint = cam.WorldToScreenPoint(unit.transform.position);
+            if (screenPoint.z < 0) continue;
+
+            Vector2 guiPoint = new(screenPoint.x, Screen.height - screenPoint.y);
+            if (rect.Contains(guiPoint))
+                AddToSelection(unit);
+        }
+    }
+
     //SELECTION
     private void AddToSelection(BaseUnit unit)
     {
