@@ -10,6 +10,7 @@ public class Selector : MonoBehaviour
 {
     public Camera cam; 
     private GridManager gridManager;
+    private UnitManager unitManager;
     private SelectorBox selectorBox;
 
     private List<BaseUnit> selectedUnits = new List<BaseUnit>();
@@ -19,9 +20,10 @@ public class Selector : MonoBehaviour
 
     [SerializeField] private float minDragSize = 3f;
 
-    public void Initialize(GridManager _gridManager)
+    public void Initialize(GridManager _gridManager, UnitManager _unitManager)
     {
         gridManager = _gridManager;
+        unitManager = _unitManager;
         interactActions = new InputSystem_Actions();
         selectorBox = GetComponent<SelectorBox>();
         selectorBox.minDragSize = minDragSize;
@@ -113,10 +115,8 @@ public class Selector : MonoBehaviour
         Rect rect = selectorBox.GetScreenRect(start, end);
         ClearSelection();
 
-        // REMOVE LATER 
-        List<BaseUnit> units = new(FindObjectsByType<BaseUnit>(FindObjectsSortMode.None));
 
-        foreach (BaseUnit unit in units)
+        foreach (BaseUnit unit in unitManager.allUnits)
         {
             Vector3 screenPoint = cam.WorldToScreenPoint(unit.transform.position);
             if (screenPoint.z < 0) continue;

@@ -1,13 +1,17 @@
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace RTS_1333
 {
-    public class UnitSpawner : MonoBehaviour
+    public class UnitManager : MonoBehaviour
     {
         [SerializeField] private GridManager gridManager;
         [SerializeField] private Pathfinder pathfinder;
         [SerializeField] private GameObject prefab;
         [SerializeField] private Vector2Int[] nodePosition;
+
+        public List<BaseUnit> allUnits = new();   
 
         private void Update()
         {
@@ -27,12 +31,25 @@ namespace RTS_1333
 
                 if (unit != null)
                 {
+                    RegisterUnit(unit);
                     unit.Initialize(pathfinder, gridManager);
                     unit.SetNodePos(node);
                 }
             }
 
             
+        }
+
+        public void RegisterUnit(BaseUnit unit)
+        {
+            if (unit != null && !allUnits.Contains(unit))
+            {
+                allUnits.Add(unit);
+            }
+        }
+        public void UnregisterUnit(BaseUnit unit)
+        {
+            allUnits.Remove(unit);
         }
     }
 }

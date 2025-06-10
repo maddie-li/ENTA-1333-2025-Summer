@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 1401232877}
   - component: {fileID: 1401232878}
   m_Layer: 0
-  m_Name: UnitSpawner
+  m_Name: UnitManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -989,6 +989,7 @@ MonoBehaviour:
   - {x: 3, y: 3}
   - {x: 2, y: 1}
   - {x: 12, y: 4}
+  allUnits: []
 --- !u!1 &1477195186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,6 +1124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 94197268}
+  unitManager: {fileID: 1401232878}
   selector: {fileID: 1737000493}
 --- !u!4 &1657904826
 Transform:

@@ -4602,22 +4602,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: {fileID: 11400000, guid: b0d708b1b5f923f4fa641f3d10659b3b, type: 2}
-  Name: Spearman
-  WorldPosition: {x: 0, y: 0, z: 0}
-  GridPosition: {x: 0, y: 0}
-  CurrentNode:
-    Name: 
-    WorldPosition: {x: 0, y: 0, z: 0}
-    GridPosition: {x: 0, y: 0}
-    TerrainType: {fileID: 0}
-    Walkable: 0
-    Weight: 0
-    Neighbours: []
-    CurrentUnit: {fileID: 0}
   gridManager: {fileID: 0}
-  characterAnimator: {fileID: 0}
-  unitSkins: {fileID: 0}
-  hurtParticles: {fileID: 0}
+  pathfinder: {fileID: 0}
   moveSpeed: 3
 --- !u!136 &7626644172911656489
 CapsuleCollider:
