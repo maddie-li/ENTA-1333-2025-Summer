@@ -24,11 +24,16 @@ namespace RTS_1333
 
         }
 
+
+
         public virtual void SetNodePos(GridNode newNode)
         {
             UpdateCurrentNode(newNode);
 
-            WorldPosition = newNode.WorldPosition;
+            Vector3 centerOffset = new Vector3((Width - 1) * 0.5f, 0f, (Length - 1) * 0.5f);
+            Vector3 centeredPosition = newNode.WorldPosition + centerOffset;
+
+            WorldPosition = centeredPosition;
             transform.position = WorldPosition;
         }
 

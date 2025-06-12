@@ -6,15 +6,18 @@ public class BuildingPlacementUI : MonoBehaviour
 {
     [SerializeField] private RectTransform layoutGroupParent;
     [SerializeField] private SelectBuildingButton buttonPrefab;
-    [SerializeField] private BuildingType buildingData;
+
+    public List<BuildingType> buildings = new();
+    public BuildingManager buildingManager;
 
     void Start()
     {
-        foreach(BuildingData b in buildingData.buildings)
+        foreach(BuildingType b in buildings)
         {
             SelectBuildingButton button = Instantiate(buttonPrefab, layoutGroupParent);
-            button.Setup(b);
+            button.Setup(b, buildingManager);
         }
     }
+
     
 }

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 namespace RTS_1333
 {
     public class GridManager : MonoBehaviour
     {
+        [SerializeField] private Camera cam;
+
         [SerializeField] private GridSettings gridSettings;
         [SerializeField] private TerrainType defaultTerrainType;
         [SerializeField] private List<TerrainType> terrainTypes;
@@ -77,6 +80,27 @@ namespace RTS_1333
             Debug.Log($"Converted World Position {position} to  Grid Position ({x}, {y})"); 
 
             return GetNode(x, y);
+        }
+
+        public GridNode GetNodeFromMousePosition()
+        {
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Plane ground = new(Vector3.up, Vector3.zero);
+
+            if (ground.Raycast(ray, out float enter))
+            {
+                Vector3 hitPoint = ray.GetPoint(enter);
+
+                GridNode node =GetNodeFromWorldPosition(hitPoint);
+
+                Debug.Log("Got node from mouse position!");
+                return node;
+            }
+            else
+            {
+                Debug.Log("DID NOT GET node from mouse position!");
+                return null;
+            }
         }
 
 

@@ -11,14 +11,21 @@ public class SelectBuildingButton : MonoBehaviour
     [SerializeField] private TMP_Text buttonText;
     [SerializeField] private Button button;
 
-    private BuildingData buildingData;
+    private BuildingType buildingType;
+    private BuildingManager buildingManager;
 
-    public void Setup(BuildingData _buildingData)
+    public void Setup(BuildingType _buildingType, BuildingManager _buildingManager)
     {
-        buildingData = _buildingData;
+        buildingType = _buildingType;
 
-        buttonText.text = buildingData.BuildingName;
+        buttonText.text = buildingType.name;
 
+    }
+
+    public void OnClick()
+    {
+        Debug.Log($"Selected building {buildingType}");
+        buildingManager.NewGhost(buildingType);
     }
 
 }
