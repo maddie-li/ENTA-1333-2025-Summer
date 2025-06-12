@@ -59,6 +59,8 @@ namespace RTS_1333
 
         public GridNode GetNode(int x, int y)
         {
+            if (x < 0 || y < 0 || x >= gridSettings.GridSizeX || y >= gridSettings.GridSizeY)
+                return null;
             return gridNodes[x, y];
         }
 
@@ -129,6 +131,48 @@ namespace RTS_1333
                         node.Neighbours[2] = gridNodes[x, y - 1];
                     if (y < gridSettings.GridSizeY - 1)         // up
                         node.Neighbours[3] = gridNodes[x, y + 1];
+                }
+            }
+        }
+
+        public bool IsFootprintOccupied(GridNode startNode, int width, int length)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < length; y++)
+                {
+                    var node = GetNode(startNode.GridPosition.x + x, startNode.GridPosition.y + y);
+                    if (node == null)
+                    {
+                        Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{startNode.GridPosition.y + y})");
+                        return true;
+                    }
+                    if (node.CurrentUnit != null)
+                    {
+                        Debug.Log($"Node {node.Name} is occupied by {node.CurrentUnit.Name}");
+                        return true;
+                    }
+                    if (!node.Walkable)
+                    {
+                        Debug.Log($"Node {node.Name} is not walkable");
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public void FootprintOccupy(GridNode startNode, int width, int length, BaseUnit unit)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < length; y++)
+                {
+                    var node = GetNode(startNode.GridPosition.x + x, startNode.GridPosition.y + y);
+                    if (node != null)
+                    {
+                        node.CurrentUnit = unit;
+                    }
                 }
             }
         }

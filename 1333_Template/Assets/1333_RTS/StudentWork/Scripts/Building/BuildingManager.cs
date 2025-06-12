@@ -21,7 +21,8 @@ public class BuildingManager : MonoBehaviour
 
         if (currentGhost != null)
         {
-            currentGhost.SetNodePos(gridManager.GetNodeFromMousePosition());
+            Placing();
+            
         }
         else
         {
@@ -37,10 +38,31 @@ public class BuildingManager : MonoBehaviour
         currentGhost = building.GetComponent<BuildingInstance>();
         if (currentGhost != null)
         {
+            currentGhost.isGhost = true;
+            GridNode startNode = gridManager.GetNodeFromMousePosition();
+            currentGhost.Initialize(startNode);
+            currentGhost.SetNodePos(startNode);
+        }
+    }
+
+    private void Placing()
+    {
+        var node = gridManager.GetNodeFromMousePosition();
+        if (node == null) return;
+
+        currentGhost.SetNodePos(node);
+
+        bool validPlacement = !gridManager.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length);
+        currentGhost.UpdateColor(validPlacement);
+
+        // BUILD
+        if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
+        {
+            currentGhost.UpdateColor();
+            currentGhost.isGhost = false; 
+            gridManager.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
             RegisterUnit(currentGhost);
-            Debug.Log(gridManager.GetNodeFromMousePosition());
-            currentGhost.Initialize(gridManager.GetNodeFromMousePosition());
-            currentGhost.SetNodePos(gridManager.GetNodeFromMousePosition());
+            currentGhost = null;
         }
     }
 

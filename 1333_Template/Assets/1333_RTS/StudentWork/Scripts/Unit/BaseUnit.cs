@@ -10,7 +10,7 @@ namespace RTS_1333
         public string Name { get; private set; }
         public Vector3 WorldPosition { get; private set; }
         public Vector2Int GridPosition { get; private set; }
-        public GridNode CurrentNode { get; private set; }
+        public GridNode CurrentNode { get; protected set; }
 
         public virtual int Width => unitType != null ? unitType.Width : 1;
         public virtual int Length => unitType != null ? unitType.Length : 1;
@@ -23,8 +23,12 @@ namespace RTS_1333
             CurrentNode = node;
 
         }
-
-
+        public bool IsFootprintOccupied(GridManager gridManager)
+        {
+            if (CurrentNode == null) return false;
+            // maybe logic here to find bottom left node
+            return gridManager.IsFootprintOccupied(CurrentNode, Width, Length);
+        }
 
         public virtual void SetNodePos(GridNode newNode)
         {
@@ -39,6 +43,7 @@ namespace RTS_1333
 
         public virtual void UpdateCurrentNode(GridNode newNode)
         {
+
             if (newNode.CurrentUnit != null) return;
 
             if (CurrentNode != null)
