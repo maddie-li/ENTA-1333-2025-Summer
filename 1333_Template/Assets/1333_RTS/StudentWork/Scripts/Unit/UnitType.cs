@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace RTS_1333
 {
-    [CreateAssetMenu(fileName = "UnitType", menuName = "Game/Unit Type")]
+    [CreateAssetMenu(fileName = "UnitType", menuName = "Game/UnitType")]
     public class UnitType : ScriptableObject
     {
         [SerializeField] private int width = 1;
