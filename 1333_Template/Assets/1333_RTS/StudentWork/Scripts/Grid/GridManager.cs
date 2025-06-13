@@ -140,6 +140,8 @@ namespace RTS_1333
 
         public bool IsFootprintOccupied(GridNode startNode, int width, int length)
         {
+            Debug.Log($"Checking {width}x{length}");
+
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < length; y++)
@@ -148,7 +150,7 @@ namespace RTS_1333
 
                     if (node == null)
                     {
-                        Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{startNode.GridPosition.y + y})");
+                        Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{ startNode.GridPosition.y + y})");
                         return true;
                     }
                     if (node.CurrentUnit != null)
@@ -163,7 +165,7 @@ namespace RTS_1333
                     }
                     else
                     {
-                        Debug.Log($"Node {node.Name} is ???? WHAT");
+                        Debug.Log($"Node {node.Name} is AVAILABLE");
                     }
                 }
             }
@@ -195,7 +197,7 @@ namespace RTS_1333
                 {
                     GridNode node = gridNodes[x, y];
                     Gizmos.color = node.Walkable ? node.TerrainType.GizmoColor : Color.red;
-                    Gizmos.DrawCube(node.WorldPosition, Vector3.one * gridSettings.NodeSize * 0.9f);
+                    Gizmos.DrawWireCube(node.WorldPosition, Vector3.one * gridSettings.NodeSize * 0.9f);
                 }
             }
         }

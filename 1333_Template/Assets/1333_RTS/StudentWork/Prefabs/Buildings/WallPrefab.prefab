@@ -77,3 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c143eec2b1979349abce5f876afa7c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
+  Name: Cheaper Town Wall
+  isGhost: 1

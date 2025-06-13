@@ -7,7 +7,7 @@ namespace RTS_1333
         [Header("Unit")]
         [SerializeField] protected UnitType unitType;
 
-        public string Name { get; private set; }
+        [SerializeField] public string Name;
         public Vector3 WorldPosition { get; private set; }
         public Vector2Int GridPosition { get; private set; }
         public GridNode CurrentNode { get; protected set; }
@@ -26,7 +26,6 @@ namespace RTS_1333
         public bool IsFootprintOccupied(GridManager gridManager)
         {
             if (CurrentNode == null) return false;
-            // maybe logic here to find bottom left node
             return gridManager.IsFootprintOccupied(CurrentNode, Width, Length);
         }
 

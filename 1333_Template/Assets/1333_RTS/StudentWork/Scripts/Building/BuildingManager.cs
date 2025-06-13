@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RTS_1333;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +23,6 @@ public class BuildingManager : MonoBehaviour
         if (currentGhost != null)
         {
             Placing();
-            
         }
         else
         {
@@ -58,12 +58,24 @@ public class BuildingManager : MonoBehaviour
         // BUILD
         if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
         {
-            currentGhost.UpdateColor();
-            currentGhost.isGhost = false; 
-            gridManager.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
-            RegisterUnit(currentGhost);
+            Building();
+        }
+
+        // CANCEL
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            Destroy(currentGhost.gameObject);
             currentGhost = null;
         }
+    }
+
+    private void Building()
+    {
+        currentGhost.UpdateColor();
+        currentGhost.isGhost = false;
+        gridManager.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
+        RegisterUnit(currentGhost);
+        currentGhost = null;
     }
 
     public void RegisterUnit(BaseUnit unit)
