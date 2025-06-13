@@ -17,14 +17,22 @@ public class SelectBuildingButton : MonoBehaviour
     public void Setup(BuildingType _buildingType, BuildingManager _buildingManager)
     {
         buildingType = _buildingType;
+        buildingManager = _buildingManager;
 
         buttonText.text = buildingType.name;
+
+        button.onClick.AddListener(() =>
+        {
+            Debug.Log($"Selected building {buildingType} add listener");
+            buildingManager.NewGhost(buildingType);
+        });
+
 
     }
 
     public void OnClick()
     {
-        Debug.Log($"Selected building {buildingType}");
+        Debug.Log($"Selected building {buildingType} via onclick");
         buildingManager.NewGhost(buildingType);
     }
 

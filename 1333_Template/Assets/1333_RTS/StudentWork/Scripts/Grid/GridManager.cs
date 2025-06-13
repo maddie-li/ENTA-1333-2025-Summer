@@ -60,7 +60,10 @@ namespace RTS_1333
         public GridNode GetNode(int x, int y)
         {
             if (x < 0 || y < 0 || x >= gridSettings.GridSizeX || y >= gridSettings.GridSizeY)
+            {
+                Debug.LogWarning($"GetNode out of bounds: ({x}, {y}) not inside grid size ({gridSettings.GridSizeX}, {gridSettings.GridSizeY})");
                 return null;
+            }
             return gridNodes[x, y];
         }
 
@@ -79,7 +82,7 @@ namespace RTS_1333
             x = Mathf.Clamp(x, 0, gridSettings.GridSizeX - 1);
             y = Mathf.Clamp(y, 0, gridSettings.GridSizeY - 1);
 
-            Debug.Log($"Converted World Position {position} to  Grid Position ({x}, {y})"); 
+            //Debug.Log($"Converted World Position {position} to  Grid Position ({x}, {y})"); 
 
             return GetNode(x, y);
         }
@@ -95,7 +98,7 @@ namespace RTS_1333
 
                 GridNode node =GetNodeFromWorldPosition(hitPoint);
 
-                Debug.Log("Got node from mouse position!");
+                //Debug.Log("Got node from mouse position!");
                 return node;
             }
             else
@@ -142,6 +145,7 @@ namespace RTS_1333
                 for (int y = 0; y < length; y++)
                 {
                     var node = GetNode(startNode.GridPosition.x + x, startNode.GridPosition.y + y);
+
                     if (node == null)
                     {
                         Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{startNode.GridPosition.y + y})");
@@ -156,6 +160,10 @@ namespace RTS_1333
                     {
                         Debug.Log($"Node {node.Name} is not walkable");
                         return true;
+                    }
+                    else
+                    {
+                        Debug.Log($"Node {node.Name} is ???? WHAT");
                     }
                 }
             }
