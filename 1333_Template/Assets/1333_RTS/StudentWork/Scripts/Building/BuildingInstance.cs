@@ -7,11 +7,23 @@ using UnityEngine;
 public class BuildingInstance : BaseUnit
 {
     private Renderer[] renderers;
-    public bool isGhost = true; 
+    public bool isGhost = true;
+
+    private Material validMat;
+    private Material invalidMat;
+    private Material defaultMat;
 
     private void Awake()
     {
+    }
+
+    public void SetupMat(Material valid, Material invalid)
+    {
         renderers = GetComponentsInChildren<Renderer>();
+        defaultMat = GetComponentInChildren<Renderer>().material;
+
+        invalidMat = invalid;
+        validMat = valid;
     }
 
     public override void UpdateCurrentNode(GridNode newNode)
@@ -35,23 +47,14 @@ public class BuildingInstance : BaseUnit
 
     internal void UpdateColor(bool isValid)
     {
-        Color color;
 
-
-        if (isValid)
-        {
-            color = Color.green;
-        }
-        else
-        {
-            color = Color.red;
-        }
+        Material mat = isValid ? validMat : invalidMat;
 
         foreach (var rend in renderers)
         {
-            
+
             if (rend.material != null)
-                rend.material.color = color;
+                rend.material = mat;
         }
     }
     internal void UpdateColor()
@@ -60,7 +63,7 @@ public class BuildingInstance : BaseUnit
         {
 
             if (rend.material != null)
-                rend.material.color = Color.white;
+                rend.material = defaultMat;
         }
     }
 }

@@ -15,7 +15,10 @@ public class BuildingManager : MonoBehaviour
 
     public BuildingInstance currentGhost;
 
-    public BuildingType buildingType;
+    public BuildingType[] buildingTypes;
+
+    public Material ValidMat;
+    public Material InvalidMat;
 
     private void Update()
     {
@@ -26,14 +29,18 @@ public class BuildingManager : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.R))
-                NewGhost(buildingType);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                NewGhost(buildingTypes[0]);
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                NewGhost(buildingTypes[1]);
         }
     }
 
     public void NewGhost(BuildingType typeToBuild)
     {
-        GameObject building = Instantiate(typeToBuild.unitPrefab);
+        Debug.Log(buildingTypes[0]);
+        Debug.Log(typeToBuild.UnitPrefab);
+        GameObject building = Instantiate(typeToBuild.UnitPrefab);
         
         currentGhost = building.GetComponent<BuildingInstance>();
         if (currentGhost != null)
@@ -42,6 +49,7 @@ public class BuildingManager : MonoBehaviour
             GridNode startNode = gridManager.GetNodeFromMousePosition();
             currentGhost.Initialize(startNode);
             currentGhost.SetNodePos(startNode);
+            currentGhost.SetupMat(ValidMat, InvalidMat);
         }
     }
 

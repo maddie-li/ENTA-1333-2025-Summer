@@ -140,7 +140,7 @@ namespace RTS_1333
 
         public bool IsFootprintOccupied(GridNode startNode, int width, int length)
         {
-            Debug.Log($"Checking {width}x{length}");
+            //Debug.Log($"Checking {width}x{length}");
 
             for (int x = 0; x < width; x++)
             {
@@ -150,22 +150,22 @@ namespace RTS_1333
 
                     if (node == null)
                     {
-                        Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{ startNode.GridPosition.y + y})");
+                        //Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{ startNode.GridPosition.y + y})");
                         return true;
                     }
                     if (node.CurrentUnit != null)
                     {
-                        Debug.Log($"Node {node.Name} is occupied by {node.CurrentUnit.Name}");
+                        //Debug.Log($"Node {node.Name} is occupied by {node.CurrentUnit.Name}");
                         return true;
                     }
                     if (!node.Walkable)
                     {
-                        Debug.Log($"Node {node.Name} is not walkable");
+                        //Debug.Log($"Node {node.Name} is not walkable");
                         return true;
                     }
                     else
                     {
-                        Debug.Log($"Node {node.Name} is AVAILABLE");
+                        //Debug.Log($"Node {node.Name} is AVAILABLE");
                     }
                 }
             }

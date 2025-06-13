@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using RTS_1333;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuildingType", menuName = "Game/BuildingType")]
-public class BuildingType : UnitType
+public class BuildingType : BaseUnitType
 {
 
     [SerializeField] private int cost = 1;
     [SerializeField] private int value = 1;
-
-    public GameObject unitPrefab;
+    [SerializeField] private int spawnInterval = 1;
+    [SerializeField] private int buildTime = 1;
 
     public int Cost => cost;
     public int Value => value;
+    public int SpawnInterval => spawnInterval;
+    public int BuildTime => buildTime;
 
 }

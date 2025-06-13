@@ -218,7 +218,11 @@ MonoBehaviour:
   gridManager: {fileID: 94197268}
   allBuildings: []
   currentGhost: {fileID: 0}
-  buildingType: {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
+  buildingTypes:
+  - {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
+  - {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
+  ValidMat: {fileID: 2100000, guid: bbc22f91b62e1ec4badf6d4529c80d5f, type: 2}
+  InvalidMat: {fileID: 2100000, guid: 90a540cadc8354344bbecf919b549ba9, type: 2}
 --- !u!1 &140795647
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +326,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -840,6 +844,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 4735612977903695001, guid: 905279177aa40f746ac29dec4bac74a5, type: 3}
   buildings:
   - {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
+  - {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
   buildingManager: {fileID: 94251117}
 --- !u!1 &1163605387
 GameObject:
@@ -1760,5 +1765,5 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1725190152}
   - {fileID: 1657904826}
-  - {fileID: 140795651}
   - {fileID: 1265747910}
+  - {fileID: 140795651}
