@@ -8,16 +8,13 @@ namespace RTS_1333
     {
 
         [SerializeField] private GridManager gridManager;
-        [SerializeField] private UnitManager unitManager;
         [SerializeField] private Selector selector;
-        //[SerializeField] private UnitManager unitManager;
 
         private void Awake()
         {
             gridManager.InitializeGrid();
-            selector.Initialize(gridManager, unitManager);
+            selector.Initialize(gridManager);
 
-            //unitManager.SpawnDummyUnit();
         }
 
         // Update is called once per frame

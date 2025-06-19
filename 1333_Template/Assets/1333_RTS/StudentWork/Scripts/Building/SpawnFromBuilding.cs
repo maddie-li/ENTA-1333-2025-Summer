@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using RTS_1333;
+using UnityEngine;
+
+public class SpawnFromBuilding : MonoBehaviour
+{
+    public GameObject UnitPrefab;
+    public float SpawnInterval = 5f;
+
+    public Transform SpawnPoint;
+    public Transform RallyPoint;
+
+    [SerializeField] private bool isSpawning = false;
+    private float spawnTimer;
+
+    void Update()
+    {
+        if (!isSpawning) return;
+
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= SpawnInterval)
+        {
+            SpawnUnit();
+            spawnTimer = 0f;
+        }
+    }
+
+    public void StartSpawning() => isSpawning = true;
+    public void StopSpawning() => isSpawning = false;
+
+    public void SetUnitPrefab(GameObject newPrefab) => UnitPrefab = newPrefab;
+
+    private void SpawnUnit()
+    {
+        UnitInstance spawnedUnit;
+
+        GameObject unit = Instantiate(UnitPrefab, transform.position, Quaternion.identity);
+
+        spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint);
+
+        if (spawnedUnit != null)
+        {
+            spawnedUnit.SetTarget(RallyPoint);
+        }
+
+    }
+
+}

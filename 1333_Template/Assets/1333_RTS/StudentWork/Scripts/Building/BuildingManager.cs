@@ -40,7 +40,7 @@ public class BuildingManager : MonoBehaviour
     {
         Debug.Log(buildingTypes[0]);
         Debug.Log(typeToBuild.UnitPrefab);
-        GameObject building = Instantiate(typeToBuild.UnitPrefab);
+        GameObject building = Instantiate(typeToBuild.UnitPrefab, this.transform);
         
         currentGhost = building.GetComponent<BuildingInstance>();
         if (currentGhost != null)

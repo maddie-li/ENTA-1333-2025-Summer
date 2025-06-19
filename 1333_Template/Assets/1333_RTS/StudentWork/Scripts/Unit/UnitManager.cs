@@ -11,7 +11,18 @@ namespace RTS_1333
         [SerializeField] private GameObject prefab;
         [SerializeField] private Vector2Int[] nodePosition;
 
-        public List<BaseUnit> allUnits = new();   
+        public List<BaseUnit> allUnits = new();
+
+        public static UnitManager Instance;
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+        }
 
         private void Update()
         {
@@ -38,6 +49,26 @@ namespace RTS_1333
             }
 
             
+        }
+
+        public UnitInstance SpawnUnit(GameObject prefab, Transform pos)
+        {
+            GridNode node = gridManager.GetNodeFromWorldPosition(pos.position);
+            if (node == null || node.CurrentUnit != null) return null;
+
+            GameObject unitObject = Instantiate(prefab, this.transform);
+            UnitInstance unit = unitObject.GetComponent<UnitInstance>();
+
+            if (unit != null)
+            {
+                RegisterUnit(unit);
+                unit.Initialize(pathfinder, gridManager);
+                unit.SetNodePos(node);
+
+                return unit;
+            }
+
+            return null;
         }
 
         public void RegisterUnit(BaseUnit unit)

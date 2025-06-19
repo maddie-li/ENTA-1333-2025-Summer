@@ -30,6 +30,12 @@ namespace RTS_1333
 
         }
 
+        public void SetTarget(Transform transform)
+        {
+            GridNode targetNode = gridManager.GetNodeFromWorldPosition(transform.position);
+            SetTarget(targetNode);
+        }
+
         public void SetTarget(GridNode targetNode)
         {
             if (gridManager == null || pathfinder == null || targetNode.CurrentUnit != null) return;
@@ -62,6 +68,7 @@ namespace RTS_1333
 
                 while (Vector3.Distance(transform.position, nextWaypoint) > 0.05f)
                 {
+                    transform.LookAt(nextWaypoint);
                     transform.position = Vector3.MoveTowards(transform.position, nextWaypoint, moveSpeed * Time.deltaTime);
                     yield return null;
                 }
