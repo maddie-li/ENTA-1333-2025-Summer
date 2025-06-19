@@ -79,6 +79,8 @@ public class BuildingManager : MonoBehaviour
 
     private void Building()
     {
+        
+
         currentGhost.UpdateColor();
         currentGhost.isGhost = false;
         gridManager.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
