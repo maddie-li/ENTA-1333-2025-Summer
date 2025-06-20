@@ -12,12 +12,16 @@ namespace RTS_1333
 
         [SerializeField] protected GameObject unitPrefab;
 
+        [SerializeField] private Army army;
+
         public int Width => width;
         public int Length => length;
 
         public int MaxHP => maxHP;
 
         public GameObject UnitPrefab => unitPrefab;
+
+        public Army Army => army;
 
 
         // Start is called before the first frame update

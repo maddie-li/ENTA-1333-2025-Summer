@@ -13,8 +13,12 @@ public class BuildingInstance : BaseUnit
     private Material invalidMat;
     private Material defaultMat;
 
+    public SpawnFromBuilding Spawner;
+
     private void Awake()
     {
+        Spawner = GetComponent<SpawnFromBuilding>();
+        
     }
 
     public void SetupMat(Material valid, Material invalid)

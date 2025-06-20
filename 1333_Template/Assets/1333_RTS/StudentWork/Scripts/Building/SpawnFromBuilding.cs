@@ -14,7 +14,7 @@ public class SpawnFromBuilding : MonoBehaviour
     public Transform RallyPoint;
     public bool CanMoveRallyPoint = false;
 
-    [SerializeField] private bool isSpawning = false;
+    [SerializeField] public bool isSpawning = false;
     private float spawnTimer;
 
     void Update()

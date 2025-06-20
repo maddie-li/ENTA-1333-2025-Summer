@@ -215,9 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ed61c68e3762649b41106b3d0afc1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 0}
   UnitPrefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
   SpawnInterval: 5
   SpawnPoint: {fileID: 742735709762567405}
   RallyPoint: {fileID: 567606144536580454}
-  isSpawning: 1
+  CanMoveRallyPoint: 0
+  isSpawning: 0

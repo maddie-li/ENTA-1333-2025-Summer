@@ -51,6 +51,8 @@ public class BuildingManager : MonoBehaviour
             currentGhost.Initialize(startNode);
             currentGhost.SetNodePos(startNode);
             currentGhost.SetupMat(ValidMat, InvalidMat);
+
+            currentGhost.Spawner?.StopSpawning();
         }
     }
 
@@ -80,13 +82,13 @@ public class BuildingManager : MonoBehaviour
 
     private void Building()
     {
-        
-
         currentGhost.UpdateColor();
         currentGhost.isGhost = false;
         GridManager.Instance.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
         RegisterUnit(currentGhost);
+        currentGhost.Spawner?.StartSpawning();
         currentGhost = null;
+
     }
 
     public void RegisterUnit(BaseUnit unit)
