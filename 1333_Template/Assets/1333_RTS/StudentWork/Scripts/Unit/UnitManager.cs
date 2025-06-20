@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Mono.Cecil;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ namespace RTS_1333
         [Header("Testing")]
         [SerializeField] private Vector2Int[] nodePosition;
 
-        public List<BaseUnit> allUnits = new();
+        public Dictionary<Army, List<UnitInstance>> unitsByArmy = new();
+        public List<UnitInstance> allUnits = new();
 
         public static UnitManager Instance;
         private void Awake()
@@ -24,6 +26,9 @@ namespace RTS_1333
                 return;
             }
             Instance = this;
+
+            unitsByArmy.Add(Army.Player, new List<UnitInstance>());
+            unitsByArmy.Add(Army.Enemy, new List<UnitInstance>());
         }
 
         private void Update()
@@ -66,16 +71,27 @@ namespace RTS_1333
             return null;
         }
 
-        public void RegisterUnit(BaseUnit unit)
+        public void RegisterUnit(UnitInstance unit)
         {
+            // add mainlist
             if (unit != null && !allUnits.Contains(unit))
             {
                 allUnits.Add(unit);
             }
+            // add armylist
+            if (!unitsByArmy[unit.army].Contains(unit))
+            {
+                unitsByArmy[unit.army].Add(unit);
+            }
         }
-        public void UnregisterUnit(BaseUnit unit)
+        public void UnregisterUnit(UnitInstance unit)
         {
             allUnits.Remove(unit);
+
+            if (unitsByArmy.TryGetValue(unit.army, out var unitList))
+            {
+                unitList.Remove(unit);
+            }
         }
     }
 }

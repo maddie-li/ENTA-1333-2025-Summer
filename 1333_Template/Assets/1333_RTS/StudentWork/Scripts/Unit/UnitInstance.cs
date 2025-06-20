@@ -6,6 +6,8 @@ namespace RTS_1333
 {
     public class UnitInstance : BaseUnit, ISelectableObject
     {
+        public bool IsAttacking;
+
         [Header("References")]
         [SerializeField] private Pathfinder pathfinder;
 
@@ -26,10 +28,11 @@ namespace RTS_1333
 
         private void Update()
         {
-            // check for unit instance in 5 unit radius
-            // if team is not my team (theres just playerarmy and enemyarmy right now
-            // get the closest enemy unit 
-            // quit current path and set new path to that one
+            if(IsAttacking)
+            {
+                Debug.Log($"Attacking {GetClosestEnemy()} at {GetClosestEnemy().CurrentNode.Name}");
+                SetTarget(GetClosestEnemy().CurrentNode);
+            }
 
         }
 
@@ -48,6 +51,30 @@ namespace RTS_1333
             selectedMat = selected;
         }
 
+        private UnitInstance GetClosestEnemy()
+        {
+            UnitInstance closestEnemy = null;
+            float closestDistance = Mathf.Infinity;
+            Vector3 myPos = transform.position;
+
+            foreach (UnitInstance enemy in GetEnemies())
+            {
+                float distance = Vector3.Distance(myPos, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy;
+                }
+            }
+
+            return closestEnemy;
+        }
+
+        private List<UnitInstance> GetEnemies()
+        {
+            return UnitManager.Instance.unitsByArmy[Army.Enemy];
+        }
+
         public void SetTarget(Transform transform)
         {
             GridNode targetNode = GridManager.Instance.GetNodeFromWorldPosition(transform.position);
@@ -56,8 +83,14 @@ namespace RTS_1333
 
         public void SetTarget(GridNode targetNode)
         {
-            if (pathfinder == null || targetNode.CurrentUnit != null) return;
-            
+            if (pathfinder == null) return;
+
+            if (targetNode.CurrentUnit != null)
+            {
+                targetNode = GridManager.Instance.GetClosestReachableNeighbour(CurrentNode, targetNode, pathfinder);
+            }
+
+
             currentPath = pathfinder.FindPath(CurrentNode, targetNode);
             pathIndex = 0;
 

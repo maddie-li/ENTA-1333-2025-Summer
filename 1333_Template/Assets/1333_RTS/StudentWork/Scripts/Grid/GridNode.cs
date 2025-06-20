@@ -34,6 +34,7 @@ namespace RTS_1333
             Weight = terrain.MovementCost;
         }
 
+
         public bool IsOccupied()
         {
             return CurrentUnit != null;

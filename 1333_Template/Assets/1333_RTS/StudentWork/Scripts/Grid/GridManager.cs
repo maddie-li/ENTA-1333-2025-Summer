@@ -148,6 +148,48 @@ namespace RTS_1333
                 }
             }
         }
+        public GridNode GetClosestReachableNeighbour(GridNode currentNode, GridNode targetNode, Pathfinder pathfinder, int depth = 1)
+        {
+            GridNode closestPossibleTarget = null;
+            float shortestPathLength = Mathf.Infinity;
+
+            foreach (GridNode possibleTarget in targetNode.Neighbours)
+            {
+                if (possibleTarget == null) continue;
+
+                if (!possibleTarget.Walkable || possibleTarget.CurrentUnit != null)
+                    continue;
+
+                List<GridNode> path = pathfinder.FindPath(currentNode, possibleTarget);
+                float pathLength = path.Count;
+
+                if (pathLength > 0 && pathLength < shortestPathLength)
+                {
+                    closestPossibleTarget = possibleTarget;
+                    shortestPathLength = pathLength;
+                }
+            }
+
+            // found usable neighbour
+            if (closestPossibleTarget != null)
+                return closestPossibleTarget;
+
+            // search recursively
+            if (depth <= 3) 
+            {
+                foreach (GridNode neighbor in targetNode.Neighbours)
+                {
+                    if (neighbor == null) continue;
+
+                    GridNode deeperSearch = GetClosestReachableNeighbour(currentNode, neighbor, pathfinder, depth + 1);
+                    if (deeperSearch != null)
+                        return deeperSearch;
+                }
+            }
+
+            // nothing
+            return null;
+        }
 
         public bool IsFootprintOccupied(GridNode startnode)
         {
