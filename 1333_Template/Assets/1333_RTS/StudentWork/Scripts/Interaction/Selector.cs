@@ -132,13 +132,22 @@ public class Selector : MonoBehaviour
 
         // add color
         selectedUnits.Add(unit);
+
+        unit.GetComponent<UnitInstance>().SetSelected(true);
     }
 
     private void ClearSelection()
     {
+        foreach (BaseUnit unit in selectedUnits)
+        {
+            unit.GetComponent<UnitInstance>().SetSelected(false);
+        }
+
         // change colors
         selectedUnits.Clear();
         Debug.Log($"Cleared selection");
+
+        
     }
 
     // COMMAND
@@ -165,6 +174,7 @@ public class Selector : MonoBehaviour
 
             foreach (BaseUnit unit in selectedUnits)
             {
+                unit.GetComponent<UnitInstance>().SetSelected(false);
                 if (unit is UnitInstance instance)
                     instance.SetTarget(node);
             }

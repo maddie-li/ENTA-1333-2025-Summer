@@ -221,8 +221,8 @@ MonoBehaviour:
   buildingTypes:
   - {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
   - {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
-  ValidMat: {fileID: 2100000, guid: bbc22f91b62e1ec4badf6d4529c80d5f, type: 2}
-  InvalidMat: {fileID: 2100000, guid: 90a540cadc8354344bbecf919b549ba9, type: 2}
+  ValidMat: {fileID: 2100000, guid: 579eed0de6a638b479dfba881a31ff82, type: 2}
+  InvalidMat: {fileID: 2100000, guid: 3c4dbd5c85f1fdb42b41439c4e18454a, type: 2}
 --- !u!1 &140795647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1109,7 @@ MonoBehaviour:
   gridManager: {fileID: 94197268}
   pathfinder: {fileID: 1588116039}
   prefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
+  selectedMat: {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
   nodePosition:
   - {x: 3, y: 3}
   - {x: 2, y: 1}

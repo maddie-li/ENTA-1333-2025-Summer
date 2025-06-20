@@ -9,6 +9,9 @@ namespace RTS_1333
         [SerializeField] private GridManager gridManager;
         [SerializeField] private Pathfinder pathfinder;
         [SerializeField] private GameObject prefab;
+        [Header("Visuals")]
+        [SerializeField] private Material selectedMat;
+        [Header("Testing")]
         [SerializeField] private Vector2Int[] nodePosition;
 
         public List<BaseUnit> allUnits = new();
@@ -34,7 +37,11 @@ namespace RTS_1333
         {
             foreach (Vector2Int pos in nodePosition)
             {
-                GridNode node = gridManager.GetNode(pos);
+                Vector3 spawnPos = new Vector3(pos.x, pos.y, 0);
+
+                SpawnUnit(prefab,spawnPos);
+
+               /* GridNode node = gridManager.GetNode(pos);
                 if (node == null || node.CurrentUnit != null) return;
 
                 GameObject unitObject = Instantiate(prefab);
@@ -45,15 +52,15 @@ namespace RTS_1333
                     RegisterUnit(unit);
                     unit.Initialize(pathfinder, gridManager);
                     unit.SetNodePos(node);
-                }
+                }*/
             }
 
             
         }
 
-        public UnitInstance SpawnUnit(GameObject prefab, Transform pos)
+        public UnitInstance SpawnUnit(GameObject prefab, Vector3 pos)
         {
-            GridNode node = gridManager.GetNodeFromWorldPosition(pos.position);
+            GridNode node = gridManager.GetNodeFromWorldPosition(pos);
             if (node == null || node.CurrentUnit != null) return null;
 
             GameObject unitObject = Instantiate(prefab, this.transform);
@@ -64,6 +71,8 @@ namespace RTS_1333
                 RegisterUnit(unit);
                 unit.Initialize(pathfinder, gridManager);
                 unit.SetNodePos(node);
+                unit.SetupMat(selectedMat);
+                Debug.Log("Initialised new unit");
 
                 return unit;
             }

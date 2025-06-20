@@ -22,22 +22,25 @@ public class BuildingManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            NewGhost(buildingTypes[0]);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            NewGhost(buildingTypes[1]);
 
         if (currentGhost != null)
         {
             Placing();
         }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                NewGhost(buildingTypes[0]);
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-                NewGhost(buildingTypes[1]);
-        }
     }
 
     public void NewGhost(BuildingType typeToBuild)
     {
+        if (currentGhost != null)
+        {
+            Destroy(currentGhost.gameObject);
+        }
+
         Debug.Log(buildingTypes[0]);
         Debug.Log(typeToBuild.UnitPrefab);
         GameObject building = Instantiate(typeToBuild.UnitPrefab, this.transform);

@@ -37,7 +37,7 @@ public class SpawnFromBuilding : MonoBehaviour
 
         GameObject unit = Instantiate(UnitPrefab, transform.position, Quaternion.identity);
 
-        spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint);
+        spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint.position);
 
         if (spawnedUnit != null)
         {

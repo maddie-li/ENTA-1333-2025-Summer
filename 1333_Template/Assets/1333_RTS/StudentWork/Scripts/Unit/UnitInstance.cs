@@ -19,15 +19,26 @@ namespace RTS_1333
         private Vector3 nextWaypoint; 
         private Coroutine movementCoroutine;
 
+        [Header("Visuals")]
+        private bool isSelected = false;
+        private Renderer[] renderers;
+        private Material defaultMat;
+        private Material selectedMat;
+
         public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
         {
             pathfinder = _pathfinder;
             gridManager = _gridManager;
         }
 
-        private void Update()
+        public void SetupMat(Material selected)
         {
+            Debug.Log("Setting up materials");
+            renderers = GetComponentsInChildren<Renderer>();
+            Debug.Log(renderers.Length);
+            defaultMat = GetComponentInChildren<Renderer>().material;
 
+            selectedMat = selected;
         }
 
         public void SetTarget(Transform transform)
@@ -77,7 +88,7 @@ namespace RTS_1333
                 {
                     pathIndex++;
                     UpdateCurrentNode(currentPath[pathIndex]);
-                    Debug.Log(CurrentNode.GridPosition);
+                    //Debug.Log(CurrentNode.GridPosition);
                 }
                 else
                 {
@@ -89,7 +100,6 @@ namespace RTS_1333
             isMoving = false;
         }
 
-
         private void DrawPath()
         {
             for (int i = 0; i < currentPath.Count - 1; i++)
@@ -98,6 +108,21 @@ namespace RTS_1333
             }
         }
 
+        public void SetSelected(bool selected)
+        {
+            Debug.Log("Updating unit material");
+            if (renderers == null) Debug.Log("Renderers are null");
+
+            Material mat = selected ? selectedMat : defaultMat;
+
+            foreach (var rend in renderers)
+            {
+                if (rend.material != null)
+                    rend.material = mat;
+            }
+
+
+        }
     }
 
 
