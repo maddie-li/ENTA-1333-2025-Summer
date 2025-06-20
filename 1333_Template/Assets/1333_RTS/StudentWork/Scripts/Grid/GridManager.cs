@@ -24,6 +24,17 @@ namespace RTS_1333
         [SerializeField] private List<GridNode> AllNodes;
 #endif
 
+        public static GridManager Instance;
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+        }
+
         public bool IsInitialized { get; private set; } = false;
 
         public void InitializeGrid()
@@ -136,6 +147,11 @@ namespace RTS_1333
                         node.Neighbours[3] = gridNodes[x, y + 1];
                 }
             }
+        }
+
+        public bool IsFootprintOccupied(GridNode startnode)
+        {
+            return IsFootprintOccupied(startnode, 1, 1);
         }
 
         public bool IsFootprintOccupied(GridNode startNode, int width, int length)

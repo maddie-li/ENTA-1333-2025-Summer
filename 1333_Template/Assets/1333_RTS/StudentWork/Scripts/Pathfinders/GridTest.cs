@@ -14,7 +14,6 @@ namespace RTS_1333
     public class GridTest : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private GridManager gridManager;
 
 
         [Header("Pathfinder")]
@@ -94,8 +93,8 @@ namespace RTS_1333
             else
             {
                 // get from inspector
-                startNode = gridManager.GetNode(startPos);
-                goalNode = gridManager.GetNode(goalPos);
+                startNode = GridManager.Instance.GetNode(startPos);
+                goalNode = GridManager.Instance.GetNode(goalPos);
             }
 
             Debug.Log($"Start Set: {startNode.GridPosition} at {startNode.WorldPosition}");
@@ -153,8 +152,8 @@ namespace RTS_1333
         private GridNode GetRandomNode()
         {
             // get dimensions
-            int width = gridManager.GridNodes.GetLength(0);
-            int height = gridManager.GridNodes.GetLength(1);
+            int width = GridManager.Instance.GridNodes.GetLength(0);
+            int height = GridManager.Instance.GridNodes.GetLength(1);
 
             GridNode randomNode = null;
 
@@ -162,7 +161,7 @@ namespace RTS_1333
             {
                 int randomX = UnityEngine.Random.Range(0, width);
                 int randomY = UnityEngine.Random.Range(0, height);
-                randomNode = gridManager.GetNode(randomX, randomY);
+                randomNode = GridManager.Instance.GetNode(randomX, randomY);
             }
 
             return randomNode;

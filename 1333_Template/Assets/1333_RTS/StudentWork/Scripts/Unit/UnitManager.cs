@@ -6,7 +6,6 @@ namespace RTS_1333
 {
     public class UnitManager : MonoBehaviour
     {
-        [SerializeField] private GridManager gridManager;
         [SerializeField] private Pathfinder pathfinder;
         [SerializeField] private GameObject prefab;
         [Header("Visuals")]
@@ -40,19 +39,6 @@ namespace RTS_1333
                 Vector3 spawnPos = new Vector3(pos.x, pos.y, 0);
 
                 SpawnUnit(prefab,spawnPos);
-
-               /* GridNode node = gridManager.GetNode(pos);
-                if (node == null || node.CurrentUnit != null) return;
-
-                GameObject unitObject = Instantiate(prefab);
-                UnitInstance unit = unitObject.GetComponent<UnitInstance>();
-
-                if (unit != null)
-                {
-                    RegisterUnit(unit);
-                    unit.Initialize(pathfinder, gridManager);
-                    unit.SetNodePos(node);
-                }*/
             }
 
             
@@ -60,7 +46,7 @@ namespace RTS_1333
 
         public UnitInstance SpawnUnit(GameObject prefab, Vector3 pos)
         {
-            GridNode node = gridManager.GetNodeFromWorldPosition(pos);
+            GridNode node = GridManager.Instance.GetNodeFromWorldPosition(pos);
             if (node == null || node.CurrentUnit != null) return null;
 
             GameObject unitObject = Instantiate(prefab, this.transform);
@@ -69,7 +55,7 @@ namespace RTS_1333
             if (unit != null)
             {
                 RegisterUnit(unit);
-                unit.Initialize(pathfinder, gridManager);
+                unit.Initialize(pathfinder);
                 unit.SetNodePos(node);
                 unit.SetupMat(selectedMat);
                 Debug.Log("Initialised new unit");

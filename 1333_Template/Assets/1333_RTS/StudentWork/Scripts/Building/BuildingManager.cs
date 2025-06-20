@@ -9,8 +9,6 @@ using UnityEngine.InputSystem;
 public class BuildingManager : MonoBehaviour
 {
 
-    [SerializeField] private GridManager gridManager;
-
     public List<BaseUnit> allBuildings = new();
 
     public BuildingInstance currentGhost;
@@ -49,7 +47,7 @@ public class BuildingManager : MonoBehaviour
         if (currentGhost != null)
         {
             currentGhost.isGhost = true;
-            GridNode startNode = gridManager.GetNodeFromMousePosition();
+            GridNode startNode = GridManager.Instance.GetNodeFromMousePosition();
             currentGhost.Initialize(startNode);
             currentGhost.SetNodePos(startNode);
             currentGhost.SetupMat(ValidMat, InvalidMat);
@@ -58,12 +56,12 @@ public class BuildingManager : MonoBehaviour
 
     private void Placing()
     {
-        var node = gridManager.GetNodeFromMousePosition();
+        var node = GridManager.Instance.GetNodeFromMousePosition();
         if (node == null) return;
 
         currentGhost.SetNodePos(node);
 
-        bool validPlacement = !gridManager.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length);
+        bool validPlacement = !GridManager.Instance.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length);
         currentGhost.UpdateColor(validPlacement);
 
         // BUILD
@@ -86,7 +84,7 @@ public class BuildingManager : MonoBehaviour
 
         currentGhost.UpdateColor();
         currentGhost.isGhost = false;
-        gridManager.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
+        GridManager.Instance.FootprintOccupy(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length, currentGhost);
         RegisterUnit(currentGhost);
         currentGhost = null;
     }

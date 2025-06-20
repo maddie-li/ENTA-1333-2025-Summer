@@ -9,7 +9,6 @@ using static InputSystem_Actions;
 public class Selector : MonoBehaviour
 {
     public Camera cam; 
-    private GridManager gridManager;
     private SelectorBox selectorBox;
 
     private List<BaseUnit> selectedUnits = new List<BaseUnit>();
@@ -19,9 +18,8 @@ public class Selector : MonoBehaviour
 
     [SerializeField] private float minDragSize = 3f;
 
-    public void Initialize(GridManager _gridManager)
+    public void Initialize()
     {
-        gridManager = _gridManager;
         interactActions = new InputSystem_Actions();
         selectorBox = GetComponent<SelectorBox>();
         selectorBox.minDragSize = minDragSize;
@@ -108,7 +106,7 @@ public class Selector : MonoBehaviour
 
     private void DragSelect(Vector2 start, Vector2 end)
     {
-        if (cam == null || gridManager == null) return;
+        if (cam == null ) return;
 
         Rect rect = selectorBox.GetScreenRect(start, end);
         ClearSelection();
@@ -153,7 +151,7 @@ public class Selector : MonoBehaviour
     // COMMAND
     private void CommandUnits(Vector2 screenPos)
     {
-        if (cam == null || gridManager == null) return;
+        if (cam == null) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos); 
         //Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 5f);
@@ -164,7 +162,7 @@ public class Selector : MonoBehaviour
             Vector3 hitPoint = ray.GetPoint(enter);
             lastClickPosition = ray.GetPoint(enter);
 
-            GridNode node = gridManager.GetNodeFromWorldPosition(hitPoint);
+            GridNode node = GridManager.Instance.GetNodeFromWorldPosition(hitPoint);
 
             if (!node.Walkable)
             {

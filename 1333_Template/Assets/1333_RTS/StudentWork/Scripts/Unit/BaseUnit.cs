@@ -23,10 +23,10 @@ namespace RTS_1333
             CurrentNode = node;
 
         }
-        public bool IsFootprintOccupied(GridManager gridManager)
+        public bool IsFootprintOccupied()
         {
             if (CurrentNode == null) return false;
-            return gridManager.IsFootprintOccupied(CurrentNode, Width, Length);
+            return GridManager.Instance.IsFootprintOccupied(CurrentNode, Width, Length);
         }
 
         public virtual void SetNodePos(GridNode newNode)

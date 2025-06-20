@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using RTS_1333;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpawnFromBuilding : MonoBehaviour
 {
+
     public GameObject UnitPrefab;
     public float SpawnInterval = 5f;
 
     public Transform SpawnPoint;
     public Transform RallyPoint;
+    public bool CanMoveRallyPoint = false;
 
     [SerializeField] private bool isSpawning = false;
     private float spawnTimer;
@@ -23,6 +26,11 @@ public class SpawnFromBuilding : MonoBehaviour
         {
             SpawnUnit();
             spawnTimer = 0f;
+        }
+
+        if (Mouse.current.leftButton.isPressed && CanMoveRallyPoint)
+        {
+            MoveRallyPoint();
         }
     }
 
@@ -44,6 +52,19 @@ public class SpawnFromBuilding : MonoBehaviour
             spawnedUnit.SetTarget(RallyPoint);
         }
 
+    }
+
+    private void MoveRallyPoint()
+    {
+        var node = GridManager.Instance.GetNodeFromMousePosition();
+        if (node == null) return;
+
+        bool validPlacement = !GridManager.Instance.IsFootprintOccupied(node);
+
+        if (validPlacement)
+        {
+            RallyPoint.transform.position = node.WorldPosition;
+        }
     }
 
 }

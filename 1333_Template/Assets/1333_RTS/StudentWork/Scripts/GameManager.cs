@@ -6,14 +6,12 @@ namespace RTS_1333
 {
     public class GameManager : MonoBehaviour
     {
-
-        [SerializeField] private GridManager gridManager;
         [SerializeField] private Selector selector;
 
         private void Awake()
         {
-            gridManager.InitializeGrid();
-            selector.Initialize(gridManager);
+            GridManager.Instance.InitializeGrid();
+            selector.Initialize();
 
         }
 

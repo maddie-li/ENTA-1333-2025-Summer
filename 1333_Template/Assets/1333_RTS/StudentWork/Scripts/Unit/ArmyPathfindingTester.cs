@@ -5,5 +5,5 @@ using UnityEngine;
 
 public class ArmyPathfindingTester : MonoBehaviour
 {
-    [SerializeField] private GridManager gridManager;
+    
 }

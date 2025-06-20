@@ -7,7 +7,6 @@ namespace RTS_1333
     public class UnitInstance : BaseUnit, ISelectableObject
     {
         [Header("References")]
-        [SerializeField] private GridManager gridManager;
         [SerializeField] private Pathfinder pathfinder;
 
         [Header("Movement")]
@@ -25,10 +24,9 @@ namespace RTS_1333
         private Material defaultMat;
         private Material selectedMat;
 
-        public void Initialize(Pathfinder _pathfinder, GridManager _gridManager)
+        public void Initialize(Pathfinder _pathfinder)
         {
             pathfinder = _pathfinder;
-            gridManager = _gridManager;
         }
 
         public void SetupMat(Material selected)
@@ -43,13 +41,13 @@ namespace RTS_1333
 
         public void SetTarget(Transform transform)
         {
-            GridNode targetNode = gridManager.GetNodeFromWorldPosition(transform.position);
+            GridNode targetNode = GridManager.Instance.GetNodeFromWorldPosition(transform.position);
             SetTarget(targetNode);
         }
 
         public void SetTarget(GridNode targetNode)
         {
-            if (gridManager == null || pathfinder == null || targetNode.CurrentUnit != null) return;
+            if (pathfinder == null || targetNode.CurrentUnit != null) return;
             
             currentPath = pathfinder.FindPath(CurrentNode, targetNode);
             pathIndex = 0;
