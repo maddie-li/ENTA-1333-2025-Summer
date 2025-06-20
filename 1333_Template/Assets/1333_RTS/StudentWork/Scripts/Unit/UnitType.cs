@@ -11,12 +11,14 @@ namespace RTS_1333
         [SerializeField] private int defense = 1;
         [SerializeField] private AttackType attackType = AttackType.Melee;
         [SerializeField] private int range = 1;
+        [SerializeField] private Army army;
 
         public float MoveSpeed => moveSpeed;
         public int Damage => damage;
         public int Defense => defense;
 
         public AttackType AttackType => attackType;
+        public Army Army => army;
 
 
         // Start is called before the first frame update

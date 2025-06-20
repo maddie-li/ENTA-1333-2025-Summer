@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504542b7837d0f840a1d1ecafd18977d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 94197268}
   allBuildings: []
   currentGhost: {fileID: 0}
   buildingTypes:
@@ -1106,9 +1105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68b62e937aead949ad1886d09c5e1d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 94197268}
   pathfinder: {fileID: 1588116039}
-  prefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
+  prefab: {fileID: 123088, guid: 1f6318dd9931245479ed25bd6845f47b, type: 3}
   selectedMat: {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
   nodePosition:
   - {x: 3, y: 3}
@@ -1248,7 +1246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f5b545c8f023c45bff69db3c813d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 94197268}
   selector: {fileID: 1737000493}
 --- !u!4 &1657904826
 Transform:
@@ -1424,7 +1421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2256f087381cc7849b4c2221e3f01cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridManager: {fileID: 94197268}
   selectedPathfinder: 0
   useRandomPositions: 1
   startPos: {x: 0, y: 0}

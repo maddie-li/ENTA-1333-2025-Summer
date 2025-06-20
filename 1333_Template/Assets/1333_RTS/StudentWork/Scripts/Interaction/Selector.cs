@@ -126,6 +126,8 @@ public class Selector : MonoBehaviour
     //SELECTION
     private void AddToSelection(BaseUnit unit)
     {
+        if (unit.army != Army.Player) return;
+
         if (selectedUnits.Contains(unit)) return;
 
         // add color

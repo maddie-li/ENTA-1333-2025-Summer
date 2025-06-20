@@ -11,18 +11,27 @@ namespace RTS_1333
 
         [Header("Movement")]
         [SerializeField] private float moveSpeed = 3f;
-
+        private bool isMoving;
         private List<GridNode> currentPath = new();
         private int pathIndex = 0;
-        private bool isMoving = false;
         private Vector3 nextWaypoint; 
         private Coroutine movementCoroutine;
 
         [Header("Visuals")]
-        private bool isSelected = false;
         private Renderer[] renderers;
         private Material defaultMat;
         private Material selectedMat;
+
+
+
+        private void Update()
+        {
+            // check for unit instance in 5 unit radius
+            // if team is not my team (theres just playerarmy and enemyarmy right now
+            // get the closest enemy unit 
+            // quit current path and set new path to that one
+
+        }
 
         public void Initialize(Pathfinder _pathfinder)
         {

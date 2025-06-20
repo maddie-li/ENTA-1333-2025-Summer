@@ -5,7 +5,7 @@ namespace RTS_1333
     public abstract class BaseUnit : MonoBehaviour
     {
         [Header("Unit")]
-        [SerializeField] protected BaseUnitType unitType;
+        [SerializeField] protected UnitType unitType;
 
         [SerializeField] public string Name;
         public Vector3 WorldPosition { get; private set; }
@@ -14,6 +14,8 @@ namespace RTS_1333
 
         public virtual int Width => unitType != null ? unitType.Width : 1;
         public virtual int Length => unitType != null ? unitType.Length : 1;
+
+        public virtual Army army => unitType.Army;
 
         public void Initialize(GridNode node)
         {
