@@ -41,7 +41,7 @@ public class SpawnFromBuilding : MonoBehaviour
 
     private void SpawnUnit()
     {
-        UnitInstance spawnedUnit;
+        Combatant spawnedUnit;
 
         GameObject unit = Instantiate(UnitPrefab, transform.position, Quaternion.identity);
 

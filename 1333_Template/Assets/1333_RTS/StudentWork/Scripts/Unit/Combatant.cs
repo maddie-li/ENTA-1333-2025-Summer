@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace RTS_1333
 {
-    public class UnitInstance : BaseUnit, ISelectableObject
+    public class Combatant : Unit, ISelectableObject
     {
         public bool IsAttacking;
 
@@ -24,7 +24,7 @@ namespace RTS_1333
         private Material defaultMat;
         private Material selectedMat;
 
-
+        private GridNode currentTargetNode;
 
         private void Update()
         {
@@ -51,13 +51,13 @@ namespace RTS_1333
             selectedMat = selected;
         }
 
-        private UnitInstance GetClosestEnemy()
+        private Combatant GetClosestEnemy()
         {
-            UnitInstance closestEnemy = null;
+            Combatant closestEnemy = null;
             float closestDistance = Mathf.Infinity;
             Vector3 myPos = transform.position;
 
-            foreach (UnitInstance enemy in GetEnemies())
+            foreach (Combatant enemy in GetEnemies())
             {
                 float distance = Vector3.Distance(myPos, enemy.transform.position);
                 if (distance < closestDistance)
@@ -70,7 +70,7 @@ namespace RTS_1333
             return closestEnemy;
         }
 
-        private List<UnitInstance> GetEnemies()
+        private List<Combatant> GetEnemies()
         {
             return UnitManager.Instance.unitsByArmy[Army.Enemy];
         }
@@ -85,11 +85,7 @@ namespace RTS_1333
         {
             if (pathfinder == null) return;
 
-            if (targetNode.CurrentUnit != null)
-            {
-                targetNode = GridManager.Instance.GetClosestReachableNeighbour(CurrentNode, targetNode, pathfinder);
-            }
-
+            currentTargetNode = targetNode;
 
             currentPath = pathfinder.FindPath(CurrentNode, targetNode);
             pathIndex = 0;
@@ -106,6 +102,7 @@ namespace RTS_1333
                 movementCoroutine = StartCoroutine(WalkPath());
             }
         }
+        
 
         private IEnumerator WalkPath()
         {
@@ -114,6 +111,33 @@ namespace RTS_1333
 
             while (pathIndex < currentPath.Count)
             {
+                // recalculate
+                int nextIndex = pathIndex + 1;
+
+                // if there is a node ahead
+                if (nextIndex < currentPath.Count)
+                {
+                    GridNode nextNode = currentPath[nextIndex];
+
+                    // if it's occupied AND the last node
+                    if (nextIndex == currentPath.Count - 1 && GridManager.Instance.IsFootprintOccupied(nextNode))
+                    {
+                        Debug.Log($"Final node ({currentPath[nextIndex].Name})is occupied. Finding neighbour");
+
+                        GridNode newTarget = GridManager.Instance.GetClosestReachableNeighbour(CurrentNode, nextNode, pathfinder);
+                        SetTarget(newTarget);
+                        yield break;
+                    }
+                    // if it's occupied and NOT the last node
+                    else if (GridManager.Instance.IsFootprintOccupied(nextNode))
+                    {
+                        Debug.Log($"Next node ({nextNode.Name}) is occupied. Recalculating path.");
+                        SetTarget(currentTargetNode);
+                        yield break;
+                    }
+                }
+
+
                 nextWaypoint = currentPath[pathIndex].WorldPosition;
                 //Debug.Log($"Moving to Waypoint {pathIndex}: {nextWaypoint}");
 
@@ -147,6 +171,7 @@ namespace RTS_1333
                 Debug.DrawLine(currentPath[i].WorldPosition, currentPath[i + 1].WorldPosition, Color.red, 5f);
             }
         }
+
 
         public void SetSelected(bool selected)
         {

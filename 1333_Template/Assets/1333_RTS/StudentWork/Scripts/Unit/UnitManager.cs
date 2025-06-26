@@ -14,8 +14,8 @@ namespace RTS_1333
         [Header("Testing")]
         [SerializeField] private Vector2Int[] nodePosition;
 
-        public Dictionary<Army, List<UnitInstance>> unitsByArmy = new();
-        public List<UnitInstance> allUnits = new();
+        public Dictionary<Army, List<Combatant>> unitsByArmy = new();
+        public List<Combatant> allUnits = new();
 
         public static UnitManager Instance;
         private void Awake()
@@ -27,8 +27,8 @@ namespace RTS_1333
             }
             Instance = this;
 
-            unitsByArmy.Add(Army.Player, new List<UnitInstance>());
-            unitsByArmy.Add(Army.Enemy, new List<UnitInstance>());
+            unitsByArmy.Add(Army.Player, new List<Combatant>());
+            unitsByArmy.Add(Army.Enemy, new List<Combatant>());
         }
 
         private void Update()
@@ -49,13 +49,13 @@ namespace RTS_1333
             
         }
 
-        public UnitInstance SpawnUnit(GameObject prefab, Vector3 pos)
+        public Combatant SpawnUnit(GameObject prefab, Vector3 pos)
         {
             GridNode node = GridManager.Instance.GetNodeFromWorldPosition(pos);
             if (node == null || node.CurrentUnit != null) return null;
 
             GameObject unitObject = Instantiate(prefab, this.transform);
-            UnitInstance unit = unitObject.GetComponent<UnitInstance>();
+            Combatant unit = unitObject.GetComponent<Combatant>();
 
             if (unit != null)
             {
@@ -71,7 +71,7 @@ namespace RTS_1333
             return null;
         }
 
-        public void RegisterUnit(UnitInstance unit)
+        public void RegisterUnit(Combatant unit)
         {
             // add mainlist
             if (unit != null && !allUnits.Contains(unit))
@@ -84,7 +84,7 @@ namespace RTS_1333
                 unitsByArmy[unit.army].Add(unit);
             }
         }
-        public void UnregisterUnit(UnitInstance unit)
+        public void UnregisterUnit(Combatant unit)
         {
             allUnits.Remove(unit);
 

@@ -11,7 +11,7 @@ public class Selector : MonoBehaviour
     public Camera cam; 
     private SelectorBox selectorBox;
 
-    private List<BaseUnit> selectedUnits = new List<BaseUnit>();
+    private List<Unit> selectedUnits = new List<Unit>();
 
     private InputSystem_Actions interactActions;
     private Vector3 lastClickPosition;
@@ -92,7 +92,7 @@ public class Selector : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
             ISelectableObject selectable = hit.collider.GetComponentInParent<ISelectableObject>();
-            if (selectable is BaseUnit unit)
+            if (selectable is Unit unit)
             {
                 ClearSelection();
                 AddToSelection(unit);
@@ -112,7 +112,7 @@ public class Selector : MonoBehaviour
         ClearSelection();
 
 
-        foreach (BaseUnit unit in UnitManager.Instance.allUnits)
+        foreach (Unit unit in UnitManager.Instance.allUnits)
         {
             Vector3 screenPoint = cam.WorldToScreenPoint(unit.transform.position);
             if (screenPoint.z < 0) continue;
@@ -124,7 +124,7 @@ public class Selector : MonoBehaviour
     }
 
     //SELECTION
-    private void AddToSelection(BaseUnit unit)
+    private void AddToSelection(Unit unit)
     {
         if (unit.army != Army.Player) return;
 
@@ -133,14 +133,14 @@ public class Selector : MonoBehaviour
         // add color
         selectedUnits.Add(unit);
 
-        unit.GetComponent<UnitInstance>().SetSelected(true);
+        unit.GetComponent<Combatant>().SetSelected(true);
     }
 
     private void ClearSelection()
     {
-        foreach (BaseUnit unit in selectedUnits)
+        foreach (Unit unit in selectedUnits)
         {
-            unit.GetComponent<UnitInstance>().SetSelected(false);
+            unit.GetComponent<Combatant>().SetSelected(false);
         }
 
         // change colors
@@ -172,10 +172,10 @@ public class Selector : MonoBehaviour
                 return;
             }
 
-            foreach (BaseUnit unit in selectedUnits)
+            foreach (Unit unit in selectedUnits)
             {
-                unit.GetComponent<UnitInstance>().SetSelected(false);
-                if (unit is UnitInstance instance)
+                unit.GetComponent<Combatant>().SetSelected(false);
+                if (unit is Combatant instance)
                     instance.SetTarget(node);
             }
         }

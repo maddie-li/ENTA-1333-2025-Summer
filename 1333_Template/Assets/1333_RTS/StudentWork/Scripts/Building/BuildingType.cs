@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RTS_1333;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuildingType", menuName = "Game/BuildingType")]
-public class BuildingType : BaseUnitType
+public class BuildingType : UnitType
 {
 
     [SerializeField] private int cost = 1;

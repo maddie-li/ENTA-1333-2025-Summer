@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using RTS_1333;
 using UnityEngine;
 
-public class BuildingInstance : BaseUnit
+public class Building : Unit
 {
     private Renderer[] renderers;
     public bool isGhost = true;

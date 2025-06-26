@@ -22,7 +22,7 @@ namespace RTS_1333
         public GridNode[] Neighbours = new GridNode[4];
 
         [Header("Occupancy")]
-        public BaseUnit CurrentUnit;
+        public Unit CurrentUnit;
 
         public GridNode(Vector2Int gridPos, Vector3 worldPos, TerrainType terrain)
         {

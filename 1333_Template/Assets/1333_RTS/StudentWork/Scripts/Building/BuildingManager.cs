@@ -9,9 +9,9 @@ using UnityEngine.InputSystem;
 public class BuildingManager : MonoBehaviour
 {
 
-    public List<BaseUnit> allBuildings = new();
+    public List<Unit> allBuildings = new();
 
-    public BuildingInstance currentGhost;
+    public Building currentGhost;
 
     public BuildingType[] buildingTypes;
 
@@ -43,7 +43,7 @@ public class BuildingManager : MonoBehaviour
         Debug.Log(typeToBuild.UnitPrefab);
         GameObject building = Instantiate(typeToBuild.UnitPrefab, this.transform);
         
-        currentGhost = building.GetComponent<BuildingInstance>();
+        currentGhost = building.GetComponent<Building>();
         if (currentGhost != null)
         {
             currentGhost.isGhost = true;
@@ -91,14 +91,14 @@ public class BuildingManager : MonoBehaviour
 
     }
 
-    public void RegisterUnit(BaseUnit unit)
+    public void RegisterUnit(Unit unit)
     {
         if (unit != null && !allBuildings.Contains(unit))
         {
             allBuildings.Add(unit);
         }
     }
-    public void UnregisterUnit(BaseUnit unit)
+    public void UnregisterUnit(Unit unit)
     {
         allBuildings.Remove(unit);
     }

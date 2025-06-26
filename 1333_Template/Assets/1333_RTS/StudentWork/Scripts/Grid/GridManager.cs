@@ -230,7 +230,7 @@ namespace RTS_1333
             return false;
         }
 
-        public void FootprintOccupy(GridNode startNode, int width, int length, BaseUnit unit)
+        public void FootprintOccupy(GridNode startNode, int width, int length, Unit unit)
         {
             for (int x = 0; x < width; x++)
             {
