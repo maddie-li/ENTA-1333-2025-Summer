@@ -49,7 +49,7 @@ public class SpawnFromBuilding : MonoBehaviour
 
         if (spawnedUnit != null)
         {
-            spawnedUnit.SetTarget(RallyPoint);
+            spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
         }
 
     }

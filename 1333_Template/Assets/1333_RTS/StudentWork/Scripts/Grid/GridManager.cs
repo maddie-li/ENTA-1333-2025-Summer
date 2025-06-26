@@ -80,6 +80,7 @@ namespace RTS_1333
 
         public GridNode GetNode(Vector2Int gridPos) => GetNode(gridPos.x, gridPos.y);
 
+
         public GridNode GetNodeFromWorldPosition(Vector3 position)
         {
             int x = gridSettings.UseXYZPlane

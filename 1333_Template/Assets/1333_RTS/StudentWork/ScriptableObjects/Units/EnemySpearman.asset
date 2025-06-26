@@ -16,9 +16,10 @@ MonoBehaviour:
   length: 1
   maxHP: 1
   unitPrefab: {fileID: 0}
-  moveSpeed: 1
+  army: 1
+  moveSpeed: 3
   damage: 1
   defense: 1
   attackType: 0
   range: 1
-  army: 1
+  attackCooldown: 1

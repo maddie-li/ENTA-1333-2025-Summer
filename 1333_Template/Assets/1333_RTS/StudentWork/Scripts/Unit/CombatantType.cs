@@ -11,10 +11,13 @@ namespace RTS_1333
         [SerializeField] private int defense = 1;
         [SerializeField] private AttackType attackType = AttackType.Melee;
         [SerializeField] private int range = 1;
+        [SerializeField] private float attackCooldown = 1f;
 
         public float MoveSpeed => moveSpeed;
         public int Damage => damage;
         public int Defense => defense;
+        public int Range => range;
+        public float AttackCooldown => attackCooldown;
 
         public AttackType AttackType => attackType;
 
