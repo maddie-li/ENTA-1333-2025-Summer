@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private CombatantType combatantType;
+    private CombatantType combatantType;
     private float lastAttackTime;
 
     public float AttackRange => combatantType.Range;
     public float AttackCooldown => combatantType.AttackCooldown;
+
+    public void Initialize(CombatantType _combatantType)
+    {
+        combatantType = _combatantType;
+    }
 
     public bool CanAttack(Combatant target)
     {

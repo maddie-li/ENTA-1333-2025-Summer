@@ -4483,6 +4483,8 @@ GameObject:
   - component: {fileID: 9500222}
   - component: {fileID: -451993451290685296}
   - component: {fileID: 7626644172911656489}
+  - component: {fileID: -4853730407920836658}
+  - component: {fileID: 4704166502555988104}
   m_Layer: 0
   m_Name: RTS_Spearman
   m_TagString: Untagged
@@ -4602,9 +4604,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: {fileID: 11400000, guid: b0d708b1b5f923f4fa641f3d10659b3b, type: 2}
-  gridManager: {fileID: 0}
-  pathfinder: {fileID: 0}
-  moveSpeed: 3
+  Name: 
+  IsAttacking: 0
+  movement: {fileID: 0}
+  attack: {fileID: 0}
 --- !u!136 &7626644172911656489
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4628,6 +4631,30 @@ CapsuleCollider:
   m_Height: 2.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.73, z: 0}
+--- !u!114 &-4853730407920836658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2405e94dbcd7ba44b8b55f70ac558bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4704166502555988104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf54b7077e8454d4d814e7537832daed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &123120
 GameObject:
   m_ObjectHideFlags: 0

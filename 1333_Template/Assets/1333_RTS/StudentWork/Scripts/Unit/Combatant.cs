@@ -6,24 +6,19 @@ public class Combatant : Unit, ISelectableObject
 {
     public bool IsAttacking;
 
-    [Header("References")]
-    [SerializeField] private MovementController movement;
+    //[Header("References")]
+    private MovementController movement;
+    private Attacker attack;
 
-    [Header("Visuals")]
+    //[Header("Visuals")]
     private Renderer[] renderers;
     private Material defaultMat;
     private Material selectedMat;
 
-    void Awake()
+    private void Awake()
     {
-        if (movement == null)
-        {
-            movement = GetComponent<MovementController>();
-            if (movement == null)
-            {
-                movement = gameObject.AddComponent<MovementController>();
-            }
-        }
+        movement = GetComponent<MovementController>();
+        attack = GetComponent<Attacker>();
     }
 
     private void Update()
@@ -41,14 +36,25 @@ public class Combatant : Unit, ISelectableObject
 
     public void Initialize(Pathfinder _pathfinder)
     {
-        float moveSpeed = 3f;
+        if (movement == null || attack == null)
+        {
+            Debug.LogError("Combatant missing movement and attack components");
+            return;
+        }
+
+        float moveSpeed = 3f; // set default
 
         if (unitType is CombatantType combatantType)
         {
             moveSpeed = combatantType.MoveSpeed;
+            attack.Initialize(combatantType);
+        }
+        else
+        {
+            Debug.LogWarning("Wrong unit type on Combatant");
         }
 
-        movement.Initialize( _pathfinder, this, moveSpeed);
+            movement.Initialize(_pathfinder, this, moveSpeed);
     }
 
     public void SetTarget(GridNode targetNode)
