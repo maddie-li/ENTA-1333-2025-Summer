@@ -27,7 +27,7 @@ public class MovementController : MonoBehaviour
 
     public void SetTarget(GridNode targetNode)
     {
-        Debug.Log($"Movement: Setting new target to {targetNode.Name}");
+        //Debug.Log($"Movement: Setting new target to {targetNode.Name}");
 
         if (pathfinder == null || unit == null) return;
 
@@ -36,12 +36,14 @@ public class MovementController : MonoBehaviour
         if (targetNode.IsOccupied())
         {
             currentTargetNode = GridManager.Instance.GetClosestReachableNeighbour(unit.CurrentNode, targetNode, pathfinder);
-            Debug.Log($"Movement: Changed target {currentTargetNode.Name}");
+            //Debug.Log($"Movement: Changed target {currentTargetNode.Name}");
+
+            // this may be null if it recursions too much
         }
         else
         {
             currentTargetNode = targetNode;
-            Debug.Log($"Movement: Kept target {currentTargetNode.Name}");
+            //Debug.Log($"Movement: Kept target {currentTargetNode.Name}");
         }
 
             

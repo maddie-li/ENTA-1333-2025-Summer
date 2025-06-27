@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 /// <summary>
 ///     Simple, non-physics parabolic flight.
@@ -56,4 +57,5 @@ public class ArcingProjectile : MonoBehaviour
 		speed = Mathf.Max(0.01f, speed);
 		_duration = Vector3.Distance(start, end) / speed;
 	}
+
 }
