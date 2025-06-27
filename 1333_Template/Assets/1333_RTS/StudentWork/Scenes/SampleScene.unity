@@ -1124,7 +1124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 1588116039}
-  prefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
+  prefab: {fileID: 123088, guid: 1f6318dd9931245479ed25bd6845f47b, type: 3}
   selectedMat: {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
   nodePosition:
   - {x: 3, y: 3}

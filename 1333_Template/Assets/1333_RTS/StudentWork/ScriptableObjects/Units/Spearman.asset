@@ -21,5 +21,6 @@ MonoBehaviour:
   damage: 1
   defense: 1
   attackType: 0
-  range: 1
+  sensingRange: 10
+  attackRange: 3
   attackCooldown: 1

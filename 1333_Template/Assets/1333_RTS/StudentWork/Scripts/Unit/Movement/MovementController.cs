@@ -27,6 +27,8 @@ public class MovementController : MonoBehaviour
 
     public void SetTarget(GridNode targetNode)
     {
+        Debug.Log($"Movement: Setting new target to {targetNode.Name}");
+
         if (pathfinder == null || unit == null) return;
 
         currentTargetNode = targetNode;
@@ -91,7 +93,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Path complete! Unit has reached the final destination.");
+                Debug.Log($"Path complete! Unit has reached the final destination of {currentTargetNode.Name}");
                 break;
             }
         }

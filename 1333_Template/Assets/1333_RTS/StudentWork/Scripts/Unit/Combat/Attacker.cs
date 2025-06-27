@@ -5,29 +5,31 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    private CombatantType combatantType;
+    private CombatantType c;
     private float lastAttackTime;
-
-    public float AttackRange => combatantType.Range;
-    public float AttackCooldown => combatantType.AttackCooldown;
 
     public void Initialize(CombatantType _combatantType)
     {
-        combatantType = _combatantType;
+        c = _combatantType;
     }
 
-    public bool CanAttack(Combatant target)
+    public bool TargetInRange(Combatant target, float range)
     {
-        if (target == null) return false;
+        if (target == null || c == null)
+        {
+            return false;   
+        }
         float distance = Vector3.Distance(transform.position, target.transform.position);
-        return distance <= AttackRange;
+        //Debug.Log(distance);
+
+        return distance <= range;
     }
 
     public void Attack(Combatant target)
     {
-        if (target == null || Time.time - lastAttackTime < AttackCooldown) return;
+        if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
-        Debug.Log($"{name} attacks {target.name} for {combatantType.Damage} damage.");
+        Debug.Log($"{name} attacks {target.name} for {c.Damage} damage.");
         //target.TakeDamage(combatantType.Damage); 
 
         lastAttackTime = Time.time;

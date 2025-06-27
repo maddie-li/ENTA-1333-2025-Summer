@@ -5,7 +5,7 @@ namespace RTS_1333
     public abstract class Unit : MonoBehaviour
     {
         [Header("Unit")]
-        [SerializeField] protected UnitType unitType;
+        [SerializeField] public UnitType unitType;
 
         [SerializeField] public string Name;
         public Vector3 WorldPosition { get; private set; }
