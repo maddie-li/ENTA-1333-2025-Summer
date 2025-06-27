@@ -12,10 +12,10 @@ namespace RTS_1333
         }
         public override List<GridNode> FindPath(GridNode start, GridNode goal)
         {
+
             // check if null
             if (start == null || goal == null)
             {
-                Debug.LogError("Can't find path: Start or end is null");
                 return new List<GridNode>();
             }
 

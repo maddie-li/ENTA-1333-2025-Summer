@@ -141,8 +141,8 @@ public class Combatant : Unit, ISelectableObject
 
             if (target.CurrentNode != null)
             {
-                Debug.Log($"In sensing range of {target.name} at {target.CurrentNode.Name}");
-                //SetTarget(target.CurrentNode);
+                Debug.Log($"In sensing range of {target.name} at {target.CurrentNode.Name}, begin chase");
+                SetTarget(target.CurrentNode);
             }
 
             yield return new WaitForSeconds(0.5f);
