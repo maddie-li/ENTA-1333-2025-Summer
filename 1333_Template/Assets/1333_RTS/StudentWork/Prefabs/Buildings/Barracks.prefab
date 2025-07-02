@@ -203,6 +203,7 @@ MonoBehaviour:
   unitType: {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
   Name: Barracks
   isGhost: 0
+  Spawner: {fileID: 0}
 --- !u!114 &-4771248079235661253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ed61c68e3762649b41106b3d0afc1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitPrefab: {fileID: 123088, guid: 39e036e65afdd364f8b507392e46e2c8, type: 3}
+  UnitPrefab: {fileID: 4513347065308714618, guid: c709eaf7c257c9a4a8a5b93f8c112489, type: 3}
   SpawnInterval: 5
   SpawnPoint: {fileID: 742735709762567405}
   RallyPoint: {fileID: 567606144536580454}

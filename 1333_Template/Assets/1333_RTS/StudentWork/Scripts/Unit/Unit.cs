@@ -6,8 +6,8 @@ namespace RTS_1333
     {
         [Header("Unit")]
         [SerializeField] public UnitType unitType;
-
         [SerializeField] public string Name;
+        private Damageable dmg;
         public Vector3 WorldPosition { get; private set; }
         public Vector2Int GridPosition { get; private set; }
         public GridNode CurrentNode { get; protected set; }
@@ -15,7 +15,21 @@ namespace RTS_1333
         public virtual int Width => unitType != null ? unitType.Width : 1;
         public virtual int Length => unitType != null ? unitType.Length : 1;
 
+        public virtual int MaxHP => unitType != null ? unitType.MaxHP : 10;
+
+        private int currentHP;
+
+        public int CurrentHP => currentHP;
+
         public virtual Army army => unitType.Army;
+
+        private void Awake()
+        {
+            dmg = GetComponent<Damageable>();
+
+            if (dmg != null)
+                dmg.Initialize(unitType.MaxHP);
+        }
 
         public void Initialize(GridNode node)
         {
@@ -23,7 +37,6 @@ namespace RTS_1333
             GridPosition = node.GridPosition;
             WorldPosition = node.WorldPosition;
             CurrentNode = node;
-
         }
         public bool IsFootprintOccupied()
         {

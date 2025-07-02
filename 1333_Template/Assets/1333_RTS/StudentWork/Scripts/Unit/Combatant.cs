@@ -11,7 +11,7 @@ public class Combatant : Unit, ISelectableObject
 
     //[Header("References")]
     private MovementController movement;
-    private Attacker attack;
+    private Attacker atk;
 
     //[Header("Visuals")]
     private Renderer[] renderers;
@@ -32,7 +32,7 @@ public class Combatant : Unit, ISelectableObject
     private void Awake()
     {
         movement = GetComponent<MovementController>();
-        attack = GetComponent<Attacker>();
+        atk = GetComponent<Attacker>();
     }
     private void Start()
     {
@@ -49,7 +49,7 @@ public class Combatant : Unit, ISelectableObject
 
     public void Initialize(Pathfinder _pathfinder)
     {
-        if (movement == null || attack == null)
+        if (movement == null || atk == null)
         {
             Debug.LogError("Combatant missing movement and attack components");
             return;
@@ -63,7 +63,7 @@ public class Combatant : Unit, ISelectableObject
             sensingRange = combatantType.SensingRange;
             attackRange = combatantType.AttackRange;
 
-            attack.Initialize(combatantType);
+            atk.Initialize(combatantType);
         }
         else
         {
@@ -106,7 +106,7 @@ public class Combatant : Unit, ISelectableObject
         {
             Combatant target = GetClosestEnemy();
 
-            if (target != null && attack.TargetInRange(target, sensingRange))
+            if (target != null && atk.TargetInRange(target, sensingRange))
             {
                 Debug.Log($"{target.name} in sensing range");
                 currentState = CombatantState.Chasing;
@@ -132,7 +132,7 @@ public class Combatant : Unit, ISelectableObject
                 yield break;
             }
 
-            if (attack.TargetInRange(target, attackRange))
+            if (atk.TargetInRange(target, attackRange))
             {
                 Debug.Log($"{target.name} in attacking range");
                 currentState = CombatantState.Attacking;
@@ -164,13 +164,13 @@ public class Combatant : Unit, ISelectableObject
                 yield break;
             }
 
-            if (!attack.TargetInRange(target, attackRange))
+            if (!atk.TargetInRange(target, attackRange))
             {
                 currentState = CombatantState.Chasing;
                 yield break;
             }
 
-            attack.Attack(target);
+            atk.Attack(target);
 
             yield return new WaitForSeconds(0.5f);
         }
