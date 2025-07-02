@@ -13,6 +13,7 @@ public class Damageable : MonoBehaviour
 
     public void Initialize(int maxHealth)
     {
+
         maxHP = maxHealth;
         currentHP = maxHP;
         if (healthBar != null)
@@ -39,7 +40,16 @@ public class Damageable : MonoBehaviour
     protected virtual void Die()
     {
         // uhoh youre died
-        UnitManager.Instance.UnregisterUnit(this.gameObject.GetComponent<Combatant>());
+
+        if (TryGetComponent<Combatant>(out Combatant combatant))
+        {
+            UnitManager.Instance.UnregisterUnit(combatant);
+        }
+
+        if (TryGetComponent<Building>(out Building building))
+        {
+            BuildingManager.Instance.UnregisterUnit(building);
+        }
         Destroy(gameObject);
     }
 

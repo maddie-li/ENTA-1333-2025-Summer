@@ -44,6 +44,12 @@ namespace RTS_1333
             }
         }
 
+        public void TakeDamage(int _dmg)
+        {
+            dmg.TakeDamage(_dmg);
+
+        }
+
         public bool IsFootprintOccupied()
         {
             if (CurrentNode == null) return false;

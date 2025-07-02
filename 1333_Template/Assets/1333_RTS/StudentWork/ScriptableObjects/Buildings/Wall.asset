@@ -15,12 +15,9 @@ MonoBehaviour:
   width: 2
   length: 2
   maxHP: 5
-  moveSpeed: 1
-  damage: 1
-  defense: 1
-  attackType: 0
-  range: 1
   unitPrefab: {fileID: 632733733720884266, guid: 0c5e78d9bf390794eae228d34a303a7e, type: 3}
+  army: 0
   cost: 5
   value: 1
-  unitPrefab: {fileID: 632733733720884266, guid: 0c5e78d9bf390794eae228d34a303a7e, type: 3}
+  spawnInterval: 1
+  buildTime: 1

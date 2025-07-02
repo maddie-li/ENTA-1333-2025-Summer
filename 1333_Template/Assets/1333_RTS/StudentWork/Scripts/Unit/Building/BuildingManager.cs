@@ -5,11 +5,12 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class BuildingManager : MonoBehaviour
 {
+    public static BuildingManager Instance { get; private set; }
 
-    public List<Unit> allBuildings = new();
 
     public Building currentGhost;
 
@@ -18,6 +19,23 @@ public class BuildingManager : MonoBehaviour
     public Material ValidMat;
     public Material InvalidMat;
 
+    public Dictionary<Army, List<Building>> buildingsByArmy = new();
+
+    public List<Building> allBuildings = new();
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+
+        buildingsByArmy.Add(Army.Player, new List<Building>());
+        buildingsByArmy.Add(Army.Enemy, new List<Building>());
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -25,6 +43,9 @@ public class BuildingManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             NewGhost(buildingTypes[1]);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            NewGhost(buildingTypes[2]);
 
         if (currentGhost != null)
         {
@@ -91,15 +112,28 @@ public class BuildingManager : MonoBehaviour
 
     }
 
-    public void RegisterUnit(Unit unit)
+    public void RegisterUnit(Building building)
     {
-        if (unit != null && !allBuildings.Contains(unit))
+        Debug.Log($"Registering building of army {building.army}");
+
+        // add mainlist
+        if (building != null && !allBuildings.Contains(building))
         {
-            allBuildings.Add(unit);
+            allBuildings.Add(building);
+        }
+        // add armylist
+        if (!buildingsByArmy[building.army].Contains(building))
+        {
+            buildingsByArmy[building.army].Add(building);
         }
     }
-    public void UnregisterUnit(Unit unit)
+    public void UnregisterUnit(Building building)
     {
-        allBuildings.Remove(unit);
+        allBuildings.Remove(building);
+
+        if (buildingsByArmy.TryGetValue(building.army, out var unitList))
+        {
+            unitList.Remove(building);
+        }
     }
 }

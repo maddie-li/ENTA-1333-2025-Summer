@@ -13,7 +13,7 @@ public class Attacker : MonoBehaviour
         c = _combatantType;
     }
 
-    public bool TargetInRange(Combatant target, float range)
+    public bool TargetInRange(Unit target, float range)
     {
         if (target == null || c == null)
         {
@@ -25,7 +25,7 @@ public class Attacker : MonoBehaviour
         return distance <= range;
     }
 
-    public void Attack(Combatant target)
+    public void Attack(Unit target)
     {
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 

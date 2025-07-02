@@ -4,6 +4,7 @@ using RTS_1333;
 using System.Collections;
 using static UnityEngine.GraphicsBuffer;
 using NUnit.Framework;
+using UnityEngine.UIElements;
 
 public class Combatant : Unit, ISelectableObject
 {
@@ -43,10 +44,6 @@ public class Combatant : Unit, ISelectableObject
             stateRoutine = StartCoroutine(StateMachine());
         }
 
-    }
-
-    private void Update()
-    {
     }
 
     public void Initialize(Pathfinder _pathfinder)
@@ -106,7 +103,7 @@ public class Combatant : Unit, ISelectableObject
 
         while (currentState == CombatantState.Idle)
         {
-            Combatant target = GetClosestEnemy();
+            Unit target = GetClosestTarget();
 
             if (target != null && atk.TargetInRange(target, sensingRange))
             {
@@ -126,7 +123,7 @@ public class Combatant : Unit, ISelectableObject
 
         while (currentState == CombatantState.Chasing)
         {
-            Combatant target = GetClosestEnemy();
+            Unit target = GetClosestTarget();
 
             if (target == null)
             {
@@ -158,7 +155,7 @@ public class Combatant : Unit, ISelectableObject
 
         while (currentState == CombatantState.Attacking)
         {
-            Combatant target = GetClosestEnemy();
+            Unit target = GetClosestTarget();
 
             if (target == null)
             {
@@ -182,15 +179,6 @@ public class Combatant : Unit, ISelectableObject
     public void SetTarget(GridNode targetNode)
     {
         movement.SetTarget(targetNode);
-    }
-
-    // DAMAGE ---------------------------------------------------------------
-    public void TakeDamage(int _dmg)
-    {
-
-        dmg.TakeDamage(_dmg);
-
-
     }
 
     // ENEMY MANAGEMENT ---------------------------------------------------------------
@@ -226,6 +214,64 @@ public class Combatant : Unit, ISelectableObject
         }
 
             
+    }
+
+    private Building GetClosestEnemyBuilding()
+    {
+        Building closestBuilding = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 myPos = transform.position;
+
+        foreach (Building building in GetEnemyBuildings())
+        {
+            float distance = Vector3.Distance(myPos, building.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestBuilding = building;
+            }
+        }
+
+        return closestBuilding;
+    }
+
+    private Unit GetClosestTarget()
+    {
+        Vector3 myPosition = transform.position;
+
+        Building closestBuilding = GetClosestEnemyBuilding();
+        Combatant closestEnemy = GetClosestEnemy();
+
+        float buildingDistance = closestBuilding != null
+            ? Vector3.Distance(myPosition, closestBuilding.transform.position)
+            : float.MaxValue;
+
+        float enemyDistance = closestEnemy != null
+            ? Vector3.Distance(myPosition, closestEnemy.transform.position)
+            : float.MaxValue;
+
+        if (buildingDistance < enemyDistance && closestBuilding != null)
+            return closestBuilding;
+
+        if (closestEnemy != null)
+            return closestEnemy;
+
+        return null;
+    }
+
+
+    private List<Building> GetEnemyBuildings()
+    {
+        if (army == Army.Enemy)
+        {
+            return BuildingManager.Instance.buildingsByArmy[Army.Player];
+        }
+        else
+        {
+            return BuildingManager.Instance.buildingsByArmy[Army.Enemy];
+        }
+
+
     }
 
     // VISUALISATION ---------------------------------------------------------------
