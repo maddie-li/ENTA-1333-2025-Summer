@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 1
   length: 1
-  maxHP: 1
+  maxHP: 5
   unitPrefab: {fileID: 0}
   army: 1
   moveSpeed: 3

@@ -1,3 +1,4 @@
+using RTS_1333;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour
@@ -38,7 +39,8 @@ public class Damageable : MonoBehaviour
     protected virtual void Die()
     {
         // uhoh youre died
-        gameObject.SetActive(false);
+        UnitManager.Instance.UnregisterUnit(this.gameObject.GetComponent<Combatant>());
+        Destroy(gameObject);
     }
 
     private void UpdateHealthBar()

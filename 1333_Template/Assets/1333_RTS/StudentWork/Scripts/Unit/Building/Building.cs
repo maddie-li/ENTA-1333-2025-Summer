@@ -18,7 +18,7 @@ public class Building : Unit
     private void Awake()
     {
         Spawner = GetComponent<SpawnFromBuilding>();
-        
+        InitDamage();
     }
 
     public void SetupMat(Material valid, Material invalid)

@@ -30,7 +30,7 @@ public class Attacker : MonoBehaviour
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
         Debug.Log($"{name} attacks {target.name} for {c.Damage} damage.");
-        //target.TakeDamage(combatantType.Damage); 
+        target.TakeDamage(c.Damage); 
 
         lastAttackTime = Time.time;
     }

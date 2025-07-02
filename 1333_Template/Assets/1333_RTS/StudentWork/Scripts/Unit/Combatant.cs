@@ -33,6 +33,8 @@ public class Combatant : Unit, ISelectableObject
     {
         movement = GetComponent<MovementController>();
         atk = GetComponent<Attacker>();
+
+        InitDamage();
     }
     private void Start()
     {
@@ -180,6 +182,15 @@ public class Combatant : Unit, ISelectableObject
     public void SetTarget(GridNode targetNode)
     {
         movement.SetTarget(targetNode);
+    }
+
+    // DAMAGE ---------------------------------------------------------------
+    public void TakeDamage(int _dmg)
+    {
+
+        dmg.TakeDamage(_dmg);
+
+
     }
 
     // ENEMY MANAGEMENT ---------------------------------------------------------------

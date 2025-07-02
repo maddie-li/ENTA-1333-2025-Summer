@@ -7,7 +7,7 @@ namespace RTS_1333
         [Header("Unit")]
         [SerializeField] public UnitType unitType;
         [SerializeField] public string Name;
-        private Damageable dmg;
+        protected Damageable dmg;
         public Vector3 WorldPosition { get; private set; }
         public Vector2Int GridPosition { get; private set; }
         public GridNode CurrentNode { get; protected set; }
@@ -23,26 +23,34 @@ namespace RTS_1333
 
         public virtual Army army => unitType.Army;
 
-        private void Awake()
-        {
-            dmg = GetComponent<Damageable>();
-
-            if (dmg != null)
-                dmg.Initialize(unitType.MaxHP);
-        }
-
         public void Initialize(GridNode node)
         {
             Name = gameObject.name;
             GridPosition = node.GridPosition;
             WorldPosition = node.WorldPosition;
             CurrentNode = node;
+            
         }
+        protected void InitDamage()
+        {
+            if (TryGetComponent<Damageable>(out dmg))
+            {
+                dmg.Initialize(unitType.MaxHP);
+                Debug.Log($"{gameObject.name} DOES SUCCESSFULLY have a Damageable component.");
+            }
+            else
+            {
+                Debug.LogWarning($"{gameObject.name} does not have a Damageable component.");
+            }
+        }
+
         public bool IsFootprintOccupied()
         {
             if (CurrentNode == null) return false;
             return GridManager.Instance.IsFootprintOccupied(CurrentNode, Width, Length);
         }
+
+
 
         public virtual void SetNodePos(GridNode newNode)
         {
