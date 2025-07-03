@@ -22,6 +22,7 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        ParticleManager.Instance.PlayParticle(ParticleType.Blood, transform.position);
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         UpdateHealthBar();

@@ -53,7 +53,7 @@ public class ParticleManager : MonoBehaviour
 
     private IEnumerator EndPlay(ParticleInstance particles)
     {
-        // wait for some time
+        // wait for some time... should probably also have something for if it loops like on fire
         yield return new WaitForSeconds(3f);
 
         particlePool.Release(particles);
