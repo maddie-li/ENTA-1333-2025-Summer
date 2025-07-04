@@ -36,6 +36,7 @@ public class Damageable : MonoBehaviour
         {
             Debug.Log("Animate take damage");
             animator.SetTrigger("hasBeenDamaged");
+            AudioManager.Instance.PlaySFX();
         }
 
 
@@ -66,11 +67,14 @@ public class Damageable : MonoBehaviour
 
         if (TryGetComponent<Combatant>(out Combatant combatant))
         {
+            Debug.Log("Deregistering combatant");
             UnitManager.Instance.UnregisterUnit(combatant);
+
         }
 
         if (TryGetComponent<Building>(out Building building))
         {
+            Debug.Log("Deregistering building");
             BuildingManager.Instance.UnregisterUnit(building);
         }
         Destroy(gameObject, 5f);

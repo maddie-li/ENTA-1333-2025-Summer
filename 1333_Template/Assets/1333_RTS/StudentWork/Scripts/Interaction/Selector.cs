@@ -17,7 +17,6 @@ public class Selector : MonoBehaviour
     private Vector3 lastClickPosition;
 
     [SerializeField] private float minDragSize = 3f;
-
     public void Initialize()
     {
         interactActions = new InputSystem_Actions();
@@ -86,6 +85,8 @@ public class Selector : MonoBehaviour
 
     private void SingleClickSelect(Vector2 screenPos)
     {
+        ClearSelection();
+
         if (cam == null) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos);
@@ -114,13 +115,18 @@ public class Selector : MonoBehaviour
 
         foreach (Unit unit in UnitManager.Instance.allUnits)
         {
-            Vector3 screenPoint = cam.WorldToScreenPoint(unit.transform.position);
-            if (screenPoint.z < 0) continue;
+            if(unit != null)
+            {
+                Vector3 screenPoint = cam.WorldToScreenPoint(unit.transform.position);
+                if (screenPoint.z < 0) continue;
 
-            Vector2 guiPoint = new(screenPoint.x, Screen.height - screenPoint.y);
-            if (rect.Contains(guiPoint))
-                AddToSelection(unit);
+                Vector2 guiPoint = new(screenPoint.x, Screen.height - screenPoint.y);
+                if (rect.Contains(guiPoint))
+                    AddToSelection(unit);
+            }
+            
         }
+
     }
 
     //SELECTION
@@ -140,14 +146,20 @@ public class Selector : MonoBehaviour
     {
         foreach (Unit unit in selectedUnits)
         {
-            unit.GetComponent<Combatant>().SetSelected(false);
+            if (unit != null)
+            {
+                unit.GetComponent<Combatant>().SetSelected(false);
+            }
         }
 
         // change colors
         selectedUnits.Clear();
         Debug.Log($"Cleared selection");
+    }
 
-        
+    public bool UnitInSelection(Unit unitToCheck)
+    {
+        return selectedUnits.Contains(unitToCheck);
     }
 
     // COMMAND
@@ -174,9 +186,13 @@ public class Selector : MonoBehaviour
 
             foreach (Unit unit in selectedUnits)
             {
-                unit.GetComponent<Combatant>().SetSelected(false);
-                if (unit is Combatant instance)
-                    instance.SetTarget(node);
+                if (unit != null)
+                {
+                    unit.GetComponent<Combatant>().SetSelected(false);
+                    if (unit is Combatant instance)
+                        instance.SetTarget(node);
+                }
+                
             }
         }
     }
