@@ -35,13 +35,18 @@ namespace RTS_1333
         {
             if (TryGetComponent<Damageable>(out dmg))
             {
-                dmg.Initialize(unitType.MaxHP);
-                //Debug.Log($"{gameObject.name} DOES SUCCESSFULLY have a Damageable component.");
+
+                if (TryGetComponent<Animator>(out Animator animator))
+                {
+                    dmg.Initialize(unitType.MaxHP, animator);
+                }
+                else
+                {
+                    dmg.Initialize(unitType.MaxHP);
+                }
+                    
             }
-            else
-            {
-                //Debug.LogWarning($"{gameObject.name} does not have a Damageable component.");
-            }
+            
         }
 
         public void TakeDamage(int _dmg)

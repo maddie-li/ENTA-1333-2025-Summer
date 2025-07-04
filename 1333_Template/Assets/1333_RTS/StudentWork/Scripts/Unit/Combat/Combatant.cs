@@ -12,6 +12,7 @@ public class Combatant : Unit, ISelectableObject
 
     //[Header("References")]
     private MovementController movement;
+    private Animator animator;
     private Attacker atk;
 
     //[Header("Visuals")]
@@ -33,16 +34,19 @@ public class Combatant : Unit, ISelectableObject
     private void Awake()
     {
         movement = GetComponent<MovementController>();
+        animator = GetComponentInChildren<Animator>();
         atk = GetComponent<Attacker>();
 
         InitDamage();
     }
     private void Start()
     {
-        if(this.army == Army.Player)
+        stateRoutine = StartCoroutine(StateMachine());
+
+        /*if (this.army == Army.Player)
         {
             stateRoutine = StartCoroutine(StateMachine());
-        }
+        }*/
 
     }
 
@@ -98,6 +102,8 @@ public class Combatant : Unit, ISelectableObject
 
     private IEnumerator IdleBehavior()
     {
+        UpdateAnimator();
+
         Debug.LogWarning($"{name} entering Idle");
         // every 1 second check for enemy
 
@@ -118,6 +124,8 @@ public class Combatant : Unit, ISelectableObject
 
     private IEnumerator ChaseBehaviour()
     {
+        UpdateAnimator();
+
         Debug.LogWarning($"{name} entering Chase");
         // every 0.5 second try to go to target
 
@@ -150,6 +158,8 @@ public class Combatant : Unit, ISelectableObject
 
     private IEnumerator AttackBehavior()
     {
+        UpdateAnimator();
+
         Debug.LogWarning($"{name} entering Attack");
         // every 0.5 second do attack
 
@@ -295,6 +305,28 @@ public class Combatant : Unit, ISelectableObject
         {
             if (rend.material != null)
                 rend.material = mat;
+        }
+    }
+
+    private void UpdateAnimator()
+    {
+        //Debug.Log($"Updating animator {animator.name}");
+
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isMoving", false); 
+        animator.SetBool("isAttacking", false);
+
+        switch (currentState)
+        {
+            case CombatantState.Idle:
+                animator.SetBool("isIdle", true);
+                break;
+            case CombatantState.Chasing:
+                animator.SetBool("isMoving", true);
+                break;
+            case CombatantState.Attacking:
+                animator.SetBool("isAttacking", true);
+                break;
         }
     }
 }

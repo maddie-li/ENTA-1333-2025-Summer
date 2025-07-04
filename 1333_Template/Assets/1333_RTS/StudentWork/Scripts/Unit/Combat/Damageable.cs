@@ -3,18 +3,26 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
+    [SerializeField] private HealthBar healthBar;
+    private Animator animator;
+
     private int maxHP;
     private int currentHP;
-
-    [SerializeField] private HealthBar healthBar;
 
     public int CurrentHP => currentHP;
     public int MaxHP => maxHP;
 
-    public void Initialize(int maxHealth)
+    public void Initialize(int _maxHP, Animator _animator)
+    {
+        animator = _animator;
+        Initialize(_maxHP);
+    }
+
+    public void Initialize(int _maxHP)
     {
 
-        maxHP = maxHealth;
+        maxHP = _maxHP;
+
         currentHP = maxHP;
         if (healthBar != null)
             healthBar.SetHealth(currentHP, maxHP);
@@ -22,7 +30,15 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // visuals
         ParticleManager.Instance.PlayParticle(ParticleType.Blood, transform.position);
+        if (animator != null)
+        {
+            Debug.Log("Animate take damage");
+            animator.SetTrigger("hasBeenDamaged");
+        }
+
+
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         UpdateHealthBar();
@@ -40,6 +56,12 @@ public class Damageable : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (animator != null)
+        {
+            Debug.Log("Animate die");
+            animator.SetTrigger("hasDied");
+        }
+
         // uhoh youre died
 
         if (TryGetComponent<Combatant>(out Combatant combatant))
@@ -51,7 +73,7 @@ public class Damageable : MonoBehaviour
         {
             BuildingManager.Instance.UnregisterUnit(building);
         }
-        Destroy(gameObject);
+        Destroy(gameObject, 5f);
     }
 
     private void UpdateHealthBar()
