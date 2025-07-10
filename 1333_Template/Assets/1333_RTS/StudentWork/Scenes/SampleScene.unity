@@ -403,6 +403,17 @@ MonoBehaviour:
   sfxSource: {fileID: 96510060}
   sfxTest: {fileID: 8300000, guid: 1a8e643c0d4a8b3459de8b3300c36131, type: 3}
   musicTest: {fileID: 8300000, guid: 33d4fc63542388e42a9a45edc4ac863c, type: 3}
+  sfxClips:
+  - {fileID: 8300000, guid: 1a8e643c0d4a8b3459de8b3300c36131, type: 3}
+  - {fileID: 8300000, guid: 5fca0fd36e385c748ab49dc22b5dd401, type: 3}
+  - {fileID: 8300000, guid: e7e48012c19a30f4ea7bd0431ae3f6ae, type: 3}
+  - {fileID: 8300000, guid: 74c04d4f76d74e844bc97095c9d97f2c, type: 3}
+  - {fileID: 8300000, guid: 16be4898d5b53534ba02a6a26ced0fef, type: 3}
+  - {fileID: 8300000, guid: d021d1ee21dc9bc4f9e7da6fb8ac2821, type: 3}
+  - {fileID: 8300000, guid: 1d8ef53ac64e89646b37f01f3bf46d41, type: 3}
+  - {fileID: 8300000, guid: de43fc7727b45094f99caf83d9422b30, type: 3}
+  - {fileID: 8300000, guid: cbfdb349d48e39b48a71e474aeeb04c4, type: 3}
+  - {fileID: 8300000, guid: 43c89200f676a76418e2f913c2340650, type: 3}
 --- !u!1 &140795647
 GameObject:
   m_ObjectHideFlags: 0

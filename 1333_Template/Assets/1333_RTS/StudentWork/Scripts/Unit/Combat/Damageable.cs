@@ -36,7 +36,7 @@ public class Damageable : MonoBehaviour
         {
             Debug.Log("Animate take damage");
             animator.SetTrigger("hasBeenDamaged");
-            AudioManager.Instance.PlaySFX();
+            AudioManager.Instance.PlaySFX(SFX.TakeDamage);
         }
 
 
@@ -50,6 +50,7 @@ public class Damageable : MonoBehaviour
 
     public void Heal(int amount)
     {
+        AudioManager.Instance.PlaySFX(SFX.Heal);
         currentHP += amount;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         UpdateHealthBar();
@@ -59,6 +60,7 @@ public class Damageable : MonoBehaviour
     {
         if (animator != null)
         {
+            AudioManager.Instance.PlaySFX(SFX.Die);
             Debug.Log("Animate die");
             animator.SetTrigger("hasDied");
         }

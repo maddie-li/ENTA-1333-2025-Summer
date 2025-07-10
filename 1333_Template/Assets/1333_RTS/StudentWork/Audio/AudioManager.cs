@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -12,15 +13,7 @@ public class AudioManager : MonoBehaviour
     [Header("SFX")] public AudioClip sfxTest;
     [Header("Music")] public AudioClip musicTest;
 
-    public enum SfxTracks
-    {
-        Yippee,
-        Valid,
-        Invalid,
-        TakeDamage,
-        Die,
-        Destroy
-    }
+    public AudioClip[] sfxClips;
 
     private void Awake()
     {
@@ -44,11 +37,13 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void PlaySFX()
+    public void PlaySFX(SFX type)
     {
-
-        sfxSource.clip = sfxTest;
-        sfxSource.Play(); 
+        int index = (int)type;
+        if (index >= 0 && index < sfxClips.Length)
+        {
+            sfxSource.PlayOneShot(sfxClips[index]);
+        }
     }
 
     public void StopMusic() => musicSource.Stop();

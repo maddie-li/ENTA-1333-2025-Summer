@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RTS_1333;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Attacker : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class Attacker : MonoBehaviour
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
         Debug.Log($"{name} attacks {target.name} for {c.Damage} damage.");
+        AudioManager.Instance.PlaySFX(SFX.DealDamage);
         target.TakeDamage(c.Damage); 
 
         lastAttackTime = Time.time;

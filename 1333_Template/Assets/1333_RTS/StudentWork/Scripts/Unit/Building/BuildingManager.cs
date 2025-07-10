@@ -55,6 +55,7 @@ public class BuildingManager : MonoBehaviour
 
     public void NewGhost(BuildingType typeToBuild)
     {
+        AudioManager.Instance.PlaySFX(SFX.UISelect);
         if (currentGhost != null)
         {
             Destroy(currentGhost.gameObject);
@@ -90,12 +91,18 @@ public class BuildingManager : MonoBehaviour
         // BUILD
         if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
         {
+            AudioManager.Instance.PlaySFX(SFX.Valid);
             Building();
+        }
+        else if (Mouse.current.leftButton.wasPressedThisFrame && !validPlacement)
+        {
+            AudioManager.Instance.PlaySFX(SFX.Invalid);
         }
 
         // CANCEL
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
+            AudioManager.Instance.PlaySFX(SFX.UIBack);
             Destroy(currentGhost.gameObject);
             currentGhost = null;
         }
