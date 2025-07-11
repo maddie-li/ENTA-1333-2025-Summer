@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 public class Combatant : Unit, ISelectableObject
 {
     public bool IsAttacking;
+    public bool IsDead;
 
     //[Header("References")]
     private MovementController movement;
@@ -23,7 +24,7 @@ public class Combatant : Unit, ISelectableObject
     //[Header("State Machine")]
     private enum CombatantState { Idle, Chasing, Attacking }
     private CombatantState currentState = CombatantState.Idle;
-    private Coroutine stateRoutine;
+    public Coroutine stateRoutine;
 
     private float sensingRange;
     private float attackRange;
@@ -81,7 +82,7 @@ public class Combatant : Unit, ISelectableObject
 
     private IEnumerator StateMachine()
     {
-        while (true)
+        while (!IsDead)
         {
             switch (currentState)
             {
@@ -98,6 +99,7 @@ public class Combatant : Unit, ISelectableObject
 
             yield return null;
         }
+
     }
 
     private IEnumerator IdleBehavior()
@@ -184,7 +186,11 @@ public class Combatant : Unit, ISelectableObject
             yield return new WaitForSeconds(0.5f);
         }
     }
-   
+    private IEnumerator DeadBehaviour()
+    {
+        yield break;
+    }
+
 
     public void SetTarget(GridNode targetNode)
     {
@@ -310,7 +316,7 @@ public class Combatant : Unit, ISelectableObject
 
     private void UpdateAnimator()
     {
-        //Debug.Log($"Updating animator {animator.name}");
+        Debug.Log($"Updating animator {animator.name}");
 
         animator.SetBool("isIdle", false);
         animator.SetBool("isMoving", false); 
@@ -328,5 +334,31 @@ public class Combatant : Unit, ISelectableObject
                 animator.SetBool("isAttacking", true);
                 break;
         }
+    }
+
+    public void Die()
+    {
+        if (IsDead) return;
+
+        //Debug.LogWarning($"{name} has died.");
+
+        IsDead = true;
+
+        StopAllCoroutines();
+
+        animator.SetBool("isIdle", false);
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isAttacking", false);
+        animator.SetBool("hasDied", true);
+
+        /*// stop other states
+        currentState = CombatantState.Dead;
+        UpdateAnimator();*/
+
+        // disable action components
+        if (movement != null) movement.enabled = false;
+        if (atk != null) atk.enabled = false; 
+        
+        Destroy(gameObject, 2f);
     }
 }

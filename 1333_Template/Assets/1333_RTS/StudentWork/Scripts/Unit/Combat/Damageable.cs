@@ -38,6 +38,8 @@ public class Damageable : MonoBehaviour
 
         if (TryGetComponent<Combatant>(out Combatant combatant))
         {
+            Debug.Log("Got damaged, stopping coroutine");
+            //combatant.StopCoroutine(combatant.stateRoutine);
             FXManager.Instance.DoFX(FXType.CombatantDamage);
         }
 
@@ -64,16 +66,13 @@ public class Damageable : MonoBehaviour
 
     protected virtual void Die()
     {
-        if (animator != null)
-        {
-            Debug.Log("Animate die");
-            animator.SetTrigger("hasDied");
-        }
 
         // uhoh youre died
 
         if (TryGetComponent<Combatant>(out Combatant combatant))
         {
+            combatant.Die();
+
             Debug.Log("Deregistering combatant");
             UnitManager.Instance.UnregisterUnit(combatant);
 
@@ -86,8 +85,8 @@ public class Damageable : MonoBehaviour
             BuildingManager.Instance.UnregisterUnit(building);
 
             FXManager.Instance.DoFX(FXType.BuildingDestroy);
+            Destroy(gameObject);
         }
-        Destroy(gameObject, 5f);
     }
 
     private void UpdateHealthBar()

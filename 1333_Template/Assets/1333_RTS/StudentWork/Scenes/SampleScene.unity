@@ -840,7 +840,7 @@ MonoBehaviour:
   - fxType: 6
     soundType: 1
     audioClip: {fileID: 0}
-    particlePrefab: {fileID: 6837061768053742933, guid: 7559315856428454fb908d6735d3c299, type: 3}
+    particlePrefab: {fileID: 871312489320899015, guid: b25416e82fbacc14b8ed06c87478937a, type: 3}
   - fxType: 7
     soundType: 1
     audioClip: {fileID: 8300000, guid: de43fc7727b45094f99caf83d9422b30, type: 3}
