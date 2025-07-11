@@ -80,5 +80,4 @@ MonoBehaviour:
   unitType: {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
   Name: Cheaper Town Wall
   isGhost: 0
-  ValidMat: {fileID: 2100000, guid: bbc22f91b62e1ec4badf6d4529c80d5f, type: 2}
-  InvalidMat: {fileID: 2100000, guid: 90a540cadc8354344bbecf919b549ba9, type: 2}
+  Spawner: {fileID: 0}

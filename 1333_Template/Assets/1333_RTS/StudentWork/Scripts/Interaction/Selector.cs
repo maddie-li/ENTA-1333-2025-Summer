@@ -132,6 +132,7 @@ public class Selector : MonoBehaviour
     //SELECTION
     private void AddToSelection(Unit unit)
     {
+
         if (unit.army != Army.Player) return;
 
         if (selectedUnits.Contains(unit)) return;
@@ -139,11 +140,16 @@ public class Selector : MonoBehaviour
         // add color
         selectedUnits.Add(unit);
 
+        FXManager.Instance.DoFX(FXType.Select);
         unit.GetComponent<Combatant>().SetSelected(true);
     }
 
     private void ClearSelection()
     {
+        if(selectedUnits.Count == 0) return;    
+
+        FXManager.Instance.DoFX(FXType.Cancel);
+
         foreach (Unit unit in selectedUnits)
         {
             if (unit != null)

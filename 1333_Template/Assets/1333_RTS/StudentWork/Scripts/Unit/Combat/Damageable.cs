@@ -30,15 +30,22 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        // visuals
-        ParticleManager.Instance.PlayParticle(ParticleType.Blood, transform.position);
         if (animator != null)
         {
             Debug.Log("Animate take damage");
             animator.SetTrigger("hasBeenDamaged");
-            AudioManager.Instance.PlaySFX(SFX.TakeDamage);
         }
 
+        if (TryGetComponent<Combatant>(out Combatant combatant))
+        {
+            FXManager.Instance.DoFX(FXType.CombatantDamage);
+        }
+
+        if (TryGetComponent<Building>(out Building building))
+        {
+
+            FXManager.Instance.DoFX(FXType.BuildingDamage);
+        }
 
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
@@ -50,7 +57,6 @@ public class Damageable : MonoBehaviour
 
     public void Heal(int amount)
     {
-        AudioManager.Instance.PlaySFX(SFX.Heal);
         currentHP += amount;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
         UpdateHealthBar();
@@ -60,7 +66,6 @@ public class Damageable : MonoBehaviour
     {
         if (animator != null)
         {
-            AudioManager.Instance.PlaySFX(SFX.Die);
             Debug.Log("Animate die");
             animator.SetTrigger("hasDied");
         }
@@ -72,12 +77,15 @@ public class Damageable : MonoBehaviour
             Debug.Log("Deregistering combatant");
             UnitManager.Instance.UnregisterUnit(combatant);
 
+            FXManager.Instance.DoFX(FXType.CombatantDie);
         }
 
         if (TryGetComponent<Building>(out Building building))
         {
             Debug.Log("Deregistering building");
             BuildingManager.Instance.UnregisterUnit(building);
+
+            FXManager.Instance.DoFX(FXType.BuildingDestroy);
         }
         Destroy(gameObject, 5f);
     }

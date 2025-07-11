@@ -33,6 +33,7 @@ public class SelectBuildingButton : MonoBehaviour
     public void OnClick()
     {
         Debug.Log($"Selected building {buildingType} via onclick");
+        FXManager.Instance.DoFX(FXType.Select);
         buildingManager.NewGhost(buildingType);
     }
 

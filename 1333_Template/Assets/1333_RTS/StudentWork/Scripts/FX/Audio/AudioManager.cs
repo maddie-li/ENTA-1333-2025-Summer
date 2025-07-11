@@ -4,16 +4,15 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance { get; private set; }
+    public static AudioManager Instance;
 
     [Header("Main Audio Source")]
     public AudioSource musicSource;
     public AudioSource sfxSource;
+    public AudioSource uiSource;
 
     [Header("SFX")] public AudioClip sfxTest;
     [Header("Music")] public AudioClip musicTest;
-
-    public AudioClip[] sfxClips;
 
     private void Awake()
     {
@@ -36,14 +35,13 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = musicTest;
         musicSource.Play();
     }
-
-    public void PlaySFX(SFX type)
+    public void PlaySFX(AudioClip clip)
     {
-        int index = (int)type;
-        if (index >= 0 && index < sfxClips.Length)
-        {
-            sfxSource.PlayOneShot(sfxClips[index]);
-        }
+        sfxSource.PlayOneShot(clip);
+    }
+    public void PlayUISFX(AudioClip clip)
+    {
+        uiSource.PlayOneShot(clip);
     }
 
     public void StopMusic() => musicSource.Stop();

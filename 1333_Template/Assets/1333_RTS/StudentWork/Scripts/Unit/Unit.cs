@@ -51,7 +51,19 @@ namespace RTS_1333
 
         public void TakeDamage(int _dmg)
         {
+            if (dmg == null)  return;
+
             dmg.TakeDamage(_dmg);
+
+            if(this.GetType() == typeof(Combatant))
+            {
+                FXManager.Instance.DoFX(FXType.CombatantDamage, this.transform.position);
+            }
+            else if (this.GetType() == typeof(Building))
+            {
+                FXManager.Instance.DoFX(FXType.BuildingDamage, this.transform.position);
+            }
+
 
         }
 

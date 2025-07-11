@@ -31,8 +31,8 @@ public class Attacker : MonoBehaviour
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
         Debug.Log($"{name} attacks {target.name} for {c.Damage} damage.");
-        AudioManager.Instance.PlaySFX(SFX.DealDamage);
-        target.TakeDamage(c.Damage); 
+        FXManager.Instance.DoFX(FXType.CombatantAttack);
+        target?.TakeDamage(c.Damage); 
 
         lastAttackTime = Time.time;
     }

@@ -6,7 +6,7 @@ using static UnityEngine.ParticleSystem;
 
 public class ParticleManager : MonoBehaviour
 {
-    public static ParticleManager Instance { get; private set; }
+    public static ParticleManager Instance;
 
     [Header("Particle Pool")]
     public ParticleInstance particleInstancePrefab;
@@ -33,16 +33,11 @@ public class ParticleManager : MonoBehaviour
             maxSize: 50
         );
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-            PlayParticle(ParticleType.Explosion, this.transform.position);
-    }
 
-    public void PlayParticle(ParticleType type, Vector3 position)
+    public void PlayParticle(GameObject prefab, Vector3 position)
     {
         ParticleInstance particles = particlePool.Get();
-        particles.Play(type, position);
+        particles.Play(prefab, position);
         StartCoroutine(EndPlay(particles));
     }
     public void StopParticle(ParticleInstance particles)

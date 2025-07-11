@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using RTS_1333;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class BuildingManager : MonoBehaviour
 {
-    public static BuildingManager Instance { get; private set; }
-
+    public static BuildingManager Instance;
 
     public Building currentGhost;
 
@@ -55,7 +56,6 @@ public class BuildingManager : MonoBehaviour
 
     public void NewGhost(BuildingType typeToBuild)
     {
-        AudioManager.Instance.PlaySFX(SFX.UISelect);
         if (currentGhost != null)
         {
             Destroy(currentGhost.gameObject);
@@ -64,7 +64,7 @@ public class BuildingManager : MonoBehaviour
         Debug.Log(buildingTypes[0]);
         Debug.Log(typeToBuild.UnitPrefab);
         GameObject building = Instantiate(typeToBuild.UnitPrefab, this.transform);
-        
+
         currentGhost = building.GetComponent<Building>();
         if (currentGhost != null)
         {
@@ -80,7 +80,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Placing()
     {
-        var node = GridManager.Instance.GetNodeFromMousePosition();
+        GridNode node = GridManager.Instance.GetNodeFromMousePosition();
         if (node == null) return;
 
         currentGhost.SetNodePos(node);
@@ -91,18 +91,19 @@ public class BuildingManager : MonoBehaviour
         // BUILD
         if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
         {
-            AudioManager.Instance.PlaySFX(SFX.Valid);
+            FXManager.Instance.DoFX(FXType.BuildBuilding, new Vector3(node.WorldPosition.x, node.WorldPosition.y, node.WorldPosition.z));
             Building();
         }
         else if (Mouse.current.leftButton.wasPressedThisFrame && !validPlacement)
         {
-            AudioManager.Instance.PlaySFX(SFX.Invalid);
+
+            FXManager.Instance.DoFX(FXType.InvalidBuilding);
         }
 
         // CANCEL
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
-            AudioManager.Instance.PlaySFX(SFX.UIBack);
+            FXManager.Instance.DoFX(FXType.Cancel);
             Destroy(currentGhost.gameObject);
             currentGhost = null;
         }
@@ -143,4 +144,5 @@ public class BuildingManager : MonoBehaviour
             unitList.Remove(building);
         }
     }
+
 }
