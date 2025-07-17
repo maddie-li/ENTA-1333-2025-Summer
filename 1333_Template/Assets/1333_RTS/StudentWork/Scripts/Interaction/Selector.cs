@@ -8,6 +8,8 @@ using static InputSystem_Actions;
 
 public class Selector : MonoBehaviour
 {
+    public static Selector Instance { get; set; }
+
     public Camera cam; 
     private SelectorBox selectorBox;
 
@@ -17,8 +19,16 @@ public class Selector : MonoBehaviour
     private Vector3 lastClickPosition;
 
     [SerializeField] private float minDragSize = 3f;
-    public void Initialize()
+
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         interactActions = new InputSystem_Actions();
         selectorBox = GetComponent<SelectorBox>();
         selectorBox.minDragSize = minDragSize;

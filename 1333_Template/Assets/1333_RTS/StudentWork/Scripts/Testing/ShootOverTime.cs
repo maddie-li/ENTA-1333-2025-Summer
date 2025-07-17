@@ -24,7 +24,7 @@ public class ShootOverTime : MonoBehaviour
             createFunc: CreateProjectile,
             actionOnGet: OnGet,
             actionOnRelease: OnRelease,
-            actionOnDestroy: OnDestroy,
+            //actionOnDestroy: OnDestroy,
             collectionCheck: true,
             defaultCapacity: 10,
             maxSize: 100
@@ -59,11 +59,11 @@ public class ShootOverTime : MonoBehaviour
         projectile.gameObject.SetActive(false);
     }
 
-    private void OnDestroy(ArcingProjectile projectile)
+    /*private void OnDestroy(ArcingProjectile projectile)
     {
         Destroy(projectile.gameObject);
     }
-
+*/
     public ArcingProjectile CreateProjectile()
 	{
         var proj = Instantiate(ProjectilePrefab);

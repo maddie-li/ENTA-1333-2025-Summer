@@ -9,7 +9,7 @@ namespace RTS_1333
 {
     public class GridManager : MonoBehaviour
     {
-        [SerializeField] private Camera cam;
+        private Camera cam;
 
         [SerializeField] private GridSettings gridSettings;
         [SerializeField] private TerrainType defaultTerrainType;
@@ -33,6 +33,8 @@ namespace RTS_1333
                 return;
             }
             Instance = this;
+
+            cam = CameraManager.Instance.MainCam;
         }
 
         public bool IsInitialized { get; private set; } = false;

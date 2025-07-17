@@ -12,19 +12,17 @@ public class SelectBuildingButton : MonoBehaviour
     [SerializeField] private Button button;
 
     private BuildingType buildingType;
-    private BuildingManager buildingManager;
 
     public void Setup(BuildingType _buildingType, BuildingManager _buildingManager)
     {
         buildingType = _buildingType;
-        buildingManager = _buildingManager;
 
         buttonText.text = buildingType.name;
 
         button.onClick.AddListener(() =>
         {
             Debug.Log($"Selected building {buildingType} add listener");
-            buildingManager.NewGhost(buildingType);
+            BuildingManager.Instance.NewGhost(buildingType);
         });
 
 
@@ -34,7 +32,7 @@ public class SelectBuildingButton : MonoBehaviour
     {
         Debug.Log($"Selected building {buildingType} via onclick");
         FXManager.Instance.DoFX(FXType.Select);
-        buildingManager.NewGhost(buildingType);
+        BuildingManager.Instance.NewGhost(buildingType);
     }
 
 }

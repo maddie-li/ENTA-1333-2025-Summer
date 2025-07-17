@@ -8,7 +8,7 @@ namespace RTS_1333
     {
         public static GameManager Instance { get; private set; }
 
-        [SerializeField] private Selector selector;
+        [SerializeField] private GameObject[] managerPrefabs;
 
         private void Awake()
         {
@@ -28,8 +28,13 @@ namespace RTS_1333
             FXManager.Instance.DoFX(FXType.Select);
             UIManager.Instance.SetUIScreen(UIManager.UIScreen.Game);
 
+            foreach (GameObject prefab in managerPrefabs)
+            {
+                GameObject manager = Instantiate(prefab);
+                manager.transform.SetParent(this.transform, false);
+            }
+
             GridManager.Instance.InitializeGrid();
-            selector.Initialize();
         }
 
         public void QuitGame()
