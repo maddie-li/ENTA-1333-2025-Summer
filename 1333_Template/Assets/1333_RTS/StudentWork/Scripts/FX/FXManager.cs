@@ -9,9 +9,17 @@ public class FXManager : MonoBehaviour
 
     private Dictionary<FXType, FXData> fxDict;
 
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         fxDict = new Dictionary<FXType, FXData>();
         foreach (FXData fx in fxTypes)
         {

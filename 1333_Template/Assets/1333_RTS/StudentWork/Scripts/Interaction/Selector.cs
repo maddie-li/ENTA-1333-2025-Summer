@@ -25,6 +25,8 @@ public class Selector : MonoBehaviour
     }
     private void OnEnable()
     {
+        if (interactActions == null) return;
+
         interactActions.UI.RightClick.performed += HandleRightClick;
         interactActions.UI.Enable();
     }
@@ -37,6 +39,8 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
+        if (interactActions == null) return;
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             HandleLeftClick();

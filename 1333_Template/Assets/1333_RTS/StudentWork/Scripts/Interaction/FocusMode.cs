@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static InputSystem_Actions;
 
 public class FocusMode : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class FocusMode : MonoBehaviour
 
     private void OnEnable()
     {
+        if (inputActions == null) return;
+
         inputActions.Enable();
         inputActions.UI.FocusMode.performed += OnFocusPerformed;
         inputActions.UI.FocusMode.canceled += OnFocusCanceled;

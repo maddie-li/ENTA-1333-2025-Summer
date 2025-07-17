@@ -21,7 +21,6 @@ public class ParticleManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); 
 
         particlePool = new ObjectPool<ParticleInstance>(
             createFunc: () => Instantiate(particleInstancePrefab, this.transform.position, Quaternion.identity, transform),

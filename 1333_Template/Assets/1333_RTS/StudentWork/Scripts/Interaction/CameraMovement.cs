@@ -62,6 +62,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
+        if (cameraActions == null) return;
+
         // input
         GetKeyboardMovement();
         CheckMouseAtScreenEdge();
@@ -75,6 +77,8 @@ public class CameraMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        if (cameraActions == null) return;
+
         zoomHeight = cameraTransform.localPosition.y;
         cameraTransform.LookAt(this.transform);
 
