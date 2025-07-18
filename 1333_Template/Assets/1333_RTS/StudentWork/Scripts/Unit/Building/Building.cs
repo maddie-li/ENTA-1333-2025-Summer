@@ -1,11 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using RTS_1333;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Building : Unit
 {
+    [Serializable]
+    public class BuildingData
+    {
+        public float x;
+        public float y;
+        public float z;
+    }
+
+
     private Renderer[] renderers;
     public bool isGhost = true;
 
@@ -14,6 +25,8 @@ public class Building : Unit
     private Material defaultMat;
 
     public SpawnFromBuilding Spawner;
+
+    [SerializeField] private List<BuildingData> data = new List<BuildingData>();  
 
     private void Awake()
     {
