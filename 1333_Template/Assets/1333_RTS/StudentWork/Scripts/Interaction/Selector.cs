@@ -32,6 +32,8 @@ public class Selector : MonoBehaviour
         interactActions = new InputSystem_Actions();
         selectorBox = GetComponent<SelectorBox>();
         selectorBox.minDragSize = minDragSize;
+
+        cam = Camera.main;
     }
     private void OnEnable()
     {
@@ -146,6 +148,7 @@ public class Selector : MonoBehaviour
     //SELECTION
     private void AddToSelection(Unit unit)
     {
+        //Debug.Log($"Attempt add {unit} to selection");
 
         if (unit.army != Army.Player) return;
 
@@ -185,6 +188,7 @@ public class Selector : MonoBehaviour
     // COMMAND
     private void CommandUnits(Vector2 screenPos)
     {
+
         if (cam == null) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos); 
@@ -211,6 +215,9 @@ public class Selector : MonoBehaviour
                     unit.GetComponent<Combatant>().SetSelected(false);
                     if (unit is Combatant instance)
                         instance.SetTarget(node);
+
+                    
+
                 }
                 
             }

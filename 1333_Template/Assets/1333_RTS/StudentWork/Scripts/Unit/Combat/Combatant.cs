@@ -5,6 +5,7 @@ using System.Collections;
 using static UnityEngine.GraphicsBuffer;
 using NUnit.Framework;
 using UnityEngine.UIElements;
+using UnityEditor.Experimental.GraphView;
 
 public class Combatant : Unit, ISelectableObject
 {
@@ -194,6 +195,7 @@ public class Combatant : Unit, ISelectableObject
 
     public void SetTarget(GridNode targetNode)
     {
+
         movement.SetTarget(targetNode);
     }
 

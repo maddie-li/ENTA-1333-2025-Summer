@@ -51,8 +51,6 @@ MonoBehaviour:
   - {fileID: 1526145079011505255, guid: 328fceab30c74d047851c32c7fa5999e, type: 3}
   - {fileID: 6364937788488144955, guid: a35b4e824bfee994caf7be3b1833ea63, type: 3}
   - {fileID: 4507390613880344539, guid: 589f8e49d07060f4691db2752d500826, type: 3}
-  - {fileID: 6433348210857009783, guid: 64410a190e8fe5742922251a7ed85a17, type: 3}
-  cameraManager: {fileID: 5857698334784412630, guid: 1da8beb71715faa4bab25ca45fb31766, type: 3}
 --- !u!114 &368433012744303496
 MonoBehaviour:
   m_ObjectHideFlags: 0

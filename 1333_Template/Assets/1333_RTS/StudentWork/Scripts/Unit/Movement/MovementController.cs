@@ -29,6 +29,10 @@ public class MovementController : MonoBehaviour
     {
         //Debug.Log($"Movement: Setting new target to {targetNode.Name}");
 
+        //Debug.Log($"Combatant: Commanding {unit.name} to node{targetNode.Name}");
+
+        Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {unit == null}");
+
         if (pathfinder == null || unit == null) return;
 
         
