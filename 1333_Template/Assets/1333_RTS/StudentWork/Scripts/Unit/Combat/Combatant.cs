@@ -182,6 +182,7 @@ public class Combatant : Unit, ISelectableObject
                 yield break;
             }
 
+            this.transform.LookAt(target.transform);
             atk.Attack(target);
 
             yield return new WaitForSeconds(0.5f);

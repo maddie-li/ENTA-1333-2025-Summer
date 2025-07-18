@@ -421,44 +421,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6334754607868961104, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+    - target: {fileID: 2460358554048774456, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6334754607868961104, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6334754607868961104, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6334754607868961104, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6786666834915761506, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7910367289019614115, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7910367289019614115, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7910367289019614115, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7910367289019614115, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6706328066712534903, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -116,7 +116,11 @@ public class MovementController : MonoBehaviour
 
             while (Vector3.Distance(transform.position, nextWaypoint) > 0.05f)
             {
-                transform.LookAt(nextWaypoint);
+                // Smooth rotation
+                Vector3 direction = (nextWaypoint - transform.position).normalized;
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 4f); 
+
                 transform.position = Vector3.MoveTowards(transform.position, nextWaypoint, moveSpeed * Time.deltaTime);
                 yield return null;
             }

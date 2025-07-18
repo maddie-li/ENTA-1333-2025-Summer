@@ -39,14 +39,14 @@ public class BuildingManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        /*if (Input.GetKeyDown(KeyCode.Alpha1))
             NewGhost(buildingTypes[0]);
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             NewGhost(buildingTypes[1]);
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            NewGhost(buildingTypes[2]);
+            NewGhost(buildingTypes[2]);*/
 
         if (currentGhost != null)
         {
@@ -91,7 +91,7 @@ public class BuildingManager : MonoBehaviour
         // BUILD
         if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
         {
-            FXManager.Instance.DoFX(FXType.BuildBuilding, new Vector3(node.WorldPosition.x, node.WorldPosition.y, node.WorldPosition.z));
+            FXManager.Instance.DoFX(FXType.BuildBuilding, GetFootprintCenter(currentGhost));
             Building();
         }
         else if (Mouse.current.leftButton.wasPressedThisFrame && !validPlacement)
@@ -143,6 +143,20 @@ public class BuildingManager : MonoBehaviour
         {
             unitList.Remove(building);
         }
+    }
+
+    public Vector3 GetFootprintCenter(Building building)
+    {
+        GridNode origin = building.CurrentNode;
+        float nodeSize = GridManager.Instance.GridSettings.NodeSize; 
+
+        Vector3 offset = new Vector3(
+            (building.Width * nodeSize) / 2f,
+            0f,
+            (building.Length * nodeSize) / 2f
+        );
+
+        return origin.WorldPosition + offset;
     }
 
 }

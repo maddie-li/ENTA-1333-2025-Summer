@@ -12,6 +12,8 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingBar;
 
+    [SerializeField] private float endFilLDuration = 1f;
+
 
     private void Awake()
     {
@@ -34,18 +36,35 @@ public class LoadingManager : MonoBehaviour
     IEnumerator SwitchToSceneAsync(int id)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(id);
+
         while (!asyncLoad.isDone)
         {
             loadingBar.value = asyncLoad.progress;
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(FakeLoadingBarFill());
         loadingScreen.SetActive(false);
 
         if(id == 1)
         {
             GameManager.Instance.SetupGame();
         }
+    }
+
+    IEnumerator FakeLoadingBarFill()
+    {
+        float duration = endFilLDuration;
+        float elapsed = 0f;
+        float startValue = loadingBar.value;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            loadingBar.value = Mathf.Lerp(startValue, 1f, elapsed / duration);
+            yield return null;
+        }
+
+        loadingBar.value = 1f;
     }
 }

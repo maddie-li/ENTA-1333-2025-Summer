@@ -5,12 +5,21 @@ using UnityEngine.SceneManagement;
 
 namespace RTS_1333
 {
+    public enum TimeState
+    {
+        Paused = 0,
+        Normal = 1,
+        Fast = 2,
+        SuperFast = 10
+    }
+
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private GameObject[] managerPrefabs;
-        //[SerializeField] private GameObject cameraManager;
+
+        private TimeState currentTimeState = TimeState.Normal;
 
         private void Awake()
         {
@@ -23,6 +32,32 @@ namespace RTS_1333
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+        }
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetTimeState(TimeState.Paused);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SetTimeState(TimeState.Normal);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                SetTimeState(TimeState.Fast);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                SetTimeState(TimeState.SuperFast);
+            }
+        }
+        private void SetTimeState(TimeState newState)
+        {
+            currentTimeState = newState;
+            Time.timeScale = (float)newState;
+
+            Debug.Log($"Time scale set to: {Time.timeScale}x");
         }
 
         public void SetupGame()

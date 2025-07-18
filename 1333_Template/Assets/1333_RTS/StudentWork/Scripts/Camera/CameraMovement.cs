@@ -138,15 +138,21 @@ public class CameraMovement : MonoBehaviour
     {
         if(targetPosition.sqrMagnitude > 0.1f)
         {
-            speed = Mathf.Lerp(speed, maxSpeed, Time.deltaTime * acceleration);
-            transform.position += targetPosition * speed * Time.deltaTime;
+            speed = Mathf.Lerp(speed, maxSpeed, Time.unscaledDeltaTime * acceleration);
+            transform.position += targetPosition * speed * Time.unscaledDeltaTime;
         }
         else
         {
-            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, Time.deltaTime * damping);
-            transform.position += horizontalVelocity * Time.deltaTime;
+            if((float.IsNaN(horizontalVelocity.x) || float.IsNaN(horizontalVelocity.y) || float.IsNaN(horizontalVelocity.z)))
+            {
+                horizontalVelocity = Vector3.zero;
+            }
+
+            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, Time.unscaledDeltaTime * damping);
+            transform.position += horizontalVelocity * Time.unscaledDeltaTime;
            
         }
+        //Debug.Log($"targetPosition: {targetPosition}, speed: {speed}, deltaTime: {Time.unscaledDeltaTime}, horizontalVelocity: {horizontalVelocity}");
 
         targetPosition = Vector3.zero;
 
