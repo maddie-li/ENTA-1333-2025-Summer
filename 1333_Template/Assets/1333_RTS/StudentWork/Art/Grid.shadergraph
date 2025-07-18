@@ -99,7 +99,7 @@
     "m_FragmentContext": {
         "m_Position": {
             "x": 287.2000427246094,
-            "y": 182.39999389648438
+            "y": 230.4000244140625
         },
         "m_Blocks": [
             {
@@ -112,7 +112,7 @@
     },
     "m_PreviewData": {
         "serializedMesh": {
-            "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
+            "m_SerializedMesh": "{\"mesh\":{\"fileID\":10210,\"guid\":\"0000000000000000e000000000000000\",\"type\":0}}",
             "m_Guid": ""
         },
         "preventRotation": false

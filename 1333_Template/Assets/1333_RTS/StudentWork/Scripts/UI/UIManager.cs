@@ -4,6 +4,7 @@ using System.Security;
 using RTS_1333;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -58,5 +59,11 @@ public class UIManager : MonoBehaviour
        
         GameManager.Instance.QuitGame();
     }
+
+    public void TimescaleChanged(Dropdown change)
+    {
+        Debug.Log($"Dropdown falue: {change}");
+        //GameManager.Instance.SetTimeState()
+    }  
 }
 

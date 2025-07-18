@@ -33,26 +33,7 @@ namespace RTS_1333
             DontDestroyOnLoad(gameObject);
 
         }
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SetTimeState(TimeState.Paused);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SetTimeState(TimeState.Normal);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SetTimeState(TimeState.Fast);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                SetTimeState(TimeState.SuperFast);
-            }
-        }
-        private void SetTimeState(TimeState newState)
+        public void SetTimeState(TimeState newState)
         {
             currentTimeState = newState;
             Time.timeScale = (float)newState;
