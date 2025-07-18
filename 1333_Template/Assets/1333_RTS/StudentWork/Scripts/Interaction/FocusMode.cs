@@ -33,6 +33,8 @@ public class FocusMode : MonoBehaviour
 
     private void OnDisable()
     {
+        if (inputActions == null) return;
+
         inputActions.UI.FocusMode.performed -= OnFocusPerformed;
         inputActions.UI.FocusMode.canceled -= OnFocusCanceled;
         inputActions.Disable();

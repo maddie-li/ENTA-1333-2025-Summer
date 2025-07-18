@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RTS_1333
 {
@@ -9,6 +10,7 @@ namespace RTS_1333
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private GameObject[] managerPrefabs;
+        //[SerializeField] private GameObject cameraManager;
 
         private void Awake()
         {
@@ -25,6 +27,10 @@ namespace RTS_1333
 
         public void SetupGame()
         {
+            Debug.Log("Setting up game");
+
+            //Instantiate(cameraManager);
+
             FXManager.Instance.DoFX(FXType.Select);
             UIManager.Instance.SetUIScreen(UIManager.UIScreen.Game);
 

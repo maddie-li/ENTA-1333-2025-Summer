@@ -18,7 +18,6 @@ public class FXManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         fxDict = new Dictionary<FXType, FXData>();
         foreach (FXData fx in fxTypes)

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using RTS_1333;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -24,7 +26,6 @@ public class UIManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); 
     }
 
     private void Start()
@@ -39,6 +40,8 @@ public class UIManager : MonoBehaviour
             s.SetActive(false);
         }
 
+        Debug.Log($"Setting active {screen}");
+
         UIScreens[(int)screen].SetActive(true);
 
         CurrentScreen = screen;
@@ -47,7 +50,7 @@ public class UIManager : MonoBehaviour
 
     public void StartClicked()
     {
-        GameManager.Instance.SetupGame();
+        LoadingManager.Instance.LoadNewScene(1);
     }
     
     public void QuitClicked()
