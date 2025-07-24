@@ -34,13 +34,14 @@ public class Building : Unit
         InitDamage();
     }
 
-    public void SetupMat(Material valid, Material invalid)
+    public void SetupMat(Material regular, Material valid, Material invalid)
     {
         renderers = GetComponentsInChildren<Renderer>();
-        defaultMat = GetComponentInChildren<Renderer>().material;
+        //defaultMat = GetComponentInChildren<Renderer>().material;
 
         invalidMat = invalid;
         validMat = valid;
+        defaultMat = regular;
     }
 
     public override void UpdateCurrentNode(GridNode newNode)

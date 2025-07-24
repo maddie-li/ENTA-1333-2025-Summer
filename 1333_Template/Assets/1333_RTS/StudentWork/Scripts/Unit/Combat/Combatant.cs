@@ -294,13 +294,22 @@ public class Combatant : Unit, ISelectableObject
     }
 
     // VISUALISATION ---------------------------------------------------------------
-    public void SetupMat(Material selected)
+    public void SetupMat(Material regular, Material selected)
     {
         //Debug.Log("Setting up materials");
         renderers = GetComponentsInChildren<Renderer>();
         //Debug.Log(renderers.Length);
-        defaultMat = GetComponentInChildren<Renderer>().material;
+        //defaultMat = GetComponentInChildren<Renderer>().material;
+        defaultMat = regular;
         selectedMat = selected;
+
+        if (renderers == null) Debug.Log("Renderers are null");
+
+        foreach (var rend in renderers)
+        {
+            if (rend.material != null)
+                rend.material = defaultMat;
+        }
     }
 
     public void SetSelected(bool selected)

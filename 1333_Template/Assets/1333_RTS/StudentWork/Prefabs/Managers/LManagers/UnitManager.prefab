@@ -94,6 +94,8 @@ MonoBehaviour:
   pathfinder: {fileID: 1434056027096467407}
   prefab: {fileID: 123088, guid: 1f6318dd9931245479ed25bd6845f47b, type: 3}
   selectedMat: {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
+  EnemyMat: {fileID: 2100000, guid: 09f07a789aff5fa4fb395a73e822bcb3, type: 2}
+  PlayerMat: {fileID: 2100000, guid: 551b6a7ed6b425f419693f9fa637e207, type: 2}
   nodePosition:
   - {x: 3, y: 3}
   - {x: 2, y: 1}

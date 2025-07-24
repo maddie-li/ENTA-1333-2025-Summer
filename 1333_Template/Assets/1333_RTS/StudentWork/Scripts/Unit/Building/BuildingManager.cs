@@ -19,6 +19,8 @@ public class BuildingManager : MonoBehaviour
 
     public Material ValidMat;
     public Material InvalidMat;
+    public Material EnemyMat;
+    public Material PlayerMat;
 
     public Dictionary<Army, List<Building>> buildingsByArmy = new();
 
@@ -72,7 +74,20 @@ public class BuildingManager : MonoBehaviour
             GridNode startNode = GridManager.Instance.GetNodeFromMousePosition();
             currentGhost.Initialize(startNode);
             currentGhost.SetNodePos(startNode);
-            currentGhost.SetupMat(ValidMat, InvalidMat);
+
+            Material defaultMat = null;
+
+            switch (currentGhost.army)
+            {
+                case Army.Player:
+                    defaultMat = PlayerMat;
+                    break;
+                case Army.Enemy:
+                    defaultMat = EnemyMat;
+                    break;
+            }
+
+            if(defaultMat != null) currentGhost.SetupMat(defaultMat, ValidMat, InvalidMat);
 
             currentGhost.Spawner?.StopSpawning();
         }

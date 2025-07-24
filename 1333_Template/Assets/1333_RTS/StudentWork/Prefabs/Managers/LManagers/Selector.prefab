@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   minDragSize: 3
-  rallyPointPrefab: {fileID: 3590365805496816298, guid: fa1e0d5c432502942898ea97001b8c03, type: 3}
+  rallyPointPrefab: {fileID: 5873845188993808981, guid: 84ed7ae98a812ac41aa380e1282ebd25, type: 3}
 --- !u!114 &464546763396898083
 MonoBehaviour:
   m_ObjectHideFlags: 0

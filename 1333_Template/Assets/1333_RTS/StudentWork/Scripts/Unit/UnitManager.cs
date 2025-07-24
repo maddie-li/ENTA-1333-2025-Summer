@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 using Mono.Cecil;
 using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace RTS_1333
@@ -11,6 +12,8 @@ namespace RTS_1333
         [SerializeField] private GameObject prefab;
         [Header("Visuals")]
         [SerializeField] private Material selectedMat;
+        public Material EnemyMat;
+        public Material PlayerMat;
         [Header("Testing")]
         [SerializeField] private Vector2Int[] nodePosition;
 
@@ -62,7 +65,21 @@ namespace RTS_1333
                 RegisterUnit(unit);
                 unit.Initialize(pathfinder);
                 unit.SetNodePos(node);
-                unit.SetupMat(selectedMat);
+
+                Material defaultMat = null;
+
+                switch (unit.army)
+                {
+                    case Army.Player:
+                        defaultMat = PlayerMat;
+                        break;
+                    case Army.Enemy:
+                        defaultMat = EnemyMat;
+                        break;
+                }
+
+                if (defaultMat != null) unit.SetupMat(defaultMat, selectedMat);
+
                 Debug.Log("Initialised new unit");
 
                 return unit;
