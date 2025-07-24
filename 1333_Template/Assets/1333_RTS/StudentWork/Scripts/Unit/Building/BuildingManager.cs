@@ -100,12 +100,13 @@ public class BuildingManager : MonoBehaviour
 
         currentGhost.SetNodePos(node);
 
-        bool validPlacement = !GridManager.Instance.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length);
+        bool validPlacement = !GridManager.Instance.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length) && CurrencyManager.Instance.CanAfford(currentGhost);
         currentGhost.UpdateColor(validPlacement);
 
         // BUILD
         if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
         {
+            CurrencyManager.Instance.TryBuyUnit(currentGhost);
             FXManager.Instance.DoFX(FXType.BuildBuilding, GetFootprintCenter(currentGhost));
             Building();
         }

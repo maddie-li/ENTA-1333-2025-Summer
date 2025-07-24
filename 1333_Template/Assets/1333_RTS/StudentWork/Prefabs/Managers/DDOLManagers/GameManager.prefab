@@ -51,6 +51,7 @@ MonoBehaviour:
   - {fileID: 1526145079011505255, guid: 328fceab30c74d047851c32c7fa5999e, type: 3}
   - {fileID: 6364937788488144955, guid: a35b4e824bfee994caf7be3b1833ea63, type: 3}
   - {fileID: 4507390613880344539, guid: 589f8e49d07060f4691db2752d500826, type: 3}
+  - {fileID: 457140550427642576, guid: f9afd5f3c8c38d54fb43b62f18a92493, type: 3}
 --- !u!114 &368433012744303496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +72,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 682498464351214359}
     m_Modifications:
+    - target: {fileID: 2342851298830391412, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342851298830391412, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2975962586326010634, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -113,6 +122,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5910900231161737126, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933660740130123099, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933660740130123099, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900227636921655644, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7773107123399488052, guid: 5c97366c701e5134abb228dc19faf4b6, type: 3}

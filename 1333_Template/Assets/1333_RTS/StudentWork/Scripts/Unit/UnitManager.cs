@@ -36,8 +36,8 @@ namespace RTS_1333
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-                TestSpawn();
+           /* if (Input.GetKeyDown(KeyCode.E))
+                TestSpawn();*/
         }
 
         private void TestSpawn()

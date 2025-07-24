@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 2
   length: 2
+  cost: 10
   maxHP: 5
   unitPrefab: {fileID: 632733733720884266, guid: 844d1aa4851f0cf4e8410748318745d5, type: 3}
   army: 1
-  cost: 5
   value: 1
   spawnInterval: 1
   buildTime: 1

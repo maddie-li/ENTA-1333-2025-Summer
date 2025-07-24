@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using RTS_1333;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class UIManager : MonoBehaviour
         Game
     }
 
+
+    public TMP_Text GoldText;
     [SerializeField] private GameObject[] UIScreens;
 
     public UIScreen CurrentScreen;
@@ -65,5 +68,7 @@ public class UIManager : MonoBehaviour
         Debug.Log($"Dropdown falue: {change}");
         //GameManager.Instance.SetTimeState()
     }  
+
+
 }
 

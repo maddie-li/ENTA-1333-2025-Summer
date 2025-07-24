@@ -8,6 +8,8 @@ namespace RTS_1333
         [SerializeField] private int width = 1;
         [SerializeField] private int length = 1;
 
+        [SerializeField] private int cost = 1;
+
         [SerializeField] private int maxHP = 1;
 
         [SerializeField] protected GameObject unitPrefab;
@@ -16,7 +18,7 @@ namespace RTS_1333
 
         public int Width => width;
         public int Length => length;
-
+        public int Cost => cost;
         public int MaxHP => maxHP;
 
         public GameObject UnitPrefab => unitPrefab;

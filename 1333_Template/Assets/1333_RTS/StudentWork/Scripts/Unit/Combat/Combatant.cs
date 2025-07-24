@@ -356,6 +356,12 @@ public class Combatant : Unit, ISelectableObject
 
         IsDead = true;
 
+        if(army == Army.Enemy)
+        {
+            CurrencyManager.Instance.EarnGold(Cost);
+        }
+
+
         StopAllCoroutines();
 
         animator.SetBool("isIdle", false);

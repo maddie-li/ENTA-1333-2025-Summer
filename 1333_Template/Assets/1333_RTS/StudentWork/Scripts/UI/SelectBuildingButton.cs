@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SelectBuildingButton : MonoBehaviour
+public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image buttonImage;
     [SerializeField] private TMP_Text buttonText;
@@ -33,6 +34,15 @@ public class SelectBuildingButton : MonoBehaviour
         Debug.Log($"Selected building {buildingType} via onclick");
         FXManager.Instance.DoFX(FXType.Select);
         BuildingManager.Instance.NewGhost(buildingType);
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        buttonText.text = $"{buildingType.Cost} Gold";
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        buttonText.text = buildingType.name;
     }
 
 }

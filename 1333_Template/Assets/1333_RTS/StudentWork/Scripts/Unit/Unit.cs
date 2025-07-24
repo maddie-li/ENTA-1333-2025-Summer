@@ -15,6 +15,8 @@ namespace RTS_1333
         public virtual int Width => unitType != null ? unitType.Width : 1;
         public virtual int Length => unitType != null ? unitType.Length : 1;
 
+        public virtual int Cost => unitType != null ? unitType.Cost : 1;
+
         public virtual int MaxHP => unitType != null ? unitType.MaxHP : 10;
 
         private int currentHP;
