@@ -32,13 +32,13 @@ public class Damageable : MonoBehaviour
     {
         if (animator != null)
         {
-            Debug.Log("Animate take damage");
+            //Debug.Log("Animate take damage");
             animator.SetTrigger("hasBeenDamaged");
         }
 
         if (TryGetComponent<Combatant>(out Combatant combatant))
         {
-            Debug.Log("Got damaged, stopping coroutine");
+            //Debug.Log("Got damaged, stopping coroutine");
             //combatant.StopCoroutine(combatant.stateRoutine);
             FXManager.Instance.DoFX(FXType.CombatantDamage);
         }

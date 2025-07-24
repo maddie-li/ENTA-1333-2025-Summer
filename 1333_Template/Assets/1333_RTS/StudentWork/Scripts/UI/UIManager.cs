@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     public TMP_Text GoldText;
     [SerializeField] private GameObject[] UIScreens;
+    private TimeStateDropdown timescaleDropdown;
 
     public UIScreen CurrentScreen;
 
@@ -30,6 +31,8 @@ public class UIManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        timescaleDropdown = GetComponent<TimeStateDropdown>();
     }
 
     private void Start()
@@ -63,10 +66,9 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.QuitGame();
     }
 
-    public void TimescaleChanged(Dropdown change)
+    public void ForceTimescale(TimeState state)
     {
-        Debug.Log($"Dropdown falue: {change}");
-        //GameManager.Instance.SetTimeState()
+        timescaleDropdown.ForceState(state);    
     }  
 
 

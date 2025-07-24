@@ -1,4 +1,5 @@
 using RTS_1333;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
@@ -7,8 +8,8 @@ public class CurrencyManager : MonoBehaviour
 
     [SerializeField] private int startingGold;
 
-    private int currentGold;
-    public int CurrentGold => currentGold; 
+    private Dictionary<Army, int> currentGoldByArmy = new();
+    //public int CurrentGold => currentGold; 
 
     private void Awake()
     {
@@ -20,40 +21,60 @@ public class CurrencyManager : MonoBehaviour
 
         Instance = this;
 
-        currentGold = startingGold;
-        UpdateText();
+        currentGoldByArmy[Army.Player] = startingGold;
+        currentGoldByArmy[Army.Enemy] = startingGold;
+
+        UpdateText(Army.Player);
+        UpdateText(Army.Enemy);
+
+        //currentGold = startingGold;
+        //UpdateText();
     }
 
-    public bool CanAfford(Unit unit)
+    public int GetGold(Army army)
     {
-        return currentGold >= unit.Cost;
+        return currentGoldByArmy.TryGetValue(army, out int gold) ? gold : 0;
     }
 
-    public void EarnGold()
+    public bool CanAfford(Army army, Unit unit)
     {
-        currentGold += 1;
-        UpdateText();
+        return GetGold(army) >= unit.Cost;
     }
 
-    public void EarnGold(int amout)
+    public bool CanAfford(Army army, int amt)
     {
-        currentGold += amout;
-        UpdateText();
+        return GetGold(army) >= amt;
     }
 
-    public bool TryBuyUnit(Unit unit)
+    public void EarnGold(Army army, int amount = 1)
     {
-        if (CanAfford(unit))
+        if (currentGoldByArmy.ContainsKey(army))
         {
-            currentGold -= unit.Cost;
-            UpdateText();
+            currentGoldByArmy[army] += amount;
+            UpdateText(army);
+        }
+    }
+
+    public bool TryBuyUnit(Army army, Unit unit)
+    {
+        if (CanAfford(army, unit))
+        {
+            currentGoldByArmy[army] -= unit.Cost;
+            UpdateText(army);
             return true;
         }
         return false;
     }
 
-    private void UpdateText()
+    private void UpdateText(Army army)
     {
-        UIManager.Instance.GoldText.text = currentGold.ToString() + " Gold";
+        if (army == Army.Player)
+        {
+            UIManager.Instance.GoldText.text = currentGoldByArmy[army].ToString() + " Gold";
+        }
+        else if (army == Army.Enemy)
+        {
+            Debug.Log($"Enemy Gold: {currentGoldByArmy[army]}");
+        }
     }
 }

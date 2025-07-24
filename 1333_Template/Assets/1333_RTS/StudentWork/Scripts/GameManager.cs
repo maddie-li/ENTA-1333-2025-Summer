@@ -57,6 +57,8 @@ namespace RTS_1333
             }
 
             GridManager.Instance.InitializeGrid();
+            UIManager.Instance.ForceTimescale(TimeState.Normal);
+            
         }
 
         public void QuitGame()

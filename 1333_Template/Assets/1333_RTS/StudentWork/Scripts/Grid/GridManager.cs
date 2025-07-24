@@ -117,7 +117,7 @@ namespace RTS_1333
             }
             else
             {
-                Debug.Log("DID NOT GET node from mouse position!");
+                //Debug.Log("DID NOT GET node from mouse position!");
                 return null;
             }
         }
@@ -194,6 +194,38 @@ namespace RTS_1333
             return null;
         }
 
+        public List<GridNode> GetNodesAtDistance(GridNode startNode, int steps)
+        {
+            if (startNode == null || steps < 0) return null;
+
+            var visited = new HashSet<GridNode>();
+            var currentLevel = new List<GridNode> { startNode };
+            visited.Add(startNode);
+
+            for (int i = 0; i < steps; i++)
+            {
+                var nextLevel = new List<GridNode>();
+
+                foreach (var node in currentLevel)
+                {
+                    foreach (var neighbor in node.Neighbours)
+                    {
+                        if (neighbor != null && neighbor.Walkable && neighbor.CurrentUnit == null && !visited.Contains(neighbor))
+                        {
+                            visited.Add(neighbor);
+                            nextLevel.Add(neighbor);
+                        }
+                    }
+                }
+
+                currentLevel = nextLevel;
+                if (currentLevel.Count == 0)
+                    break;
+            }
+
+            return currentLevel; 
+        }
+
         public bool IsFootprintOccupied(GridNode startnode)
         {
             return IsFootprintOccupied(startnode, 1, 1);
@@ -245,7 +277,28 @@ namespace RTS_1333
                         node.CurrentUnit = unit;
                     }
                 }
+         
+            
             }
+        }
+
+        public GridNode GetRandomFreeNode(int maxAttempts = 100)
+        {
+            if (!IsInitialized) return null;
+
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                int x = Random.Range(0, gridSettings.GridSizeX);
+                int y = Random.Range(0, gridSettings.GridSizeY);
+
+                GridNode node = gridNodes[x, y];
+                if (node != null && node.Walkable && node.CurrentUnit == null)
+                {
+                    return node;
+                }
+            }
+
+            return null;
         }
 
         private void OnDrawGizmos()

@@ -80,7 +80,7 @@ namespace RTS_1333
 
                 if (defaultMat != null) unit.SetupMat(defaultMat, selectedMat);
 
-                Debug.Log("Initialised new unit");
+                //Debug.Log("Initialised new unit");
 
                 return unit;
             }

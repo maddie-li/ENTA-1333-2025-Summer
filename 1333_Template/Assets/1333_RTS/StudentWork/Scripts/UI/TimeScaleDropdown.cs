@@ -24,7 +24,7 @@ public class TimeStateDropdown : MonoBehaviour
         dropdown.onValueChanged.AddListener(OnDropdownChanged);
     }
 
-    void OnDropdownChanged(int index)
+    public void OnDropdownChanged(int index)
     {
         TimeState selectedState = (TimeState)Enum.GetValues(typeof(TimeState)).GetValue(index);
         Debug.Log("Selected TimeState: " + selectedState);
@@ -35,5 +35,11 @@ public class TimeStateDropdown : MonoBehaviour
     string FormatTimeState(TimeState state)
     {
         return $"{state} ({(int)state}x)";
+    }
+
+    public void ForceState(TimeState state)
+    {
+        dropdown.value = (int)state;
+        OnDropdownChanged((int)state);
     }
 }

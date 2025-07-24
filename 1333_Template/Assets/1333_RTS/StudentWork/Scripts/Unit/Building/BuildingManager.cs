@@ -100,13 +100,13 @@ public class BuildingManager : MonoBehaviour
 
         currentGhost.SetNodePos(node);
 
-        bool validPlacement = !GridManager.Instance.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length) && CurrencyManager.Instance.CanAfford(currentGhost);
+        bool validPlacement = !GridManager.Instance.IsFootprintOccupied(currentGhost.CurrentNode, currentGhost.Width, currentGhost.Length) && CurrencyManager.Instance.CanAfford(Army.Player, currentGhost);
         currentGhost.UpdateColor(validPlacement);
 
         // BUILD
         if (Mouse.current.leftButton.wasPressedThisFrame && validPlacement)
         {
-            CurrencyManager.Instance.TryBuyUnit(currentGhost);
+            CurrencyManager.Instance.TryBuyUnit(Army.Player, currentGhost);
             FXManager.Instance.DoFX(FXType.BuildBuilding, GetFootprintCenter(currentGhost));
             Building();
         }
@@ -134,6 +134,32 @@ public class BuildingManager : MonoBehaviour
         currentGhost.Spawner?.StartSpawning();
         currentGhost = null;
 
+    }
+
+    public void EnemyBuilding(BuildingType typeToBuild, GridNode targetNode)
+    {
+        if (targetNode == null) return;
+        if (!CurrencyManager.Instance.CanAfford(Army.Enemy, typeToBuild.Cost)) return;
+
+        if (GridManager.Instance.IsFootprintOccupied(targetNode, typeToBuild.Width, typeToBuild.Length)) return;
+
+        GameObject buildingObject = Instantiate(typeToBuild.UnitPrefab, this.transform);
+        Building building = buildingObject.GetComponent<Building>();
+
+        building.Initialize(targetNode);
+        building.SetNodePos(targetNode);
+        GridManager.Instance.FootprintOccupy(targetNode, building.Width, building.Length, building);
+            
+        RegisterUnit(building);
+        building.Spawner?.StartSpawning();
+
+        Material defaultMat = EnemyMat;
+        building.SetupMat(defaultMat, ValidMat, InvalidMat);
+        building.UpdateColor();
+
+        FXManager.Instance.DoFX(FXType.BuildBuilding, GetFootprintCenter(building));
+
+        CurrencyManager.Instance.TryBuyUnit(Army.Enemy, building);
     }
 
     public void RegisterUnit(Building building)

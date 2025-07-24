@@ -107,7 +107,7 @@ public class Combatant : Unit, ISelectableObject
     {
         UpdateAnimator();
 
-        Debug.LogWarning($"{name} entering Idle");
+        //Debug.LogWarning($"{name} entering Idle");
         // every 1 second check for enemy
 
         while (currentState == CombatantState.Idle)
@@ -129,7 +129,7 @@ public class Combatant : Unit, ISelectableObject
     {
         UpdateAnimator();
 
-        Debug.LogWarning($"{name} entering Chase");
+        //Debug.LogWarning($"{name} entering Chase");
         // every 0.5 second try to go to target
 
         while (currentState == CombatantState.Chasing)
@@ -151,7 +151,7 @@ public class Combatant : Unit, ISelectableObject
 
             if (target.CurrentNode != null)
             {
-                Debug.Log($"In sensing range of {target.name} at {target.CurrentNode.Name}, begin chase");
+                //Debug.Log($"In sensing range of {target.name} at {target.CurrentNode.Name}, begin chase");
                 SetTarget(target.CurrentNode);
             }
 
@@ -163,7 +163,7 @@ public class Combatant : Unit, ISelectableObject
     {
         UpdateAnimator();
 
-        Debug.LogWarning($"{name} entering Attack");
+        //Debug.LogWarning($"{name} entering Attack");
         // every 0.5 second do attack
 
         while (currentState == CombatantState.Attacking)
@@ -328,7 +328,7 @@ public class Combatant : Unit, ISelectableObject
 
     private void UpdateAnimator()
     {
-        Debug.Log($"Updating animator {animator.name}");
+        //Debug.Log($"Updating animator {animator.name}");
 
         animator.SetBool("isIdle", false);
         animator.SetBool("isMoving", false); 
@@ -358,11 +358,15 @@ public class Combatant : Unit, ISelectableObject
 
         if(army == Army.Enemy)
         {
-            CurrencyManager.Instance.EarnGold(Cost);
+            CurrencyManager.Instance.EarnGold(Army.Player, Cost);
+        }
+        else
+        {
+            CurrencyManager.Instance.EarnGold(Army.Enemy, Cost);
         }
 
 
-        StopAllCoroutines();
+            StopAllCoroutines();
 
         animator.SetBool("isIdle", false);
         animator.SetBool("isMoving", false);

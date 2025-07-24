@@ -97,7 +97,7 @@ public class Selector : MonoBehaviour
 
     private void HandleRightClick(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Right click detected!");
+        // Debug.Log("Right click detected!");
         CommandUnits(interactActions.UI.Point.ReadValue<Vector2>());
     }
 
