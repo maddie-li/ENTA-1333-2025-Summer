@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour
 
         //Debug.Log($"Combatant: Commanding {unit.name} to node{targetNode.Name}");
 
-        Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {unit == null}");
+        //Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {unit == null}");
 
         if (pathfinder == null || unit == null) return;
 

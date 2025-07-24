@@ -19,6 +19,8 @@ public class Selector : MonoBehaviour
     private Vector3 lastClickPosition;
 
     [SerializeField] private float minDragSize = 3f;
+    [SerializeField] GameObject rallyPointPrefab;
+    GameObject rallyPoint;
 
     private void Awake()
     {
@@ -190,6 +192,7 @@ public class Selector : MonoBehaviour
     {
 
         if (cam == null) return;
+        if (selectedUnits.Count < 1) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos); 
         //Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green, 5f);
@@ -208,6 +211,8 @@ public class Selector : MonoBehaviour
                 return;
             }
 
+            SpawnRallyPoint(node);
+
             foreach (Unit unit in selectedUnits)
             {
                 if (unit != null)
@@ -222,6 +227,18 @@ public class Selector : MonoBehaviour
                 
             }
         }
+    }
+
+    private void SpawnRallyPoint(GridNode node)
+    {
+
+        if (rallyPoint != null)
+        {
+            Destroy(rallyPoint);
+        }
+
+        rallyPoint = Instantiate(rallyPointPrefab);
+        rallyPoint.transform.position = node.WorldPosition;
     }
 
     private void OnDrawGizmos()
