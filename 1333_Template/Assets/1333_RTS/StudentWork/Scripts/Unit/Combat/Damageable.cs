@@ -1,4 +1,5 @@
 using RTS_1333;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class Damageable : MonoBehaviour
@@ -66,27 +67,40 @@ public class Damageable : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (!TryGetComponent<Unit>(out Unit thisUnit)) return;
 
-        // uhoh youre died
-
-        if (TryGetComponent<Combatant>(out Combatant combatant))
+        if (thisUnit is Combatant combatant)
         {
             combatant.Die();
-
             Debug.Log("Deregistering combatant");
             UnitManager.Instance.UnregisterUnit(combatant);
-
             FXManager.Instance.DoFX(FXType.CombatantDie);
         }
-
-        if (TryGetComponent<Building>(out Building building))
+        else if (thisUnit is Building building)
         {
             Debug.Log("Deregistering building");
             BuildingManager.Instance.UnregisterUnit(building);
-
             FXManager.Instance.DoFX(FXType.BuildingDestroy);
+        }
+
+        if (thisUnit.army == Army.Enemy)
+        {
+            CurrencyManager.Instance.EarnGold(Army.Player, thisUnit.Cost);
+        }
+        else
+        {
+            CurrencyManager.Instance.EarnGold(Army.Enemy, thisUnit.Cost);
+        }
+
+        if (thisUnit is Combatant combatantToDestroy)
+        {
+            Destroy(gameObject, 2f);
+        }
+        else if (thisUnit is Building buildingToDestroy)
+        {
             Destroy(gameObject);
         }
+
     }
 
     private void UpdateHealthBar()

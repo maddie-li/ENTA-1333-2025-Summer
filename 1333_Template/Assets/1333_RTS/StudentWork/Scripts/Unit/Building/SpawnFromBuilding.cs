@@ -51,6 +51,10 @@ public class SpawnFromBuilding : MonoBehaviour
         {
             spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
         }
+        else
+        {
+            Debug.LogError("Spawned unit inside building is null");
+        }
 
     }
 

@@ -265,6 +265,29 @@ namespace RTS_1333
             return false;
         }
 
+        public List<Vector3> GetOccupiedFootprintNodes(Unit unit)
+        {
+            List<Vector3> occupiedPositions = new List<Vector3>();
+
+            float width = unit.Width;
+            float length = unit.Length;
+            GridNode startNode = unit.CurrentNode;
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < length; y++)
+                {
+                    GridNode node = GetNode(startNode.GridPosition.x + x, startNode.GridPosition.y + y);
+                    if (node != null)
+                    {
+                        occupiedPositions.Add(node.WorldPosition);
+                    }
+                }
+            }
+
+            return occupiedPositions;
+        }
+
         public void FootprintOccupy(GridNode startNode, int width, int length, Unit unit)
         {
             for (int x = 0; x < width; x++)

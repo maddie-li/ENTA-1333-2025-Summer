@@ -14,7 +14,7 @@ public class Attacker : MonoBehaviour
         c = _combatantType;
     }
 
-    public bool TargetInRange(Unit target, float range)
+    /*public bool TargetInRange(Unit target, float range)
     {
         if (target == null || c == null)
         {
@@ -24,6 +24,27 @@ public class Attacker : MonoBehaviour
         //Debug.Log(distance);
 
         return distance <= range;
+    }*/
+
+    public bool TargetInRange(Unit target, float range)
+    {
+        if (target == null || c == null)
+            return false;
+
+        Vector3 myPos = transform.position;
+
+        List<Vector3> targetGridNodes = GridManager.Instance.GetOccupiedFootprintNodes(target);
+
+        foreach (Vector3 nodePos in targetGridNodes)
+        {
+            float distance = Vector3.Distance(myPos, nodePos);
+            if (distance <= range)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void Attack(Unit target)
