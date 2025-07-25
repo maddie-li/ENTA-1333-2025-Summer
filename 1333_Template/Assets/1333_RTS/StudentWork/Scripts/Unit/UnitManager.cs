@@ -47,18 +47,6 @@ namespace RTS_1333
                 TestSpawn();*/
         }
 
-        private void TestSpawn()
-        {
-            foreach (Vector2Int pos in nodePosition)
-            {
-                Vector3 spawnPos = new Vector3(pos.x, pos.y, 0);
-
-                SpawnUnit(prefab,spawnPos);
-            }
-
-            
-        }
-
         public Combatant SpawnUnit(GameObject prefab, Vector3 pos)
         {
             GridNode node = GridManager.Instance.GetNodeFromWorldPosition(pos);

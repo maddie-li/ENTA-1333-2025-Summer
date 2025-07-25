@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static InputSystem_Actions;
@@ -28,9 +29,10 @@ namespace RTS_1333
         private InputSystem_Actions interactActions;
         public static GameManager Instance { get; private set; }
 
-        private GameState currentState = GameState.Menu;
+        public GameState currentState = GameState.Menu;
 
         [SerializeField] private GameObject[] managerPrefabs;
+        private List<GameObject> destroyableManagers = new List<GameObject>();
 
         private TimeState currentTimeState = TimeState.Normal;
         private void OnEnable()
@@ -87,8 +89,9 @@ namespace RTS_1333
             switch (newState)
             {
                 case GameState.Menu:
-                    
+                    UIManager.Instance.ForceTimescale(TimeState.Paused);
                     break;
+
                 case GameState.Gameplay:
                     UIManager.Instance.ForceTimescale(TimeState.Normal);
                     break;
@@ -98,11 +101,15 @@ namespace RTS_1333
                     break;
 
                 case GameState.Victory:
-                    
+                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.SetUIScreen(UIManager.UIScreen.Victory);
                     break;
+
                 case GameState.Defeat:
-                    
+                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.SetUIScreen(UIManager.UIScreen.Defeat);
                     break;
+
             }
         }
 
@@ -127,12 +134,13 @@ namespace RTS_1333
             {
                 GameObject manager = Instantiate(prefab);
                 manager.transform.SetParent(this.transform, false);
+                destroyableManagers.Add(manager);
             }
 
             GridManager.Instance.InitializeGrid();
             UIManager.Instance.ForceTimescale(TimeState.Normal);
 
-            currentState = GameState.Gameplay;
+            SetGameState(GameState.Gameplay);
             
         }
 
@@ -158,8 +166,36 @@ namespace RTS_1333
 
         private void HandleGameOver(Army army)
         {
-            currentState = GameState.Defeat;
-            Debug.LogError($"GAME OVER! {army} LOST because ran out of soldiers");
+            if (currentState == GameState.Gameplay || currentState == GameState.Paused)
+            {
+                switch (army)
+                {
+                    case Army.Player:
+                        Debug.Log("Player lost");
+                        SetGameState(GameState.Defeat);
+                        break;
+                    case Army.Enemy:
+                        Debug.Log("Player won");
+                        SetGameState(GameState.Victory);
+                        break;
+                }
+            }
+            
+        }
+
+        public void HandleResetGame()
+        {
+            /*UIManager.Instance.ForceTimescale(TimeState.Normal);
+            UIManager.Instance.SetUIScreen(UIManager.UIScreen.Game);
+
+            foreach (GameObject manager in destroyableManagers)
+            {
+                Debug.Log($"Destroying: {manager.name}");
+                Destroy(manager);
+            }
+
+            destroyableManagers.Clear();
+            SetupGame();*/
         }
     }
 }

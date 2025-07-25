@@ -13,7 +13,10 @@ public class UIManager : MonoBehaviour
     public enum UIScreen
     {
         Menu,
-        Game
+        Game,
+        Settings,
+        Victory,
+        Defeat
     }
 
 
@@ -58,6 +61,11 @@ public class UIManager : MonoBehaviour
     public void StartClicked()
     {
         LoadingManager.Instance.LoadNewScene(1);
+    }
+
+    public void RestartClicked()
+    {
+        GameManager.Instance.HandleResetGame();
     }
     
     public void QuitClicked()

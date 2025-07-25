@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using System.Security.Cryptography;
+using RTS_1333;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -62,7 +63,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (cameraActions == null) return;
+        if (cameraActions == null) return; 
+        if (GameManager.Instance.currentState != GameState.Gameplay) return;
 
         // input
         GetKeyboardMovement();
