@@ -196,7 +196,6 @@ public class Combatant : Unit, ISelectableObject
 
     public void SetTarget(GridNode targetNode)
     {
-
         movement.SetTarget(targetNode);
     }
 

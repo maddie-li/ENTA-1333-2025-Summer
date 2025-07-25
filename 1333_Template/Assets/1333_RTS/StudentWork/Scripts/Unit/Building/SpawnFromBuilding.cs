@@ -43,18 +43,17 @@ public class SpawnFromBuilding : MonoBehaviour
     {
         Combatant spawnedUnit;
 
-        GameObject unit = Instantiate(UnitPrefab, transform.position, Quaternion.identity);
-
         spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint.position);
 
         if (spawnedUnit != null)
         {
+            Debug.LogWarning("Spawning unit from building", spawnedUnit);
             spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
         }
-        else
+        /*else
         {
             Debug.LogError("Spawned unit inside building is null");
-        }
+        }*/
 
     }
 
