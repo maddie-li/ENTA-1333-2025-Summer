@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,10 +17,7 @@ namespace RTS_1333
         private GridNode[,] gridNodes;
         public GridNode[,] GridNodes => gridNodes;
 
-#if UNITY_EDITOR
-        [Header("Debug for editor playmode only")]
         [SerializeField] private List<GridNode> AllNodes;
-#endif
 
         public static GridManager Instance;
         private void Awake()

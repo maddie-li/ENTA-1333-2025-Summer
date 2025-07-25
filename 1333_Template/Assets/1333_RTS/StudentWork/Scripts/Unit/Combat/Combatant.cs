@@ -2,10 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using RTS_1333;
 using System.Collections;
-using static UnityEngine.GraphicsBuffer;
-using NUnit.Framework;
-using UnityEngine.UIElements;
-using UnityEditor.Experimental.GraphView;
 
 public class Combatant : Unit, ISelectableObject
 {

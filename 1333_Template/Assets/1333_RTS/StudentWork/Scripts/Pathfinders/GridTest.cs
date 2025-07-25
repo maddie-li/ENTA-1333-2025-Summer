@@ -1,12 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework.Interfaces;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Sprites;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 namespace RTS_1333
 {
