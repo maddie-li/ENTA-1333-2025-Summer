@@ -47,14 +47,9 @@ public class SpawnFromBuilding : MonoBehaviour
 
         if (spawnedUnit != null)
         {
-            Debug.LogWarning("Spawning unit from building", spawnedUnit);
+            //Debug.LogWarning("Spawning unit from building", spawnedUnit);
             spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
         }
-        /*else
-        {
-            Debug.LogError("Spawned unit inside building is null");
-        }*/
-
     }
 
     private void MoveRallyPoint()

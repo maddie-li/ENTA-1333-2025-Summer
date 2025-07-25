@@ -20,6 +20,8 @@ namespace RTS_1333
         public Dictionary<Army, List<Combatant>> unitsByArmy = new();
         public List<Combatant> allUnits = new();
 
+        public Dictionary<Army, bool> armyActivated = new();
+
         public static UnitManager Instance;
         private void Awake()
         {
@@ -32,6 +34,11 @@ namespace RTS_1333
 
             unitsByArmy.Add(Army.Player, new List<Combatant>());
             unitsByArmy.Add(Army.Enemy, new List<Combatant>());
+
+            foreach (Army army in (Army[])System.Enum.GetValues(typeof(Army)))
+            {
+                armyActivated[army] = false;
+            }
         }
 
         private void Update()
@@ -80,6 +87,7 @@ namespace RTS_1333
 
                 if (defaultMat != null) unit.SetupMat(defaultMat, selectedMat);
 
+                armyActivated[unit.army] = true;
                 //Debug.Log("Initialised new unit");
 
                 return unit;
