@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RTS_1333
 {
@@ -178,10 +179,13 @@ namespace RTS_1333
             
         }
 
+        public void ResumeGame()
+        {
+        }
+
         public void HandleResetGame()
         {
-            /*UIManager.Instance.ForceTimescale(TimeState.Normal);
-            UIManager.Instance.SetUIScreen(UIManager.UIScreen.Game);
+            UnitManager.Instance.Reset();
 
             foreach (GameObject manager in destroyableManagers)
             {
@@ -189,8 +193,10 @@ namespace RTS_1333
                 Destroy(manager);
             }
 
-            destroyableManagers.Clear();
-            SetupGame();*/
+            Debug.Log("Resetting game");
+            SceneManager.LoadScene(1);
+
+            SetupGame();
         }
     }
 }

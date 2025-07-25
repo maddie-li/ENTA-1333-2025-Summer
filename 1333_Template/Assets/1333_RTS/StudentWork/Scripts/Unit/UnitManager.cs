@@ -38,12 +38,6 @@ namespace RTS_1333
             }
         }
 
-        private void Update()
-        {
-           /* if (Input.GetKeyDown(KeyCode.E))
-                TestSpawn();*/
-        }
-
         public Combatant SpawnUnit(GameObject prefab, Vector3 pos)
         {
             GridNode node = GridManager.Instance.GetNodeFromWorldPosition(pos);
@@ -101,6 +95,14 @@ namespace RTS_1333
             if (unitsByArmy.TryGetValue(unit.army, out var unitList))
             {
                 unitList.Remove(unit);
+            }
+        }
+
+        public void Reset()
+        {
+            foreach (Army army in (Army[])System.Enum.GetValues(typeof(Army)))
+            {
+                armyActivated[army] = false;
             }
         }
     }

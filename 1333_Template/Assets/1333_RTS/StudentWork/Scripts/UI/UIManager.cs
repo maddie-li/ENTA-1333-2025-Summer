@@ -65,9 +65,15 @@ public class UIManager : MonoBehaviour
 
     public void RestartClicked()
     {
+        Debug.Log("UI: Resetting game");
         GameManager.Instance.HandleResetGame();
     }
-    
+
+    public void ResumeClicked()
+    {
+        GameManager.Instance.ResumeGame();
+    }
+
     public void QuitClicked()
     {
        

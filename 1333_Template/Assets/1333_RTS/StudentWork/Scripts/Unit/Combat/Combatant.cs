@@ -52,7 +52,7 @@ public class Combatant : Unit, ISelectableObject
     {
         if (movement == null || atk == null)
         {
-            Debug.LogError("Combatant missing movement and attack components");
+            //Debug.LogError("Combatant missing movement and attack components");
             return;
         }
 
@@ -68,7 +68,7 @@ public class Combatant : Unit, ISelectableObject
         }
         else
         {
-            Debug.LogWarning("Wrong unit type on Combatant");
+            //Debug.LogWarning("Wrong unit type on Combatant");
         }
 
             movement.Initialize(_pathfinder, this, moveSpeed);
@@ -112,7 +112,7 @@ public class Combatant : Unit, ISelectableObject
 
             if (target != null && atk.TargetInRange(target, sensingRange))
             {
-                Debug.Log($"{target.name} in sensing range");
+                //Debug.Log($"{target.name} in sensing range");
                 currentState = CombatantState.Chasing;
                 yield break;
             }
@@ -140,7 +140,7 @@ public class Combatant : Unit, ISelectableObject
 
             if (atk.TargetInRange(target, attackRange))
             {
-                Debug.Log($"{target.name} in attacking range");
+                //Debug.Log($"{target.name} in attacking range");
                 currentState = CombatantState.Attacking;
                 yield break;
             }
