@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static InputSystem_Actions;
 
 namespace RTS_1333
 {
@@ -14,14 +15,33 @@ namespace RTS_1333
         SuperFast = 10
     }
 
+    public enum GameState
+    {
+        Menu,     
+        Gameplay,  
+        Paused,    
+        Victory,  
+        Defeat    
+    }
     public class GameManager : MonoBehaviour
     {
-        public bool GameplayRunning = false;
+        private InputSystem_Actions interactActions;
         public static GameManager Instance { get; private set; }
+
+        private GameState currentState = GameState.Menu;
 
         [SerializeField] private GameObject[] managerPrefabs;
 
         private TimeState currentTimeState = TimeState.Normal;
+        private void OnEnable()
+        {
+            interactActions.Enable();
+        }
+
+        private void OnDisable()
+        {
+            interactActions.Disable();
+        }
 
         private void Awake()
         {
@@ -34,12 +54,56 @@ namespace RTS_1333
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+            interactActions = new InputSystem_Actions();
+
         }
 
         void Update()
         {
-            if(GameplayRunning)
-            CheckLoseCondition();
+            if (currentState == GameState.Gameplay)
+            {
+                CheckLoseCondition();
+
+                if (interactActions.Game.Pause.WasPressedThisFrame())
+                {
+                    SetGameState(GameState.Paused);
+                    Debug.LogError("Pausing game");
+                }
+            }
+            else if (currentState == GameState.Paused)
+            {
+                if (interactActions.Game.Pause.WasPressedThisFrame())
+                {
+                    SetGameState(GameState.Gameplay);
+                    Debug.LogError("Resumiing game");
+                }
+            }
+        }
+        public void SetGameState(GameState newState)
+        {
+            currentState = newState;
+            Debug.Log($"Game state changed to: {newState}");
+
+            switch (newState)
+            {
+                case GameState.Menu:
+                    
+                    break;
+                case GameState.Gameplay:
+                    UIManager.Instance.ForceTimescale(TimeState.Normal);
+                    break;
+
+                case GameState.Paused:
+                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    break;
+
+                case GameState.Victory:
+                    
+                    break;
+                case GameState.Defeat:
+                    
+                    break;
+            }
         }
 
         public void SetTimeState(TimeState newState)
@@ -68,7 +132,7 @@ namespace RTS_1333
             GridManager.Instance.InitializeGrid();
             UIManager.Instance.ForceTimescale(TimeState.Normal);
 
-            GameplayRunning = true;
+            currentState = GameState.Gameplay;
             
         }
 
@@ -94,6 +158,7 @@ namespace RTS_1333
 
         private void HandleGameOver(Army army)
         {
+            currentState = GameState.Defeat;
             Debug.LogError($"GAME OVER! {army} LOST because ran out of soldiers");
         }
     }
