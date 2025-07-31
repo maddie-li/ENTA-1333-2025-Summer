@@ -3,7 +3,7 @@ void VertShader(inout appdata_full v, out Input data)
 	v.vertex.x += _VertexOffsetX;
 	v.vertex.y += _VertexOffsetY;
 
-	UNITY_INITIALIZE_OUTPUT(Input, data);
+	UnitY_INITIALIZE_OUTPUT(Input, data);
 
 	float bold = step(v.texcoord.w, 0);
 
@@ -18,7 +18,7 @@ void VertShader(inout appdata_full v, out Input data)
 	float4 vPosition = UnityObjectToClipPos(vert);
 	float2 pixelSize = vPosition.w;
 
-	pixelSize /= float2(_ScaleX, _ScaleY) * mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy);
+	pixelSize /= float2(_ScaleX, _ScaleY) * mul((float2x2)UnitY_MATRIX_P, _ScreenParams.xy);
 	float scale = rsqrt(dot(pixelSize, pixelSize));
 	scale *= abs(v.texcoord.w) * _GradientScale * (_Sharpness + 1);
 	scale = lerp(scale * (1 - _PerspectiveFilter), scale, abs(dot(UnityObjectToWorldNormal(v.normal.xyz), normalize(WorldSpaceViewDir(vert)))));
@@ -74,7 +74,7 @@ void PixShader(Input input, inout SurfaceOutput o)
 	n = normalize(n - bump);
 
 	// Cubemap reflection
-	fixed4 reflcol = texCUBE(_Cube, reflect(input.viewDirEnv, mul((float3x3)unity_ObjectToWorld, n)));
+	fixed4 reflcol = texCUBE(_Cube, reflect(input.viewDirEnv, mul((float3x3)Unity_ObjectToWorld, n)));
 	float3 emission = reflcol.rgb * lerp(_ReflectFaceColor.rgb, _ReflectOutlineColor.rgb, saturate(sd + outline * 0.5)) * faceColor.a;
 #else
 	float3 n = float3(0, 0, -1);

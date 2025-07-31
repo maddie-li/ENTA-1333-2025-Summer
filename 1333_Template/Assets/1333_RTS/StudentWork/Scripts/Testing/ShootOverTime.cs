@@ -12,8 +12,8 @@ public class ShootOverTime : MonoBehaviour
 	[SerializeField] private Transform DebugEndPoint;
 
 	[Header("Flight Settings")]
-	[SerializeField] [Min(0.1f)] private float ProjectileSpeed = 5f; // units / second
-	[SerializeField] private float ArcHeight = 2f; // world units
+	[SerializeField] [Min(0.1f)] private float ProjectileSpeed = 5f; // Units / second
+	[SerializeField] private float ArcHeight = 2f; // world Units
 
 	[Header("Pooling")]
 	private ObjectPool<ArcingProjectile> projectilePool;

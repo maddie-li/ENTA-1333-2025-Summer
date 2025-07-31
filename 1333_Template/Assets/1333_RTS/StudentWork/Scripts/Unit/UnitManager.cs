@@ -1,25 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace RTS_1333
 {
     public class UnitManager : MonoBehaviour
     {
-        [SerializeField] private Pathfinder pathfinder;
-        [SerializeField] private GameObject prefab;
-        [Header("Visuals")]
-        [SerializeField] private Material selectedMat;
-        public Material EnemyMat;
-        public Material PlayerMat;
-        [Header("Testing")]
-        [SerializeField] private Vector2Int[] nodePosition;
+        public Pathfinder Pathfinder;
 
-        public Dictionary<Army, List<Combatant>> unitsByArmy = new();
-        public List<Combatant> allUnits = new();
+        public Material[] combatantMaterials = new Material[5]; // player, enemy, valid, invalid, selected
+        public Material[] buildingMaterials = new Material[5]; 
 
+        public Dictionary<Army, List<Unit>> UnitsByArmy = new();
+        public List<Unit> allUnits = new();
         public Dictionary<Army, bool> armyActivated = new();
 
         public static UnitManager Instance;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -27,74 +24,57 @@ namespace RTS_1333
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this;
 
-            unitsByArmy.Add(Army.Player, new List<Combatant>());
-            unitsByArmy.Add(Army.Enemy, new List<Combatant>());
-
-            foreach (Army army in (Army[])System.Enum.GetValues(typeof(Army)))
+            foreach (Army army in System.Enum.GetValues(typeof(Army)))
             {
+                UnitsByArmy[army] = new List<Unit>();
                 armyActivated[army] = false;
             }
         }
 
-        public Combatant SpawnUnit(GameObject prefab, Vector3 pos)
+        public Unit SpawnUnit(GameObject prefab, Vector3 position, Army army)
         {
-            GridNode node = GridManager.Instance.GetNodeFromWorldPosition(pos);
+            GridNode node = GridManager.Instance.GetNodeFromWorldPosition(position);
             if (node == null || node.CurrentUnit != null) return null;
 
-            GameObject unitObject = Instantiate(prefab, this.transform);
-            Combatant unit = unitObject.GetComponent<Combatant>();
+            GameObject obj = Instantiate(prefab, transform);
+            Unit Unit = obj.GetComponent<Unit>();
 
-            if (unit != null)
-            {
-                RegisterUnit(unit);
-                unit.Initialize(pathfinder);
-                unit.SetNodePos(node);
+            if (Unit == null) return null;
 
-                Material defaultMat = null;
+            RegisterUnit(Unit);
 
-                switch (unit.army)
-                {
-                    case Army.Player:
-                        defaultMat = PlayerMat;
-                        break;
-                    case Army.Enemy:
-                        defaultMat = EnemyMat;
-                        break;
-                }
+            Unit.SetNodePos(node);
 
-                if (defaultMat != null) unit.SetupMat(defaultMat, selectedMat);
+            Unit.SetupMat();
 
-                armyActivated[unit.army] = true;
-                //Debug.Log("Initialised new unit");
+            armyActivated[army] = true;
 
-                return unit;
-            }
-
-            return null;
+            return Unit;
         }
 
-        public void RegisterUnit(Combatant unit)
+        public void RegisterUnit(Unit Unit)
         {
             // add mainlist
-            if (unit != null && !allUnits.Contains(unit))
+            if (Unit != null && !allUnits.Contains(Unit))
             {
-                allUnits.Add(unit);
+                allUnits.Add(Unit);
             }
             // add armylist
-            if (!unitsByArmy[unit.army].Contains(unit))
+            if (!UnitsByArmy[Unit.Army].Contains(Unit))
             {
-                unitsByArmy[unit.army].Add(unit);
+                UnitsByArmy[Unit.Army].Add(Unit);
             }
         }
-        public void UnregisterUnit(Combatant unit)
+        public void UnregisterUnit(Unit Unit)
         {
-            allUnits.Remove(unit);
+            allUnits.Remove(Unit);
 
-            if (unitsByArmy.TryGetValue(unit.army, out var unitList))
+            if (UnitsByArmy.TryGetValue(Unit.Army, out var UnitList))
             {
-                unitList.Remove(unit);
+                UnitList.Remove(Unit);
             }
         }
 

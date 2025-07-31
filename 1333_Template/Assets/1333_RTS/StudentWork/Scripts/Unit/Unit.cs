@@ -1,29 +1,52 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace RTS_1333
 {
-    public abstract class Unit : MonoBehaviour
+    public enum UnitType
+    {
+        Combatant,
+        Building
+    }
+    public class Unit : MonoBehaviour, ISelectableObject
     {
         [Header("Unit")]
-        [SerializeField] public UnitType unitType;
+        [SerializeField] public UnitData UnitData;
         [SerializeField] public string Name;
-        protected Damageable dmg;
+
         public Vector3 WorldPosition { get; private set; }
         public Vector2Int GridPosition { get; private set; }
-        public GridNode CurrentNode { get; protected set; }
+        public GridNode CurrentNode { get; private set; }
 
-        public virtual int Width => unitType != null ? unitType.Width : 1;
-        public virtual int Length => unitType != null ? unitType.Length : 1;
-
-        public virtual int Cost => unitType != null ? unitType.Cost : 1;
-
-        public virtual int MaxHP => unitType != null ? unitType.MaxHP : 10;
-
+        public int Width => UnitData != null ? UnitData.Width : 1;
+        public int Length => UnitData != null ? UnitData.Length : 1;
+        public int Cost => UnitData != null ? UnitData.Cost : 1;
+        public int MaxHP => UnitData != null ? UnitData.MaxHP : 10;
+        public int CurrentHP => currentHP;
         private int currentHP;
 
-        public int CurrentHP => currentHP;
+        public Army Army => UnitData.Army;
 
-        public virtual Army army => unitType.Army;
+        [Header("Behaviours")]
+        public bool CanCombat => UnitData.CombatEnabled;
+        public Combat combat;
+        public bool CanMove => UnitData.MovementEnabled;
+        public Movement movement;
+        public bool CanAttack => UnitData.AttackEnabled;
+        public Attack attack;
+        public bool CanDamaged => UnitData.DamageEnabled;
+        public Damage damage;
+        public bool CanPlace => UnitData.PlacementEnabled;
+        public Placement placement;
+        public bool CanSpawn => UnitData.SpawningEnabled;
+        public Spawner spawner;
+
+
+        private Renderer[] renderers;
+        private Material defaultMat;
+        private Material validMat;
+        private Material invalidMat;
+        private Material selectedMat;
 
         public void Initialize(GridNode node)
         {
@@ -31,53 +54,34 @@ namespace RTS_1333
             GridPosition = node.GridPosition;
             WorldPosition = node.WorldPosition;
             CurrentNode = node;
-            
         }
-        protected void InitDamage()
+        private void OnValidate()
         {
-            if (TryGetComponent<Damageable>(out dmg))
-            {
-
-                if (TryGetComponent<Animator>(out Animator animator))
-                {
-                    dmg.Initialize(unitType.MaxHP, animator);
-                }
-                else
-                {
-                    dmg.Initialize(unitType.MaxHP);
-                }
-                    
-            }
-            
+            movement.gameObject.SetActive(CanMove);
+            attack.gameObject.SetActive(CanAttack);
+            damage.gameObject.SetActive(CanDamaged);
+            placement.gameObject.SetActive(CanPlace);
         }
 
-        public void TakeDamage(int _dmg)
+        public void TakeDamage(int amount)
         {
-            if (dmg == null)  return;
+            if (damage == null) return;
 
-            dmg.TakeDamage(_dmg);
+            damage.TakeDamage(amount);
 
-            if(this.GetType() == typeof(Combatant))
-            {
-                FXManager.Instance.DoFX(FXType.CombatantDamage, this.transform.position);
-            }
-            else if (this.GetType() == typeof(Building))
-            {
-                FXManager.Instance.DoFX(FXType.BuildingDamage, this.transform.position);
-            }
-
-
+            /*if (this is Combatant)
+                FXManager.Instance.DoFX(FXType.CombatantDamage, transform.position);
+            else if (this is Building)
+                FXManager.Instance.DoFX(FXType.BuildingDamage, transform.position);*/
         }
 
         public bool IsFootprintOccupied()
         {
-            if (CurrentNode == null) return false;
-            return GridManager.Instance.IsFootprintOccupied(CurrentNode, Width, Length);
+            return CurrentNode != null &&
+                   GridManager.Instance.IsFootprintOccupied(CurrentNode, Width, Length);
         }
 
-
-
-        public virtual void SetNodePos(GridNode newNode)
+        public void SetNodePos(GridNode newNode)
         {
             UpdateCurrentNode(newNode);
 
@@ -88,8 +92,10 @@ namespace RTS_1333
             transform.position = WorldPosition;
         }
 
-        public virtual void UpdateCurrentNode(GridNode newNode)
+        public void UpdateCurrentNode(GridNode newNode)
         {
+            if(CanPlace && placement.IsGhost)
+                CurrentNode = newNode;
 
             if (newNode.CurrentUnit != null) return;
 
@@ -98,6 +104,51 @@ namespace RTS_1333
 
             CurrentNode = newNode;
             newNode.CurrentUnit = this;
+        }
+
+
+
+        // VISUALISATION ---------------------------------------------------------------
+        public void SetupMat()
+        {
+            renderers = GetComponentsInChildren<Renderer>();
+            if (renderers == null) Debug.Log("Renderers are null");
+
+            switch (UnitData.UnitType)
+            {
+                case UnitType.Combatant:
+                    defaultMat = UnitManager.Instance.combatantMaterials[(int)Army];
+                    validMat = UnitManager.Instance.combatantMaterials[3];
+                    invalidMat = UnitManager.Instance.combatantMaterials[4];
+                    selectedMat = UnitManager.Instance.combatantMaterials[5];
+                    break;
+                case UnitType.Building:
+                    defaultMat = UnitManager.Instance.buildingMaterials[(int)Army];
+                    validMat = UnitManager.Instance.combatantMaterials[3];
+                    invalidMat = UnitManager.Instance.combatantMaterials[4];
+                    selectedMat = UnitManager.Instance.combatantMaterials[5];
+                    break;
+            }
+
+            foreach (var rend in renderers)
+            {
+                if (rend.material != null)
+                    rend.material = defaultMat;
+            }
+        }
+
+        public void SetSelected(bool selected)
+        {
+            Debug.Log("Updating Unit material");
+            if (renderers == null) Debug.Log("Renderers are null");
+
+            Material mat = selected ? selectedMat : defaultMat;
+
+            foreach (var rend in renderers)
+            {
+                if (rend.material != null)
+                    rend.material = mat;
+            }
         }
     }
 }

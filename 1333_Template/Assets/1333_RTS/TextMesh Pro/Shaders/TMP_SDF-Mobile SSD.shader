@@ -78,7 +78,7 @@ SubShader {
 	ZWrite Off
 	Lighting Off
 	Fog { Mode Off }
-	ZTest [unity_GUIZTestMode]
+	ZTest [Unity_GUIZTestMode]
 	Blend One OneMinusSrcAlpha
 	ColorMask [_ColorMask]
 
@@ -89,8 +89,8 @@ SubShader {
 		#pragma shader_feature __ OUTLINE_ON
 		#pragma shader_feature __ UNDERLAY_ON UNDERLAY_INNER
 
-		#pragma multi_compile __ UNITY_UI_CLIP_RECT
-		#pragma multi_compile __ UNITY_UI_ALPHACLIP
+		#pragma multi_compile __ UnitY_UI_CLIP_RECT
+		#pragma multi_compile __ UnitY_UI_ALPHACLIP
 
 		#include "UnityCG.cginc"
 		#include "UnityUI.cginc"

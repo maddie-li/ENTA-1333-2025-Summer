@@ -1,3 +1,4 @@
+using RTS_1333;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,9 +10,9 @@ public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private TMP_Text buttonText;
     [SerializeField] private Button button;
 
-    private BuildingType buildingType;
+    private UnitData buildingType;
 
-    public void Setup(BuildingType _buildingType, BuildingManager _buildingManager)
+    public void Setup(UnitData _buildingType, UnitManager _buildingManager)
     {
         buildingType = _buildingType;
 
@@ -20,7 +21,7 @@ public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointe
         button.onClick.AddListener(() =>
         {
             Debug.Log($"Selected building {buildingType} add listener");
-            BuildingManager.Instance.NewGhost(buildingType);
+            PlacementManager.Instance.NewGhost(buildingType);
         });
 
 
@@ -30,7 +31,7 @@ public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         Debug.Log($"Selected building {buildingType} via onclick");
         FXManager.Instance.DoFX(FXType.Select);
-        BuildingManager.Instance.NewGhost(buildingType);
+        PlacementManager.Instance.NewGhost(buildingType);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {

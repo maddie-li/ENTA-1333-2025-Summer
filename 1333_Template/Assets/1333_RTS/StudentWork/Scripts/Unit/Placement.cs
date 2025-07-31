@@ -6,61 +6,40 @@ using RTS_1333;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Building : Unit
+public class Placement : MonoBehaviour
 {
-    [Serializable]
-    public class BuildingData
-    {
-        public float x;
-        public float y;
-        public float z;
-    }
-
+    public Unit Unit;
+    private UnitData UnitData;
 
     private Renderer[] renderers;
-    public bool isGhost = true;
-
+    public bool IsGhost = true;
+    public Spawner spawner;
     private Material validMat;
     private Material invalidMat;
     private Material defaultMat;
 
-    public SpawnFromBuilding Spawner;
+    [Header("Placement Settings")]
 
-    [SerializeField] private List<BuildingData> data = new List<BuildingData>();  
+    [SerializeField] private int value = 1;
+    [SerializeField] private int buildTime = 1;
+    public int Value => value;
+    public int BuildTime => buildTime;
 
     private void Awake()
     {
-        Spawner = GetComponent<SpawnFromBuilding>();
-        InitDamage();
+        Unit = GetComponentInParent<Unit>();
+        UnitData = Unit.UnitData;
+
+        spawner = Unit.spawner;
     }
 
     public void SetupMat(Material regular, Material valid, Material invalid)
     {
         renderers = GetComponentsInChildren<Renderer>();
-        //defaultMat = GetComponentInChildren<Renderer>().material;
 
         invalidMat = invalid;
         validMat = valid;
         defaultMat = regular;
-    }
-
-    public override void UpdateCurrentNode(GridNode newNode)
-    {
-        if (isGhost)
-        {
-            CurrentNode = newNode;
-        }
-        else
-        {
-            
-            if (newNode.CurrentUnit != null) return;
-
-            if (CurrentNode != null)
-                CurrentNode.CurrentUnit = null;
-
-            CurrentNode = newNode;
-            newNode.CurrentUnit = this;
-        }
     }
 
     internal void UpdateColor(bool isValid)

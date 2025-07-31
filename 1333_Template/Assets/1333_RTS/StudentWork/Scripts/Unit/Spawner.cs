@@ -4,10 +4,9 @@ using RTS_1333;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SpawnFromBuilding : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
-
-    public GameObject UnitPrefab;
+    public UnitData typeToSpawn;
     public float SpawnInterval = 5f;
 
     public Transform SpawnPoint;
@@ -37,18 +36,17 @@ public class SpawnFromBuilding : MonoBehaviour
     public void StartSpawning() => isSpawning = true;
     public void StopSpawning() => isSpawning = false;
 
-    public void SetUnitPrefab(GameObject newPrefab) => UnitPrefab = newPrefab;
 
     private void SpawnUnit()
     {
-        Combatant spawnedUnit;
+        Unit spawnedUnit;
 
-        spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint.position);
+        spawnedUnit = UnitManager.Instance.SpawnUnit(typeToSpawn.UnitPrefab, SpawnPoint.position, typeToSpawn.Army);
 
         if (spawnedUnit != null)
         {
-            //Debug.LogWarning("Spawning unit from building", spawnedUnit);
-            spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
+            //Debug.LogWarning("Spawning Unit from building", spawnedUnit);
+            spawnedUnit.movement.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
         }
     }
 

@@ -260,13 +260,13 @@ namespace RTS_1333
             return false;
         }
 
-        public List<Vector3> GetOccupiedFootprintNodes(Unit unit)
+        public List<Vector3> GetOccupiedFootprintNodes(Unit Unit)
         {
             List<Vector3> occupiedPositions = new List<Vector3>();
 
-            float width = unit.Width;
-            float length = unit.Length;
-            GridNode startNode = unit.CurrentNode;
+            float width = Unit.Width;
+            float length = Unit.Length;
+            GridNode startNode = Unit.CurrentNode;
 
             for (int x = 0; x < width; x++)
             {
@@ -283,7 +283,7 @@ namespace RTS_1333
             return occupiedPositions;
         }
 
-        public void FootprintOccupy(GridNode startNode, int width, int length, Unit unit)
+        public void FootprintOccupy(GridNode startNode, int width, int length, Unit Unit)
         {
             for (int x = 0; x < width; x++)
             {
@@ -292,7 +292,7 @@ namespace RTS_1333
                     var node = GetNode(startNode.GridPosition.x + x, startNode.GridPosition.y + y);
                     if (node != null)
                     {
-                        node.CurrentUnit = unit;
+                        node.CurrentUnit = Unit;
                     }
                 }
          

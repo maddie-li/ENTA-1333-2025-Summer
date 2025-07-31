@@ -119,8 +119,8 @@ SubShader {
 		#pragma shader_feature __ UNDERLAY_ON UNDERLAY_INNER
 		#pragma shader_feature __ GLOW_ON
 
-		#pragma multi_compile __ UNITY_UI_CLIP_RECT
-		#pragma multi_compile __ UNITY_UI_ALPHACLIP
+		#pragma multi_compile __ UnitY_UI_CLIP_RECT
+		#pragma multi_compile __ UnitY_UI_ALPHACLIP
 
 		#include "UnityCG.cginc"
 		#include "UnityUI.cginc"
@@ -129,7 +129,7 @@ SubShader {
 
 		struct vertex_t
 		{
-			UNITY_VERTEX_INPUT_INSTANCE_ID
+			UnitY_VERTEX_INPUT_INSTANCE_ID
 			float4	position		: POSITION;
 			float3	normal			: NORMAL;
 			fixed4	color			: COLOR;
@@ -139,8 +139,8 @@ SubShader {
 
 		struct pixel_t
 		{
-			UNITY_VERTEX_INPUT_INSTANCE_ID
-			UNITY_VERTEX_OUTPUT_STEREO
+			UnitY_VERTEX_INPUT_INSTANCE_ID
+			UnitY_VERTEX_OUTPUT_STEREO
 			float4	position		: SV_POSITION;
 			fixed4	color			: COLOR;
 			float2	atlas			: TEXCOORD0;		// Atlas
@@ -167,10 +167,10 @@ SubShader {
 		{
 			pixel_t output;
 
-			UNITY_INITIALIZE_OUTPUT(pixel_t, output);
-			UNITY_SETUP_INSTANCE_ID(input);
-			UNITY_TRANSFER_INSTANCE_ID(input,output);
-			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+			UnitY_INITIALIZE_OUTPUT(pixel_t, output);
+			UnitY_SETUP_INSTANCE_ID(input);
+			UnitY_TRANSFER_INSTANCE_ID(input,output);
+			UnitY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 			float bold = step(input.texcoord0.w, 0);
 
@@ -181,10 +181,10 @@ SubShader {
 			float4 vPosition = UnityObjectToClipPos(vert);
 
 			float2 pixelSize = vPosition.w;
-			pixelSize /= float2(_ScaleX, _ScaleY) * abs(mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy));
+			pixelSize /= float2(_ScaleX, _ScaleY) * abs(mul((float2x2)UnitY_MATRIX_P, _ScreenParams.xy));
 			float scale = rsqrt(dot(pixelSize, pixelSize));
 			scale *= abs(input.texcoord0.w) * _GradientScale * (_Sharpness + 1);
-			if (UNITY_MATRIX_P[3][3] == 0) scale = lerp(abs(scale) * (1 - _PerspectiveFilter), scale, abs(dot(UnityObjectToWorldNormal(input.normal.xyz), normalize(WorldSpaceViewDir(vert)))));
+			if (UnitY_MATRIX_P[3][3] == 0) scale = lerp(abs(scale) * (1 - _PerspectiveFilter), scale, abs(dot(UnityObjectToWorldNormal(input.normal.xyz), normalize(WorldSpaceViewDir(vert)))));
 
 			float weight = lerp(_WeightNormal, _WeightBold, bold) / 4.0;
 			weight = (weight + _FaceDilate) * _ScaleRatioA * 0.5;
@@ -232,7 +232,7 @@ SubShader {
 			output.param =	float4(alphaClip, scale, bias, weight);
 			const half2 maskSoftness = half2(max(_UIMaskSoftnessX, _MaskSoftnessX), max(_UIMaskSoftnessY, _MaskSoftnessY));
 			output.mask = half4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * maskSoftness + pixelSize.xy));
-			output.viewDir =	mul((float3x3)_EnvMatrix, _WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, vert).xyz);
+			output.viewDir =	mul((float3x3)_EnvMatrix, _WorldSpaceCameraPos.xyz - mul(Unity_ObjectToWorld, vert).xyz);
 			#if (UNDERLAY_ON || UNDERLAY_INNER)
 			output.texcoord2 = float4(input.texcoord0 + bOffset, bScale, bBias);
 			output.underlayColor =	underlayColor;
@@ -245,7 +245,7 @@ SubShader {
 
 		fixed4 PixShader(pixel_t input) : SV_Target
 		{
-			UNITY_SETUP_INSTANCE_ID(input);
+			UnitY_SETUP_INSTANCE_ID(input);
 
 			float c = tex2D(_MainTex, input.atlas).a;
 
@@ -306,12 +306,12 @@ SubShader {
 		    #endif
 
 		    // Alternative implementation to UnityGet2DClipping with support for softness.
-		    #if UNITY_UI_CLIP_RECT
+		    #if UnitY_UI_CLIP_RECT
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 			faceColor *= m.x * m.y;
 		    #endif
 
-		    #if UNITY_UI_ALPHACLIP
+		    #if UnitY_UI_ALPHACLIP
 			clip(faceColor.a - 0.001);
 		    #endif
 

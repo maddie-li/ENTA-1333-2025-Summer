@@ -36,9 +36,9 @@ public class CurrencyManager : MonoBehaviour
         return currentGoldByArmy.TryGetValue(army, out int gold) ? gold : 0;
     }
 
-    public bool CanAfford(Army army, Unit unit)
+    public bool CanAfford(Army army, Unit Unit)
     {
-        return GetGold(army) >= unit.Cost;
+        return GetGold(army) >= Unit.Cost;
     }
 
     public bool CanAfford(Army army, int amt)
@@ -55,11 +55,11 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
-    public bool TryBuyUnit(Army army, Unit unit)
+    public bool TryBuyUnit(Army army, Unit Unit)
     {
-        if (CanAfford(army, unit))
+        if (CanAfford(army, Unit))
         {
-            currentGoldByArmy[army] -= unit.Cost;
+            currentGoldByArmy[army] -= Unit.Cost;
             UpdateText(army);
             return true;
         }

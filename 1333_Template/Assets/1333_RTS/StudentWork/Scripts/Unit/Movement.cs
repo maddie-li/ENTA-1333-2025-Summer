@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using RTS_1333;
 
-public class MovementController : MonoBehaviour
+public class Movement : MonoBehaviour
 {
-    //[Header("References")]
-    private Pathfinder pathfinder;
-    private Unit unit;
+    public Unit Unit;
+    private UnitData unitData;
 
-    //[Header("Movement")]
-    private float moveSpeed = 3f;
+    private Animator animator;
+
+    // pathfinding
+    private Pathfinder pathfinder; 
     private bool isMoving;
     private List<GridNode> currentPath = new();
     private int pathIndex = 0;
@@ -18,28 +19,39 @@ public class MovementController : MonoBehaviour
     private Coroutine movementCoroutine;
     private GridNode currentTargetNode;
 
-    public void Initialize(Pathfinder _pathfinder, Unit _unit, float _moveSpeed)
+    [Header("Movement Settings")]
+
+    [SerializeField] private float moveSpeed = 1;
+    [SerializeField] private int sensingRange = 1;
+
+    public float MoveSpeed => moveSpeed;
+    public int SensingRange => sensingRange;
+    private void Awake()
     {
-        pathfinder = _pathfinder;
-        unit = _unit;
-        moveSpeed = _moveSpeed;
+        Unit = GetComponentInParent<Unit>();
+        unitData = Unit.UnitData;
+
+        pathfinder = UnitManager.Instance.Pathfinder;
+
+        if (Unit.TryGetComponent<Animator>(out Animator _animator))
+            animator = _animator;
     }
 
     public void SetTarget(GridNode targetNode)
     {
         //Debug.Log($"Movement: Setting new target to {targetNode.Name}");
 
-        //Debug.Log($"Combatant: Commanding {unit.name} to node{targetNode.Name}");
+        //Debug.Log($"Combatant: Commanding {Unit.name} to node{targetNode.Name}");
 
-        //Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {unit == null}");
+        //Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {Unit == null}");
 
-        if (pathfinder == null || unit == null) return;
+        if (pathfinder == null || Unit == null) return;
 
         
 
         if (targetNode.IsOccupied())
         {
-            currentTargetNode = GridManager.Instance.GetClosestReachableNeighbour(unit.CurrentNode, targetNode, pathfinder);
+            currentTargetNode = GridManager.Instance.GetClosestReachableNeighbour(Unit.CurrentNode, targetNode, pathfinder);
             //Debug.Log($"Movement: Changed target {currentTargetNode.Name}");
 
             // this may be null if it recursions too much
@@ -52,8 +64,8 @@ public class MovementController : MonoBehaviour
 
             
 
-        //Debug.Log($"Start node: {unit.CurrentNode?.Name}, End node: {targetNode?.Name}");
-        currentPath = pathfinder.FindPath(unit.CurrentNode, currentTargetNode);
+        //Debug.Log($"Start node: {Unit.CurrentNode?.Name}, End node: {targetNode?.Name}");
+        currentPath = pathfinder.FindPath(Unit.CurrentNode, currentTargetNode);
         pathIndex = 0;
 
         //Debug.Log($"Movement: currentPath.Count = {currentPath.Count}, coroutine = {movementCoroutine}");
@@ -100,7 +112,7 @@ public class MovementController : MonoBehaviour
                 {
                     //Debug.Log($"Final node ({currentPath[nextIndex].Name})is occupied. Finding neighbour");
 
-                    GridNode newTarget = GridManager.Instance.GetClosestReachableNeighbour(unit.CurrentNode, nextNode, pathfinder);
+                    GridNode newTarget = GridManager.Instance.GetClosestReachableNeighbour(Unit.CurrentNode, nextNode, pathfinder);
                     SetTarget(newTarget);
                     yield break;
                 }
@@ -128,7 +140,7 @@ public class MovementController : MonoBehaviour
             if (pathIndex < currentPath.Count - 1)
             {
                 pathIndex++;
-                unit.UpdateCurrentNode(currentPath[pathIndex]);
+                Unit.UpdateCurrentNode(currentPath[pathIndex]);
             }
             else
             {

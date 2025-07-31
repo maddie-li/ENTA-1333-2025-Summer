@@ -1,34 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
 using RTS_1333;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
-public class Damageable : MonoBehaviour
+public class Damage : MonoBehaviour
 {
-    [SerializeField] private HealthBar healthBar;
+    public Unit Unit;
+    private UnitData UnitData;
+
+    private int currentHP; 
     private Animator animator;
+    [SerializeField] private HealthBar healthBar;
 
-    private int maxHP;
-    private int currentHP;
-
+    [Header("Damage Settings")]
     public int CurrentHP => currentHP;
-    public int MaxHP => maxHP;
+    public int MaxHP => UnitData.MaxHP;
+    public int Defense => UnitData.Defense;
 
-    public void Initialize(int _maxHP, Animator _animator)
+    private void Awake()
     {
-        animator = _animator;
-        Initialize(_maxHP);
-    }
+        Unit = GetComponentInParent<Unit>();
+        UnitData = Unit.UnitData;
 
-    public void Initialize(int _maxHP)
-    {
-
-        maxHP = _maxHP;
-
-        currentHP = maxHP;
+        currentHP = MaxHP;
         if (healthBar != null)
-            healthBar.SetHealth(currentHP, maxHP);
-    }
+            healthBar.SetHealth(currentHP, MaxHP);
 
+        if (Unit.TryGetComponent<Animator>(out Animator _animator))
+            animator = _animator;
+    }
     public void TakeDamage(int damage)
     {
         if (animator != null)
@@ -37,21 +39,20 @@ public class Damageable : MonoBehaviour
             animator.SetTrigger("hasBeenDamaged");
         }
 
-        if (TryGetComponent<Combatant>(out Combatant combatant))
+        /*if (TryGetComponent<Combatant>(out Combatant combatant))
         {
             //Debug.Log("Got damaged, stopping coroutine");
             //combatant.StopCoroutine(combatant.stateRoutine);
             FXManager.Instance.DoFX(FXType.CombatantDamage);
         }
-
         if (TryGetComponent<Building>(out Building building))
         {
 
             FXManager.Instance.DoFX(FXType.BuildingDamage);
-        }
+        }*/
 
         currentHP -= damage;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        currentHP = Mathf.Clamp(currentHP, 0, MaxHP);
         UpdateHealthBar();
 
         if (currentHP <= 0)
@@ -61,7 +62,7 @@ public class Damageable : MonoBehaviour
     public void Heal(int amount)
     {
         currentHP += amount;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        currentHP = Mathf.Clamp(currentHP, 0, MaxHP);
         UpdateHealthBar();
     }
 
@@ -69,7 +70,7 @@ public class Damageable : MonoBehaviour
     {
         if (!TryGetComponent<Unit>(out Unit thisUnit)) return;
 
-        if (thisUnit is Combatant combatant)
+        /*if (thisUnit is Combatant combatant)
         {
             combatant.Die();
             Debug.Log("Deregistering combatant");
@@ -81,9 +82,9 @@ public class Damageable : MonoBehaviour
             Debug.Log("Deregistering building");
             BuildingManager.Instance.UnregisterUnit(building);
             FXManager.Instance.DoFX(FXType.BuildingDestroy);
-        }
+        }*/
 
-        if (thisUnit.army == Army.Enemy)
+        if (thisUnit.Army == Army.Enemy)
         {
             CurrencyManager.Instance.EarnGold(Army.Player, thisUnit.Cost);
         }
@@ -92,11 +93,11 @@ public class Damageable : MonoBehaviour
             CurrencyManager.Instance.EarnGold(Army.Enemy, thisUnit.Cost);
         }
 
-        if (thisUnit is Combatant combatantToDestroy)
+        if (animator != null)
         {
             Destroy(gameObject, 2f);
         }
-        else if (thisUnit is Building buildingToDestroy)
+        else
         {
             Destroy(gameObject);
         }
@@ -106,6 +107,6 @@ public class Damageable : MonoBehaviour
     private void UpdateHealthBar()
     {
         if (healthBar != null)
-            healthBar.SetHealth(currentHP, maxHP);
+            healthBar.SetHealth(currentHP, MaxHP);
     }
 }
