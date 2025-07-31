@@ -11,8 +11,6 @@ public class Attack : MonoBehaviour
     private UnitData UnitData;
 
     private float lastAttackTime;
-    public bool IsAttacking;
-    public bool IsDead;
     private Animator animator;
 
     [Header("Attack Settings")]

@@ -9,15 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15371665ffab6104cbf6d6ff9db18af5, type: 3}
+  m_Script: {fileID: 11500000, guid: 03e572c1923d5a441b4818a91276a76c, type: 3}
   m_Name: Barracks
   m_EditorClassIdentifier: 
-  width: 6
-  length: 6
-  cost: 25
-  maxHP: 5
-  unitPrefab: {fileID: 8077127449755859070, guid: c6936e1854629634189a941c94d34fff, type: 3}
+  unitType: 1
+  width: 1
+  length: 1
+  cost: 1
+  unitPrefab: {fileID: 8698577214421215342, guid: 5bca30568c2927d448910a8c4686c95d, type: 3}
   army: 0
-  value: 1
-  spawnInterval: 1
-  buildTime: 1
+  maxHP: 1
+  defense: 1
+  CombatEnabled: 0
+  PlacementEnabled: 1
+  AttackEnabled: 0
+  DamageEnabled: 0
+  MovementEnabled: 0
+  SpawningEnabled: 0

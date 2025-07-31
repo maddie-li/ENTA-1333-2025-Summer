@@ -55,12 +55,13 @@ namespace RTS_1333
             WorldPosition = node.WorldPosition;
             CurrentNode = node;
         }
-        private void OnValidate()
+        private void Awake()
         {
             movement.gameObject.SetActive(CanMove);
             attack.gameObject.SetActive(CanAttack);
             damage.gameObject.SetActive(CanDamaged);
             placement.gameObject.SetActive(CanPlace);
+            spawner.gameObject.SetActive(CanSpawn);
         }
 
         public void TakeDamage(int amount)

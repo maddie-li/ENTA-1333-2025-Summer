@@ -12,7 +12,7 @@ namespace RTS_1333
 
         [SerializeField] private int cost = 1;
 
-        //[SerializeField] protected GameObject UnitPrefab;
+        [SerializeField] protected GameObject unitPrefab;
 
         [SerializeField] private Army army;
 
@@ -35,7 +35,7 @@ namespace RTS_1333
         public int MaxHP => maxHP;
         public int Defense => defense;
 
-        public GameObject UnitPrefab => UnitPrefab;
+        public GameObject UnitPrefab => unitPrefab;
 
         public Army Army => army;
     }

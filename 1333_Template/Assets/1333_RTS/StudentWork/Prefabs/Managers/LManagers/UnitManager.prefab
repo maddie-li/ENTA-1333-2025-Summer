@@ -91,13 +91,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68b62e937aead949ad1886d09c5e1d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathfinder: {fileID: 1434056027096467407}
-  prefab: {fileID: 123088, guid: 1f6318dd9931245479ed25bd6845f47b, type: 3}
-  selectedMat: {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
-  EnemyMat: {fileID: 2100000, guid: 09f07a789aff5fa4fb395a73e822bcb3, type: 2}
-  PlayerMat: {fileID: 2100000, guid: 551b6a7ed6b425f419693f9fa637e207, type: 2}
-  nodePosition:
-  - {x: 3, y: 3}
-  - {x: 2, y: 1}
-  - {x: 12, y: 4}
+  Pathfinder: {fileID: 0}
+  combatantMaterials:
+  - {fileID: 2100000, guid: 551b6a7ed6b425f419693f9fa637e207, type: 2}
+  - {fileID: 2100000, guid: 09f07a789aff5fa4fb395a73e822bcb3, type: 2}
+  - {fileID: 2100000, guid: 579eed0de6a638b479dfba881a31ff82, type: 2}
+  - {fileID: 2100000, guid: 3c4dbd5c85f1fdb42b41439c4e18454a, type: 2}
+  - {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
+  buildingMaterials:
+  - {fileID: 2100000, guid: 4dbe8d2b46607294bab2e6cc27977d7c, type: 2}
+  - {fileID: 2100000, guid: 98af6458766fff74c8c69230bf371e18, type: 2}
+  - {fileID: 2100000, guid: 579eed0de6a638b479dfba881a31ff82, type: 2}
+  - {fileID: 2100000, guid: 3c4dbd5c85f1fdb42b41439c4e18454a, type: 2}
+  - {fileID: 2100000, guid: 842196d43b29daa4ab80512e42b952f5, type: 2}
   allUnits: []

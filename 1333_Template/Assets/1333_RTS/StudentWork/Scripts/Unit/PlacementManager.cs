@@ -10,9 +10,6 @@ public class PlacementManager : MonoBehaviour
 
     public Placement CurrentGhost;
 
-    public UnitData[] UnitData;
-
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,16 +30,17 @@ public class PlacementManager : MonoBehaviour
 
     public void NewGhost(UnitData typeToBuild)
     {
+        Debug.LogError("New ghost!");
         if (CurrentGhost != null)
         {
             Destroy(CurrentGhost.gameObject);
         }
 
-        Debug.Log(UnitData[0]);
         Debug.Log(typeToBuild.UnitPrefab);
         GameObject ghostObject = Instantiate(typeToBuild.UnitPrefab, this.transform);
 
         CurrentGhost = ghostObject.GetComponent<Placement>();
+        Debug.LogError(CurrentGhost);
         if (CurrentGhost != null)
         {
             CurrentGhost.IsGhost = true;

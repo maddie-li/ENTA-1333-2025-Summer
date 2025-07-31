@@ -9,14 +9,13 @@ public class BuildingPlacementUI : MonoBehaviour
     [SerializeField] private SelectBuildingButton buttonPrefab;
 
     public List<UnitData> buildings = new();
-    public UnitManager buildingManager;
 
     void Start()
     {
         foreach(UnitData b in buildings)
         {
             SelectBuildingButton button = Instantiate(buttonPrefab, layoutGroupParent);
-            button.Setup(b, buildingManager);
+            button.Setup(b);
         }
     }
 

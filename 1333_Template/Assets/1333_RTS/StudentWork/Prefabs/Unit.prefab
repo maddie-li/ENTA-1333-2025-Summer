@@ -195,6 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 703151365081475666}
+  - component: {fileID: 5843430437111584177}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -223,3 +224,23 @@ Transform:
   - {fileID: 3649986570320472333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5843430437111584177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698577214421215342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463eeb8693cf2304b898f06c812ad31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitData: {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
+  Name: 
+  combat: {fileID: 0}
+  movement: {fileID: 0}
+  attack: {fileID: 0}
+  damage: {fileID: 0}
+  placement: {fileID: 0}
+  spawner: {fileID: 0}

@@ -12,7 +12,7 @@ public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private UnitData buildingType;
 
-    public void Setup(UnitData _buildingType, UnitManager _buildingManager)
+    public void Setup(UnitData _buildingType)
     {
         buildingType = _buildingType;
 

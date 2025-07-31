@@ -38,7 +38,7 @@ public class Combat : MonoBehaviour
     }
     private void Start()
     {
-        stateRoutine = StartCoroutine(StateMachine());
+        if(Unit.CanCombat)stateRoutine = StartCoroutine(StateMachine());
 
     }
 

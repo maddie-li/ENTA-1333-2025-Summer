@@ -47,12 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f5b545c8f023c45bff69db3c813d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   managerPrefabs:
   - {fileID: 1526145079011505255, guid: 328fceab30c74d047851c32c7fa5999e, type: 3}
   - {fileID: 6364937788488144955, guid: a35b4e824bfee994caf7be3b1833ea63, type: 3}
   - {fileID: 4507390613880344539, guid: 589f8e49d07060f4691db2752d500826, type: 3}
   - {fileID: 457140550427642576, guid: f9afd5f3c8c38d54fb43b62f18a92493, type: 3}
   - {fileID: 6317674515184914579, guid: 402149a294a33a04b93016f49010c209, type: 3}
+  - {fileID: 1405983154717648802, guid: c005febb63fc0854a808fdfc85fdbda2, type: 3}
 --- !u!114 &368433012744303496
 MonoBehaviour:
   m_ObjectHideFlags: 0
