@@ -47,6 +47,6 @@ MonoBehaviour:
   interval: 5
   spawnDistance: 15
   enemyBuildings:
-  - {fileID: 11400000, guid: ce1463ae8fa870842b3609e2dae7c5b7, type: 2}
-  - {fileID: 11400000, guid: 0afe0e88480708d4c989cafa96aebd6b, type: 2}
-  - {fileID: 11400000, guid: ab0ca54b88950bb478d6a9b37d0c78f5, type: 2}
+  - {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
+  - {fileID: 11400000, guid: 8f6d88e72765d6042bf5c3c769a1c6a5, type: 2}
+  - {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}

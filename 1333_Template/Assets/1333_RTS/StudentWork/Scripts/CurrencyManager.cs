@@ -24,8 +24,7 @@ public class CurrencyManager : MonoBehaviour
         currentGoldByArmy[Army.Player] = startingGold;
         currentGoldByArmy[Army.Enemy] = startingGold;
 
-        UpdateText(Army.Player);
-        UpdateText(Army.Enemy);
+        UpdateText();
 
         //currentGold = startingGold;
         //UpdateText();
@@ -51,7 +50,7 @@ public class CurrencyManager : MonoBehaviour
         if (currentGoldByArmy.ContainsKey(army))
         {
             currentGoldByArmy[army] += amount;
-            UpdateText(army);
+            UpdateText();
         }
     }
 
@@ -60,21 +59,23 @@ public class CurrencyManager : MonoBehaviour
         if (CanAfford(army, unit))
         {
             currentGoldByArmy[army] -= unit.Cost;
-            UpdateText(army);
+            UpdateText();
             return true;
         }
         return false;
     }
 
-    private void UpdateText(Army army)
+    private void UpdateText()
     {
-        if (army == Army.Player)
+        /*if (army == Army.Player)
         {
             UIManager.Instance.GoldText.text = currentGoldByArmy[army].ToString() + " Gold";
         }
         else if (army == Army.Enemy)
         {
             Debug.Log($"Enemy Gold: {currentGoldByArmy[army]}");
-        }
+        }*/
+
+        UIManager.Instance.GoldText.text = $"Your Gold: {currentGoldByArmy[Army.Player].ToString()} \n Enemy Gold: {currentGoldByArmy[Army.Enemy].ToString()}";
     }
 }

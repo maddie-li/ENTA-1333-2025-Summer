@@ -21,6 +21,14 @@ namespace RTS_1333
         Victory,  
         Defeat    
     }
+
+    public enum LoseReason
+    {
+        NoSoldiers,
+        NoCastle,
+        NoMoney
+    }
+
     public class GameManager : MonoBehaviour
     {
         private InputSystem_Actions interactActions;
@@ -32,6 +40,11 @@ namespace RTS_1333
         private List<GameObject> destroyableManagers = new List<GameObject>();
 
         private TimeState currentTimeState = TimeState.Normal;
+
+        // lose conditions
+        public Building EnemyCastle;
+        public Building PlayerCastle;
+        public LoseReason ReasonForLoss;
         private void OnEnable()
         {
             interactActions.Enable();
@@ -156,20 +169,26 @@ namespace RTS_1333
 
                 if (UnitManager.Instance.unitsByArmy[army].Count == 0)
                 {
-                    HandleGameOver(army);
+                    HandleGameOver(army, LoseReason.NoSoldiers);
                 }
 
 
-                if (BuildingManager.Instance.EnemyCastle == null) HandleGameOver(Army.Enemy);
-                if (BuildingManager.Instance.PlayerCastle == null) HandleGameOver(Army.Player);
+                if (EnemyCastle == null) HandleGameOver(Army.Enemy, LoseReason.NoCastle);
+                if (PlayerCastle == null) HandleGameOver(Army.Player, LoseReason.NoCastle);
+
+                if (CurrencyManager.Instance.GetGold(Army.Player) < 1) HandleGameOver(Army.Player, LoseReason.NoMoney);
+                if (CurrencyManager.Instance.GetGold(Army.Player) < 1) HandleGameOver(Army.Player, LoseReason.NoMoney);
             }
 
         }
 
-        private void HandleGameOver(Army army)
+        private void HandleGameOver(Army army, LoseReason reason)
         {
             if (currentState == GameState.Gameplay || currentState == GameState.Paused)
             {
+
+                ReasonForLoss = reason;
+
                 switch (army)
                 {
                     case Army.Player:

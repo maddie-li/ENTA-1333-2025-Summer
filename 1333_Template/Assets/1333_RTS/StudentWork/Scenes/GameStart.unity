@@ -421,6 +421,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3440436112584379711, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+      propertyPath: m_fontSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440436112584379711, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440436112584379711, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329342279006978556, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6334754607868961104, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -449,6 +465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6864373624042872457, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7910367289019614115, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -464,6 +484,10 @@ PrefabInstance:
     - target: {fileID: 7910367289019614115, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7961112661958428203, guid: bd654daaa9dbe8344a529c43fddbf3ea, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -36.80005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

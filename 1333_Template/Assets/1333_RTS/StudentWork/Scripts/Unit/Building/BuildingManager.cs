@@ -20,12 +20,7 @@ public class BuildingManager : MonoBehaviour
 
     public List<Building> allBuildings = new();
 
-    public BuildingType playerCastle;
-    public BuildingType enemyCastle;
-    public Vector3 playerStart;
-    public Vector3 enemyStart;
-    public Building PlayerCastle;
-    public Building EnemyCastle;
+    [SerializeField] private BuildingType castle;
 
     private void Awake()
     {
@@ -42,8 +37,9 @@ public class BuildingManager : MonoBehaviour
 
     private void Start()
     {
-        BuildStartScene(playerCastle, GridManager.Instance.GetNodeFromWorldPosition(playerStart));
-        BuildStartScene(enemyCastle, GridManager.Instance.GetNodeFromWorldPosition(enemyStart));
+        GameManager.Instance.EnemyCastle = CreateCastle(castle, GridManager.Instance.GetNodeFromWorldPosition(new Vector3 (40,0,40)),Army.Enemy);
+        GameManager.Instance.PlayerCastle = CreateCastle(castle, GridManager.Instance.GetNodeFromWorldPosition(new Vector3(2, 0, 2)), Army.Player);
+
     }
 
     private void Update()
@@ -76,6 +72,8 @@ public class BuildingManager : MonoBehaviour
 
             Material defaultMat = null;
 
+            currentGhost.unitType.Army = Army.Player;
+
             switch (currentGhost.army)
             {
                 case Army.Player:
@@ -87,7 +85,6 @@ public class BuildingManager : MonoBehaviour
             }
 
             if(defaultMat != null) currentGhost.SetupMat(defaultMat, ValidMat, InvalidMat);
-
             currentGhost.Spawner?.StopSpawning();
         }
     }
@@ -145,6 +142,8 @@ public class BuildingManager : MonoBehaviour
         GameObject buildingObject = Instantiate(typeToBuild.UnitPrefab, this.transform);
         Building building = buildingObject.GetComponent<Building>();
 
+        building.unitType.Army = Army.Enemy;
+
         building.Initialize(targetNode);
         building.SetNodePos(targetNode);
         GridManager.Instance.FootprintOccupy(targetNode, building.Width, building.Length, building);
@@ -200,7 +199,7 @@ public class BuildingManager : MonoBehaviour
         return origin.WorldPosition + offset;
     }
 
-    private void BuildStartScene(BuildingType typeToBuild, GridNode targetNode)
+    private Building CreateCastle(BuildingType typeToBuild, GridNode targetNode, Army army)
     {
         GameObject buildingObject = Instantiate(typeToBuild.UnitPrefab, this.transform);
         Building building = buildingObject.GetComponent<Building>();
@@ -209,7 +208,7 @@ public class BuildingManager : MonoBehaviour
         building.SetNodePos(targetNode);
         GridManager.Instance.FootprintOccupy(targetNode, building.Width, building.Length, building);
 
-        RegisterUnit(building);
+        building.unitType.Army = army;
 
         Material defaultMat = null;
 
@@ -217,15 +216,21 @@ public class BuildingManager : MonoBehaviour
         {
             case Army.Player:
                 defaultMat = PlayerMat;
-                PlayerCastle = building;
                 break;
             case Army.Enemy:
                 defaultMat = EnemyMat;
-                EnemyCastle = building;
                 break;
         }
 
         if (defaultMat != null) building.SetupMat(defaultMat, ValidMat, InvalidMat);
         building.UpdateColor();
+
+        RegisterUnit(building);
+
+        building.Spawner?.SetArmy(army);
+        building.Spawner?.StartSpawning();
+
+        return building;
+
     }
 }

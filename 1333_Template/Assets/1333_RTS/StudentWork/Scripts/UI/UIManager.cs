@@ -21,6 +21,10 @@ public class UIManager : MonoBehaviour
 
 
     public TMP_Text GoldText;
+    public TMP_Text VictoryMessage;
+    public TMP_Text DefeatMessage;
+
+
     [SerializeField] private GameObject[] UIScreens;
     private TimeStateDropdown timescaleDropdown;
 
@@ -55,7 +59,40 @@ public class UIManager : MonoBehaviour
         UIScreens[(int)screen].SetActive(true);
 
         CurrentScreen = screen;
-        
+
+        if(screen == UIScreen.Victory)
+        {
+            switch (GameManager.Instance.ReasonForLoss)
+            {
+                case LoseReason.NoSoldiers:
+                    VictoryMessage.text = "You have destroyed all soldiers of the enemy army!";
+                    break;
+                case LoseReason.NoMoney:
+                    VictoryMessage.text = "The enemy has run out of wealth to support their campaign!";
+                    break;
+                case LoseReason.NoCastle:
+                    VictoryMessage.text = "You have destroyed the enemy's castle!";
+                    break;
+                    ;
+            }
+        }
+        else if (screen == UIScreen.Defeat)
+        {
+            switch (GameManager.Instance.ReasonForLoss)
+            {
+                case LoseReason.NoSoldiers:
+                    DefeatMessage.text = "All of your soldiers have been wiped out...";
+                    break;
+                case LoseReason.NoMoney:
+                    DefeatMessage.text = "Your wealth has been depleted...";
+                    break;
+                case LoseReason.NoCastle:
+                    DefeatMessage.text = "Your castle has crumbled...";
+                    break;
+                    ;
+            }
+        }
+
     }
 
     public void StartClicked()

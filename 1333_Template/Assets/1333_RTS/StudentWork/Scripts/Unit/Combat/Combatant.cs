@@ -197,6 +197,11 @@ public class Combatant : Unit, ISelectableObject
 
     // ENEMY MANAGEMENT ---------------------------------------------------------------
 
+    public void GoToClosestTarget()
+    {
+        SetTarget(GetClosestTarget()?.CurrentNode);  
+    }
+
     private Combatant GetClosestEnemy()
     {
         Combatant closestEnemy = null;
@@ -205,12 +210,17 @@ public class Combatant : Unit, ISelectableObject
 
         foreach (Combatant enemy in GetEnemies())
         {
-            float distance = Vector3.Distance(myPos, enemy.transform.position);
-            if (distance < closestDistance)
+            if (enemy != null)
             {
-                closestDistance = distance;
-                closestEnemy = enemy;
+
+                float distance = Vector3.Distance(myPos, enemy.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = enemy;
+                }
             }
+
         }
 
         return closestEnemy;

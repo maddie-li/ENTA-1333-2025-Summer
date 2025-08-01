@@ -23,20 +23,13 @@ public class SpawnFromBuilding : MonoBehaviour
     public GameObject UnitPrefab;
 
     public Transform SpawnPoint;
-    public Transform RallyPoint;
-    public bool CanMoveRallyPoint = false;
+    //public Transform RallyPoint;
+    //public bool CanMoveRallyPoint = false;
 
     private float spawnTimer;
 
     [Header("Gold Spawn Settings")]
     [SerializeField] public int goldAmount = 1;
-
-
-    private void Awake()
-    {
-        army = GetComponentInParent<Building>().unitType.Army;
-    }
-
     void Update()
     {
         if (!isSpawning) return;
@@ -58,10 +51,10 @@ public class SpawnFromBuilding : MonoBehaviour
             spawnTimer = 0f;
         }
 
-        if (Mouse.current.leftButton.isPressed && CanMoveRallyPoint)
+        /*if (Mouse.current.leftButton.isPressed && CanMoveRallyPoint)
         {
             MoveRallyPoint();
-        }
+        }*/
     }
 
     public void StartSpawning() => isSpawning = true;
@@ -73,12 +66,13 @@ public class SpawnFromBuilding : MonoBehaviour
     {
         Combatant spawnedUnit;
 
-        spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint.position);
+        spawnedUnit = UnitManager.Instance.SpawnUnit(UnitPrefab, SpawnPoint.position, army);
 
         if (spawnedUnit != null)
         {
             //Debug.LogWarning("Spawning unit from building", spawnedUnit);
-            spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
+            //spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
+            spawnedUnit.GoToClosestTarget();
         }
     }
 
@@ -88,7 +82,12 @@ public class SpawnFromBuilding : MonoBehaviour
         CurrencyManager.Instance.EarnGold(army, goldAmount);
     }
 
-    private void MoveRallyPoint()
+    public void SetArmy(Army _army)
+    {
+        army = _army;
+    }
+
+    /*private void MoveRallyPoint()
     {
         var node = GridManager.Instance.GetNodeFromMousePosition();
         if (node == null) return;
@@ -99,6 +98,6 @@ public class SpawnFromBuilding : MonoBehaviour
         {
             RallyPoint.transform.position = node.WorldPosition;
         }
-    }
+    }*/
 
 }

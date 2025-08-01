@@ -38,13 +38,15 @@ namespace RTS_1333
             }
         }
 
-        public Combatant SpawnUnit(GameObject prefab, Vector3 pos)
+        public Combatant SpawnUnit(GameObject prefab, Vector3 pos, Army army)
         {
             GridNode node = GridManager.Instance.GetNodeFromWorldPosition(pos);
             if (node == null || node.CurrentUnit != null) return null;
 
             GameObject unitObject = Instantiate(prefab, this.transform);
             Combatant unit = unitObject.GetComponent<Combatant>();
+
+            unit.unitType.Army = army;
 
             if (unit != null)
             {
