@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 namespace RTS_1333
@@ -47,6 +48,7 @@ namespace RTS_1333
             Combatant unit = unitObject.GetComponent<Combatant>();
 
             unit.unitType.Army = army;
+            Debug.Log($"Switched {unit} to army {army}");
 
             if (unit != null)
             {
@@ -79,6 +81,8 @@ namespace RTS_1333
 
         public void RegisterUnit(Combatant unit)
         {
+            Debug.Log($"Registering {unit} to army {unit.army}");
+
             // add mainlist
             if (unit != null && !allUnits.Contains(unit))
             {

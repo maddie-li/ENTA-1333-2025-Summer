@@ -51,7 +51,7 @@ public class Attacker : MonoBehaviour
     {
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
-        Debug.Log($"{name} attacks {target.name} for {c.Damage} damage.");
+        Debug.Log($"{name} {c.Army} attacks {target.name} {target.army} for {c.Damage} damage.", target);
         FXManager.Instance.DoFX(FXType.CombatantAttack);
         target?.TakeDamage(c.Damage); 
 

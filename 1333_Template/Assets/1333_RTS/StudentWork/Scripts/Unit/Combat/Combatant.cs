@@ -248,11 +248,15 @@ public class Combatant : Unit, ISelectableObject
 
         foreach (Building building in GetEnemyBuildings())
         {
-            float distance = Vector3.Distance(myPos, building.transform.position);
-            if (distance < closestDistance)
+            if (building != null)
             {
-                closestDistance = distance;
-                closestBuilding = building;
+
+                float distance = Vector3.Distance(myPos, building.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestBuilding = building;
+                }
             }
         }
 

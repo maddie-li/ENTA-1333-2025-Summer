@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RTS_1333;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -149,6 +150,7 @@ public class BuildingManager : MonoBehaviour
         GridManager.Instance.FootprintOccupy(targetNode, building.Width, building.Length, building);
             
         RegisterUnit(building);
+        building.Spawner?.SetArmy(Army.Enemy);
         building.Spawner?.StartSpawning();
 
         Material defaultMat = EnemyMat;
