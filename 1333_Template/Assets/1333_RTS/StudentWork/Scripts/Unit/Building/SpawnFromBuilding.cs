@@ -4,18 +4,38 @@ using RTS_1333;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum SpawnType
+{
+    Units,
+    Gold
+}
 public class SpawnFromBuilding : MonoBehaviour
 {
+    private Army army;
+    [Header("Spawn Settings")]
+    [SerializeField] public bool isSpawning = false;
+    public SpawnType spawnType;
+
+    public float SpawnInterval = 5f;
+
+    [Header("Unit Spawn Settings")]
 
     public GameObject UnitPrefab;
-    public float SpawnInterval = 5f;
 
     public Transform SpawnPoint;
     public Transform RallyPoint;
     public bool CanMoveRallyPoint = false;
 
-    [SerializeField] public bool isSpawning = false;
     private float spawnTimer;
+
+    [Header("Gold Spawn Settings")]
+    [SerializeField] public int goldAmount = 1;
+
+
+    private void Awake()
+    {
+        army = GetComponentInParent<Building>().unitType.Army;
+    }
 
     void Update()
     {
@@ -24,7 +44,17 @@ public class SpawnFromBuilding : MonoBehaviour
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= SpawnInterval)
         {
-            SpawnUnit();
+            switch (spawnType)
+            {
+                case SpawnType.Units:
+                    SpawnUnit();
+                    break;
+                case SpawnType.Gold:
+                    SpawnGold();
+                    break;
+            }
+
+            
             spawnTimer = 0f;
         }
 
@@ -50,6 +80,12 @@ public class SpawnFromBuilding : MonoBehaviour
             //Debug.LogWarning("Spawning unit from building", spawnedUnit);
             spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
         }
+    }
+
+    private void SpawnGold()
+    {
+        //Debug.Log($"Spawning gold for {army}");
+        CurrencyManager.Instance.EarnGold(army, goldAmount);
     }
 
     private void MoveRallyPoint()

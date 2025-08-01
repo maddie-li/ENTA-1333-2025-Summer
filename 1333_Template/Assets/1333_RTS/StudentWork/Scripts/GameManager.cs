@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -157,7 +158,12 @@ namespace RTS_1333
                 {
                     HandleGameOver(army);
                 }
+
+
+                if (BuildingManager.Instance.EnemyCastle == null) HandleGameOver(Army.Enemy);
+                if (BuildingManager.Instance.PlayerCastle == null) HandleGameOver(Army.Player);
             }
+
         }
 
         private void HandleGameOver(Army army)

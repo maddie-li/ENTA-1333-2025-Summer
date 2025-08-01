@@ -20,6 +20,13 @@ public class BuildingManager : MonoBehaviour
 
     public List<Building> allBuildings = new();
 
+    public BuildingType playerCastle;
+    public BuildingType enemyCastle;
+    public Vector3 playerStart;
+    public Vector3 enemyStart;
+    public Building PlayerCastle;
+    public Building EnemyCastle;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,16 +40,14 @@ public class BuildingManager : MonoBehaviour
         buildingsByArmy.Add(Army.Enemy, new List<Building>());
     }
 
+    private void Start()
+    {
+        BuildStartScene(playerCastle, GridManager.Instance.GetNodeFromWorldPosition(playerStart));
+        BuildStartScene(enemyCastle, GridManager.Instance.GetNodeFromWorldPosition(enemyStart));
+    }
+
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Alpha1))
-            NewGhost(buildingTypes[0]);
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            NewGhost(buildingTypes[1]);
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            NewGhost(buildingTypes[2]);*/
 
         if (currentGhost != null)
         {
@@ -195,4 +200,32 @@ public class BuildingManager : MonoBehaviour
         return origin.WorldPosition + offset;
     }
 
+    private void BuildStartScene(BuildingType typeToBuild, GridNode targetNode)
+    {
+        GameObject buildingObject = Instantiate(typeToBuild.UnitPrefab, this.transform);
+        Building building = buildingObject.GetComponent<Building>();
+
+        building.Initialize(targetNode);
+        building.SetNodePos(targetNode);
+        GridManager.Instance.FootprintOccupy(targetNode, building.Width, building.Length, building);
+
+        RegisterUnit(building);
+
+        Material defaultMat = null;
+
+        switch (building.unitType.Army)
+        {
+            case Army.Player:
+                defaultMat = PlayerMat;
+                PlayerCastle = building;
+                break;
+            case Army.Enemy:
+                defaultMat = EnemyMat;
+                EnemyCastle = building;
+                break;
+        }
+
+        if (defaultMat != null) building.SetupMat(defaultMat, ValidMat, InvalidMat);
+        building.UpdateColor();
+    }
 }

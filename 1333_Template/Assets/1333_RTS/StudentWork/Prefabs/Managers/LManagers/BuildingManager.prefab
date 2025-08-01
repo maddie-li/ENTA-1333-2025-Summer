@@ -55,3 +55,7 @@ MonoBehaviour:
   EnemyMat: {fileID: 2100000, guid: 98af6458766fff74c8c69230bf371e18, type: 2}
   PlayerMat: {fileID: 2100000, guid: 4dbe8d2b46607294bab2e6cc27977d7c, type: 2}
   allBuildings: []
+  playerCastle: {fileID: 11400000, guid: 915ccea986f703846963fb748685eb36, type: 2}
+  enemyCastle: {fileID: 11400000, guid: 434dd534101fd9f44b09c105b328a26d, type: 2}
+  playerStart: {x: 40, y: 0, z: 10}
+  enemyStart: {x: 10, y: 0, z: 40}

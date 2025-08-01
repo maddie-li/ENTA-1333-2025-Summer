@@ -404,39 +404,48 @@ MonoBehaviour:
   fxTypes:
   - fxType: 0
     soundType: 0
-    audioClip: {fileID: 8300000, guid: 5fca0fd36e385c748ab49dc22b5dd401, type: 3}
+    audioClips:
+    - {fileID: 8300000, guid: 5fca0fd36e385c748ab49dc22b5dd401, type: 3}
     particlePrefab: {fileID: 0}
   - fxType: 1
     soundType: 0
-    audioClip: {fileID: 8300000, guid: e7e48012c19a30f4ea7bd0431ae3f6ae, type: 3}
+    audioClips:
+    - {fileID: 8300000, guid: 16be4898d5b53534ba02a6a26ced0fef, type: 3}
     particlePrefab: {fileID: 0}
   - fxType: 2
     soundType: 1
-    audioClip: {fileID: 0}
+    audioClips:
+    - {fileID: 8300000, guid: 43c89200f676a76418e2f913c2340650, type: 3}
     particlePrefab: {fileID: 871312489320899015, guid: b25416e82fbacc14b8ed06c87478937a, type: 3}
   - fxType: 3
     soundType: 0
-    audioClip: {fileID: 8300000, guid: 16be4898d5b53534ba02a6a26ced0fef, type: 3}
+    audioClips:
+    - {fileID: 8300000, guid: 16be4898d5b53534ba02a6a26ced0fef, type: 3}
     particlePrefab: {fileID: 0}
   - fxType: 4
     soundType: 1
-    audioClip: {fileID: 8300000, guid: d021d1ee21dc9bc4f9e7da6fb8ac2821, type: 3}
+    audioClips:
+    - {fileID: 8300000, guid: d021d1ee21dc9bc4f9e7da6fb8ac2821, type: 3}
     particlePrefab: {fileID: 0}
   - fxType: 5
     soundType: 1
-    audioClip: {fileID: 8300000, guid: 1d8ef53ac64e89646b37f01f3bf46d41, type: 3}
+    audioClips: []
     particlePrefab: {fileID: 6837061768053742933, guid: 7559315856428454fb908d6735d3c299, type: 3}
   - fxType: 6
     soundType: 1
-    audioClip: {fileID: 0}
+    audioClips: []
     particlePrefab: {fileID: 871312489320899015, guid: b25416e82fbacc14b8ed06c87478937a, type: 3}
   - fxType: 7
     soundType: 1
-    audioClip: {fileID: 8300000, guid: de43fc7727b45094f99caf83d9422b30, type: 3}
+    audioClips:
+    - {fileID: 8300000, guid: 1d9529f0fed608742beaff515cf53ddb, type: 3}
+    - {fileID: 8300000, guid: 11238e7a1a817b049b70f79c5405a16c, type: 3}
+    - {fileID: 8300000, guid: de43fc7727b45094f99caf83d9422b30, type: 3}
     particlePrefab: {fileID: 6837061768053742933, guid: 7559315856428454fb908d6735d3c299, type: 3}
   - fxType: 8
     soundType: 1
-    audioClip: {fileID: 8300000, guid: cbfdb349d48e39b48a71e474aeeb04c4, type: 3}
+    audioClips:
+    - {fileID: 8300000, guid: cbfdb349d48e39b48a71e474aeeb04c4, type: 3}
     particlePrefab: {fileID: 160018, guid: 36d6f3a5d7340d240b3cfc1441981d8a, type: 3}
 --- !u!1 &8871330078065108067
 GameObject:

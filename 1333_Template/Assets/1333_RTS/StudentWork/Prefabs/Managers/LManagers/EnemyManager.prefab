@@ -46,4 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 5
   spawnDistance: 15
-  testType: {fileID: 11400000, guid: 0afe0e88480708d4c989cafa96aebd6b, type: 2}
+  enemyBuildings:
+  - {fileID: 11400000, guid: ce1463ae8fa870842b3609e2dae7c5b7, type: 2}
+  - {fileID: 11400000, guid: 0afe0e88480708d4c989cafa96aebd6b, type: 2}
+  - {fileID: 11400000, guid: ab0ca54b88950bb478d6a9b37d0c78f5, type: 2}

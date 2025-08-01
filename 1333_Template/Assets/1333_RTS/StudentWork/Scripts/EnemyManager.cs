@@ -9,7 +9,7 @@ public class EnemyManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float interval = 10f;
     [SerializeField] private int spawnDistance = 5;
-    [SerializeField] private BuildingType testType;
+    [SerializeField] private BuildingType[] enemyBuildings;
 
     private float timer;
 
@@ -68,13 +68,8 @@ public class EnemyManager : MonoBehaviour
             nodeToBuildOn = PickRandom(spawnableNodes);
         }
 
-        BuildingManager.Instance.EnemyBuilding(testType, nodeToBuildOn);
-    }
-
-    private void TryMoveTroops()
-    {
-        Debug.Log("AI: Moving troops...");
-        // Add unit movement logic here
+        BuildingType chosenType = enemyBuildings[Random.Range(0, enemyBuildings.Length)];
+        BuildingManager.Instance.EnemyBuilding(chosenType, nodeToBuildOn);
     }
 
     private T PickRandom<T>(List<T> list)

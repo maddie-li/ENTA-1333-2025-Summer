@@ -1,12 +1,21 @@
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
+using System.Collections.Generic;
+
 [System.Serializable]
 public class FXData
 {
     public FXType fxType;
     public SFXType soundType;
-    public AudioClip audioClip;
+    public List<AudioClip> audioClips;
     public GameObject particlePrefab;
-    public bool HasAudio => audioClip != null;
+    public AudioClip audioClip => GetRandomClip();
+
+    public bool HasAudio => audioClips != null && audioClips.Count > 0;
     public bool HasParticle => particlePrefab != null;
+
+    public AudioClip GetRandomClip()
+    {
+        if (!HasAudio) return null;
+        return audioClips[Random.Range(0, audioClips.Count)];
+    }
 }
