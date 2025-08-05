@@ -8,5 +8,6 @@ public enum FXType
     CombatantDamage,
     BuildingDamage,
     CombatantDie,
-    BuildingDestroy
+    BuildingDestroy,
+    Healing
 }

@@ -438,15 +438,20 @@ MonoBehaviour:
   - fxType: 7
     soundType: 1
     audioClips:
-    - {fileID: 8300000, guid: 1d9529f0fed608742beaff515cf53ddb, type: 3}
     - {fileID: 8300000, guid: 11238e7a1a817b049b70f79c5405a16c, type: 3}
-    - {fileID: 8300000, guid: de43fc7727b45094f99caf83d9422b30, type: 3}
+    - {fileID: 8300000, guid: be3b5f96770355b4f82eb241c639c7db, type: 3}
+    - {fileID: 8300000, guid: d386baa3b70095a44b94aabe8ba1ce95, type: 3}
     particlePrefab: {fileID: 6837061768053742933, guid: 7559315856428454fb908d6735d3c299, type: 3}
   - fxType: 8
     soundType: 1
     audioClips:
-    - {fileID: 8300000, guid: cbfdb349d48e39b48a71e474aeeb04c4, type: 3}
+    - {fileID: 8300000, guid: b5d2ae62dd70f084eb7665d776d0136d, type: 3}
     particlePrefab: {fileID: 160018, guid: 36d6f3a5d7340d240b3cfc1441981d8a, type: 3}
+  - fxType: 9
+    soundType: 1
+    audioClips:
+    - {fileID: 8300000, guid: 94b52084b03232d4b97d8bafac525411, type: 3}
+    particlePrefab: {fileID: 0}
 --- !u!1 &8871330078065108067
 GameObject:
   m_ObjectHideFlags: 0
