@@ -48,15 +48,6 @@ public class Combatant : Unit, ISelectableObject
 
     }
 
-    void Update()
-    {
-        foreach (var rend in renderers)
-        {
-            if (rend.material != null)
-                rend.material = defaultMat;
-        }
-    }
-
     public void Initialize(Pathfinder _pathfinder)
     {
         if (movement == null || atk == null)
@@ -239,12 +230,12 @@ public class Combatant : Unit, ISelectableObject
     {
         if (Army == Army.Enemy)
         {
-            Debug.Log("Getting Player units as enemies (current unit is Enemy)");
+            //Debug.Log("Getting Player units as enemies (current unit is Enemy)");
             return UnitManager.Instance.unitsByArmy[Army.Player];
         }
         else
         {
-            Debug.Log("Getting Enemy units as enemies (current unit is Player)");
+            //Debug.Log("Getting Enemy units as enemies (current unit is Player)");
             return UnitManager.Instance.unitsByArmy[Army.Enemy];
         }
     }
@@ -332,16 +323,17 @@ public class Combatant : Unit, ISelectableObject
 
     public void SetSelected(bool selected)
     {
-        Debug.Log("Updating unit material");
         if (renderers == null) Debug.Log("Renderers are null");
 
         Material mat = selected ? selectedMat : defaultMat;
 
+        Debug.Log($"Selected? {selected} : Updating unit material to material {mat}");
         foreach (var rend in renderers)
         {
             if (rend.material != null)
                 rend.material = mat;
         }
+
     }
 
     private void UpdateAnimator()

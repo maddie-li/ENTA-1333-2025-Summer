@@ -100,7 +100,7 @@ public class Selector : MonoBehaviour
 
     private void SingleClickSelect(Vector2 screenPos)
     {
-        ClearSelection();
+        ClearSelection(false);
 
         if (cam == null) return;
 
@@ -110,22 +110,26 @@ public class Selector : MonoBehaviour
             ISelectableObject selectable = hit.collider.GetComponentInParent<ISelectableObject>();
             if (selectable is Unit unit)
             {
-                ClearSelection();
+                ClearSelection(false);
                 AddToSelection(unit);
                 Debug.Log($"Adding {unit} to selection");
                 return;
             }
+
+            ClearSelection(true);
         }
 
-        ClearSelection();
+        
     }
 
     private void DragSelect(Vector2 start, Vector2 end)
     {
         if (cam == null ) return;
 
+        bool anySelected = false;
+
         Rect rect = selectorBox.GetScreenRect(start, end);
-        ClearSelection();
+        ClearSelection(false);
 
 
         foreach (Unit unit in UnitManager.Instance.allUnits)
@@ -137,34 +141,51 @@ public class Selector : MonoBehaviour
 
                 Vector2 guiPoint = new(screenPoint.x, Screen.height - screenPoint.y);
                 if (rect.Contains(guiPoint))
+                {
                     AddToSelection(unit);
+                    anySelected = true;
+                }
             }
             
         }
+
+        if (!anySelected) ClearSelection(true);
 
     }
 
     //SELECTION
     private void AddToSelection(Unit unit)
     {
-        //Debug.Log($"Attempt add {unit} to selection");
+        //Debug.Log($"Attempt add {unit} army {unit.Army} to selection");
 
-        if (unit.Army != Army.Player) return;
+        if (unit.Army != Army.Player)
+        {
+            Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Failed due to not player");
+            return;
+        }
 
-        if (selectedUnits.Contains(unit)) return;
+        if (selectedUnits.Contains(unit))
+        {
+            Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Failed due to already selected");
+            return;
+        }
+        
 
         // add color
         selectedUnits.Add(unit);
 
         FXManager.Instance.DoFX(FXType.Select);
         unit.GetComponent<Combatant>().SetSelected(true);
+
+        Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Succeeded");
     }
 
-    private void ClearSelection()
+    private void ClearSelection(bool playSound)
     {
-        if(selectedUnits.Count == 0) return;    
+        if (playSound) FXManager.Instance.DoFX(FXType.Cancel);
 
-        FXManager.Instance.DoFX(FXType.Cancel);
+        if (selectedUnits.Count == 0) return;    
+
 
         foreach (Unit unit in selectedUnits)
         {
@@ -208,6 +229,7 @@ public class Selector : MonoBehaviour
                 return;
             }
 
+            FXManager.Instance.DoFX(FXType.BuildBuilding);
             SpawnRallyPoint(node);
 
             foreach (Unit unit in selectedUnits)
