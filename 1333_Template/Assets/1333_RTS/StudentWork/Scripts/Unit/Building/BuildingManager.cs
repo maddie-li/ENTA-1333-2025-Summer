@@ -41,6 +41,8 @@ public class BuildingManager : MonoBehaviour
         GameManager.Instance.EnemyCastle = CreateCastle(castle, GridManager.Instance.GetNodeFromWorldPosition(new Vector3 (40,0,40)),Army.Enemy);
         GameManager.Instance.PlayerCastle = CreateCastle(castle, GridManager.Instance.GetNodeFromWorldPosition(new Vector3(2, 0, 2)), Army.Player);
 
+        GameManager.Instance.EnemyCastle.transform.rotation = Quaternion.Euler(270, 180, 0);
+
     }
 
     private void Update()

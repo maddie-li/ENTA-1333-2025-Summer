@@ -167,7 +167,7 @@ namespace RTS_1333
                 if (!UnitManager.Instance.armyActivated[army])
                     continue;
 
-                if (UnitManager.Instance.unitsByArmy[army].Count == 0)
+               if (UnitManager.Instance.unitsByArmy[army].Count == 0)
                 {
                     HandleGameOver(army, LoseReason.NoSoldiers);
                 }

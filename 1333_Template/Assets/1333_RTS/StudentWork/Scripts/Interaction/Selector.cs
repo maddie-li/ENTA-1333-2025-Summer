@@ -100,7 +100,7 @@ public class Selector : MonoBehaviour
 
     private void SingleClickSelect(Vector2 screenPos)
     {
-        ClearSelection(false);
+        ClearSelection();
 
         if (cam == null) return;
 
@@ -110,13 +110,13 @@ public class Selector : MonoBehaviour
             ISelectableObject selectable = hit.collider.GetComponentInParent<ISelectableObject>();
             if (selectable is Unit unit)
             {
-                ClearSelection(false);
+                ClearSelection();
                 AddToSelection(unit);
                 Debug.Log($"Adding {unit} to selection");
                 return;
             }
 
-            ClearSelection(true);
+            ClearSelection();
         }
 
         
@@ -126,10 +126,8 @@ public class Selector : MonoBehaviour
     {
         if (cam == null ) return;
 
-        bool anySelected = false;
-
         Rect rect = selectorBox.GetScreenRect(start, end);
-        ClearSelection(false);
+        ClearSelection();
 
 
         foreach (Unit unit in UnitManager.Instance.allUnits)
@@ -143,13 +141,11 @@ public class Selector : MonoBehaviour
                 if (rect.Contains(guiPoint))
                 {
                     AddToSelection(unit);
-                    anySelected = true;
                 }
             }
             
         }
 
-        if (!anySelected) ClearSelection(true);
 
     }
 
@@ -180,9 +176,8 @@ public class Selector : MonoBehaviour
         Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Succeeded");
     }
 
-    private void ClearSelection(bool playSound)
+    private void ClearSelection()
     {
-        if (playSound) FXManager.Instance.DoFX(FXType.Cancel);
 
         if (selectedUnits.Count == 0) return;    
 

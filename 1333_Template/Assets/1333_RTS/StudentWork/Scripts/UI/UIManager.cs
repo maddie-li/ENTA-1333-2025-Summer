@@ -97,23 +97,26 @@ public class UIManager : MonoBehaviour
 
     public void StartClicked()
     {
+        FXManager.Instance.DoFX(FXType.Select);
         LoadingManager.Instance.LoadNewScene(1);
     }
 
     public void RestartClicked()
     {
+        FXManager.Instance.DoFX(FXType.Select);
         Debug.Log("UI: Resetting game");
         GameManager.Instance.HandleResetGame();
     }
 
     public void ResumeClicked()
     {
+        FXManager.Instance.DoFX(FXType.Select);
         GameManager.Instance.ResumeGame();
     }
 
     public void QuitClicked()
     {
-       
+        FXManager.Instance.DoFX(FXType.Select);
         GameManager.Instance.QuitGame();
     }
 
