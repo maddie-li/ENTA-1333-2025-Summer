@@ -100,24 +100,34 @@ namespace RTS_1333
             {
                 case GameState.Menu:
                     UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.SetUIScreen(UIManager.UIScreen.Menu);
                     break;
 
                 case GameState.Gameplay:
                     UIManager.Instance.ForceTimescale(TimeState.Normal);
+                    UIManager.Instance.SetUIScreen(UIManager.UIScreen.Game);
+                    Selector.Instance.Enabled = true;
                     break;
 
                 case GameState.Paused:
                     UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.SetUIScreen(UIManager.UIScreen.Settings);
+                    Selector.Instance.Enabled = false;
+                    
                     break;
 
                 case GameState.Victory:
                     UIManager.Instance.ForceTimescale(TimeState.Paused);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Victory);
+                    Selector.Instance.Enabled = false;
+
                     break;
 
                 case GameState.Defeat:
                     UIManager.Instance.ForceTimescale(TimeState.Paused);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Defeat);
+                    Selector.Instance.Enabled = false;
+
                     break;
 
             }
@@ -206,6 +216,8 @@ namespace RTS_1333
 
         public void ResumeGame()
         {
+
+            SetGameState(GameState.Gameplay);
         }
 
         public void HandleResetGame()

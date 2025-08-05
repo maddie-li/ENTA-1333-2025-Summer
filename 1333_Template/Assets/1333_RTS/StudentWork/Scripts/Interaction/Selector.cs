@@ -19,6 +19,8 @@ public class Selector : MonoBehaviour
     [SerializeField] GameObject rallyPointPrefab;
     GameObject rallyPoint;
 
+    public bool Enabled;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,6 +35,8 @@ public class Selector : MonoBehaviour
         selectorBox.minDragSize = minDragSize;
 
         cam = Camera.main;
+
+        Enabled = true;
     }
     private void OnEnable()
     {
@@ -50,7 +54,7 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        if (interactActions == null) return;
+        if (interactActions == null || Enabled == false) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
