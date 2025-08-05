@@ -47,7 +47,7 @@ namespace RTS_1333
             GameObject unitObject = Instantiate(prefab, this.transform);
             Combatant unit = unitObject.GetComponent<Combatant>();
 
-            unit.unitType.Army = army;
+            unit.Army = army;
             Debug.Log($"Switched {unit} to army {army}");
 
             if (unit != null)
@@ -58,7 +58,7 @@ namespace RTS_1333
 
                 Material defaultMat = null;
 
-                switch (unit.army)
+                switch (unit.Army)
                 {
                     case Army.Player:
                         defaultMat = PlayerMat;
@@ -70,7 +70,7 @@ namespace RTS_1333
 
                 if (defaultMat != null) unit.SetupMat(defaultMat, selectedMat);
 
-                armyActivated[unit.army] = true;
+                armyActivated[unit.Army] = true;
                 //Debug.Log("Initialised new unit");
 
                 return unit;
@@ -81,7 +81,7 @@ namespace RTS_1333
 
         public void RegisterUnit(Combatant unit)
         {
-            Debug.Log($"Registering {unit} to army {unit.army}");
+            Debug.Log($"Registering {unit} to army {unit.Army}");
 
             // add mainlist
             if (unit != null && !allUnits.Contains(unit))
@@ -89,16 +89,16 @@ namespace RTS_1333
                 allUnits.Add(unit);
             }
             // add armylist
-            if (!unitsByArmy[unit.army].Contains(unit))
+            if (!unitsByArmy[unit.Army].Contains(unit))
             {
-                unitsByArmy[unit.army].Add(unit);
+                unitsByArmy[unit.Army].Add(unit);
             }
         }
         public void UnregisterUnit(Combatant unit)
         {
             allUnits.Remove(unit);
 
-            if (unitsByArmy.TryGetValue(unit.army, out var unitList))
+            if (unitsByArmy.TryGetValue(unit.Army, out var unitList))
             {
                 unitList.Remove(unit);
             }

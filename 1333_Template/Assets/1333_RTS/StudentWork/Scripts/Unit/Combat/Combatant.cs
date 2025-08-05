@@ -48,6 +48,15 @@ public class Combatant : Unit, ISelectableObject
 
     }
 
+    void Update()
+    {
+        foreach (var rend in renderers)
+        {
+            if (rend.material != null)
+                rend.material = defaultMat;
+        }
+    }
+
     public void Initialize(Pathfinder _pathfinder)
     {
         if (movement == null || atk == null)
@@ -228,16 +237,16 @@ public class Combatant : Unit, ISelectableObject
 
     private List<Combatant> GetEnemies()
     {
-        if(army == Army.Enemy)
+        if (Army == Army.Enemy)
         {
+            Debug.Log("Getting Player units as enemies (current unit is Enemy)");
             return UnitManager.Instance.unitsByArmy[Army.Player];
         }
         else
         {
+            Debug.Log("Getting Enemy units as enemies (current unit is Player)");
             return UnitManager.Instance.unitsByArmy[Army.Enemy];
         }
-
-            
     }
 
     private Building GetClosestEnemyBuilding()
@@ -290,7 +299,7 @@ public class Combatant : Unit, ISelectableObject
 
     private List<Building> GetEnemyBuildings()
     {
-        if (army == Army.Enemy)
+        if (Army == Army.Enemy)
         {
             return BuildingManager.Instance.buildingsByArmy[Army.Player];
         }
@@ -365,7 +374,7 @@ public class Combatant : Unit, ISelectableObject
 
         IsDead = true;
 
-        if(army == Army.Enemy)
+        if(Army == Army.Enemy)
         {
             CurrencyManager.Instance.EarnGold(Army.Player, Cost);
         }

@@ -14,8 +14,6 @@ namespace RTS_1333
 
         [SerializeField] protected GameObject unitPrefab;
 
-        public Army Army;
-
         public int Width => width;
         public int Length => length;
         public int Cost => cost;

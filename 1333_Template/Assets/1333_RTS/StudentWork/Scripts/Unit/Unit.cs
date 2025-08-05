@@ -23,7 +23,7 @@ namespace RTS_1333
 
         public int CurrentHP => currentHP;
 
-        public virtual Army army => unitType.Army;
+        public Army Army;
 
         public void Initialize(GridNode node)
         {

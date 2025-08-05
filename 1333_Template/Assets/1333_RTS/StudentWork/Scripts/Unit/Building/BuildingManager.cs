@@ -73,9 +73,9 @@ public class BuildingManager : MonoBehaviour
 
             Material defaultMat = null;
 
-            currentGhost.unitType.Army = Army.Player;
+            currentGhost.Army = Army.Player;
 
-            switch (currentGhost.army)
+            switch (currentGhost.Army)
             {
                 case Army.Player:
                     defaultMat = PlayerMat;
@@ -143,7 +143,7 @@ public class BuildingManager : MonoBehaviour
         GameObject buildingObject = Instantiate(typeToBuild.UnitPrefab, this.transform);
         Building building = buildingObject.GetComponent<Building>();
 
-        building.unitType.Army = Army.Enemy;
+        building.Army = Army.Enemy;
 
         building.Initialize(targetNode);
         building.SetNodePos(targetNode);
@@ -164,7 +164,7 @@ public class BuildingManager : MonoBehaviour
 
     public void RegisterUnit(Building building)
     {
-        Debug.Log($"Registering building of army {building.army}");
+        Debug.Log($"Registering building of army {building.Army}");
 
         // add mainlist
         if (building != null && !allBuildings.Contains(building))
@@ -172,16 +172,16 @@ public class BuildingManager : MonoBehaviour
             allBuildings.Add(building);
         }
         // add armylist
-        if (!buildingsByArmy[building.army].Contains(building))
+        if (!buildingsByArmy[building.Army].Contains(building))
         {
-            buildingsByArmy[building.army].Add(building);
+            buildingsByArmy[building.Army].Add(building);
         }
     }
     public void UnregisterUnit(Building building)
     {
         allBuildings.Remove(building);
 
-        if (buildingsByArmy.TryGetValue(building.army, out var unitList))
+        if (buildingsByArmy.TryGetValue(building.Army, out var unitList))
         {
             unitList.Remove(building);
         }
@@ -210,11 +210,11 @@ public class BuildingManager : MonoBehaviour
         building.SetNodePos(targetNode);
         GridManager.Instance.FootprintOccupy(targetNode, building.Width, building.Length, building);
 
-        building.unitType.Army = army;
+        building.Army = army;
 
         Material defaultMat = null;
 
-        switch (building.unitType.Army)
+        switch (building.Army)
         {
             case Army.Player:
                 defaultMat = PlayerMat;

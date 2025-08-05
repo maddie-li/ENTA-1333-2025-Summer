@@ -9,6 +9,8 @@ public class Attacker : MonoBehaviour
     private CombatantType c;
     private float lastAttackTime;
 
+   
+
     public void Initialize(CombatantType _combatantType)
     {
         c = _combatantType;
@@ -51,7 +53,7 @@ public class Attacker : MonoBehaviour
     {
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
-        Debug.Log($"{name} {c.Army} attacks {target.name} {target.army} for {c.Damage} damage.", target);
+        Debug.Log($"{name} attacks {target.name} {target.Army} for {c.Damage} damage.", target);
         FXManager.Instance.DoFX(FXType.CombatantAttack);
         target?.TakeDamage(c.Damage); 
 

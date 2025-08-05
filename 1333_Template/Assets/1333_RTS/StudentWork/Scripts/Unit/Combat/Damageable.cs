@@ -83,7 +83,7 @@ public class Damageable : MonoBehaviour
             FXManager.Instance.DoFX(FXType.BuildingDestroy);
         }
 
-        if (thisUnit.army == Army.Enemy)
+        if (thisUnit.Army == Army.Enemy)
         {
             CurrencyManager.Instance.EarnGold(Army.Player, thisUnit.Cost);
         }

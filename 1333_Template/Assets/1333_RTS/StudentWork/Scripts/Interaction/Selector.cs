@@ -149,7 +149,7 @@ public class Selector : MonoBehaviour
     {
         //Debug.Log($"Attempt add {unit} to selection");
 
-        if (unit.army != Army.Player) return;
+        if (unit.Army != Army.Player) return;
 
         if (selectedUnits.Contains(unit)) return;
 
