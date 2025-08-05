@@ -54,16 +54,26 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        if (interactActions == null || Enabled == false) return;
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (interactActions == null || Enabled == false)
         {
-            HandleLeftClick();
+            HandleLeftRelease();
+            return;
         }
 
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             HandleLeftRelease();
+        }
+
+        if (UnityEngine.EventSystems.EventSystem.current != null &&
+        UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            HandleLeftClick();
         }
 
         if (selectorBox.IsDragging)

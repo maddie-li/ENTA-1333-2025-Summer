@@ -99,46 +99,38 @@ namespace RTS_1333
             switch (newState)
             {
                 case GameState.Menu:
-                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.Pause(false);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Menu);
                     break;
 
                 case GameState.Gameplay:
-                    UIManager.Instance.ForceTimescale(TimeState.Normal);
+                    UIManager.Instance.Pause(false);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Game);
                     Selector.Instance.Enabled = true;
                     break;
 
                 case GameState.Paused:
-                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.Pause(true);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Settings);
                     Selector.Instance.Enabled = false;
                     
                     break;
 
                 case GameState.Victory:
-                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.Pause(false);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Victory);
                     Selector.Instance.Enabled = false;
 
                     break;
 
                 case GameState.Defeat:
-                    UIManager.Instance.ForceTimescale(TimeState.Paused);
+                    UIManager.Instance.Pause(false);
                     UIManager.Instance.SetUIScreen(UIManager.UIScreen.Defeat);
                     Selector.Instance.Enabled = false;
 
                     break;
 
             }
-        }
-
-        public void SetTimeState(TimeState newState)
-        {
-            currentTimeState = newState;
-            Time.timeScale = (float)newState;
-
-            Debug.Log($"Time scale set to: {Time.timeScale}x");
         }
 
         public void SetupGame()
@@ -158,7 +150,7 @@ namespace RTS_1333
             }
 
             GridManager.Instance.InitializeGrid();
-            UIManager.Instance.ForceTimescale(TimeState.Normal);
+            UIManager.Instance.SetTimescale((float)TimeState.Normal);
 
             SetGameState(GameState.Gameplay);
             
@@ -177,17 +169,17 @@ namespace RTS_1333
                 if (!UnitManager.Instance.armyActivated[army])
                     continue;
 
-               if (UnitManager.Instance.unitsByArmy[army].Count == 0)
+               /*if (UnitManager.Instance.unitsByArmy[army].Count == 0)
                 {
                     HandleGameOver(army, LoseReason.NoSoldiers);
-                }
+                }*/
 
 
                 if (EnemyCastle == null) HandleGameOver(Army.Enemy, LoseReason.NoCastle);
                 if (PlayerCastle == null) HandleGameOver(Army.Player, LoseReason.NoCastle);
-
+/*
                 if (CurrencyManager.Instance.GetGold(Army.Player) < 1) HandleGameOver(Army.Player, LoseReason.NoMoney);
-                if (CurrencyManager.Instance.GetGold(Army.Player) < 1) HandleGameOver(Army.Player, LoseReason.NoMoney);
+                if (CurrencyManager.Instance.GetGold(Army.Player) < 1) HandleGameOver(Army.Player, LoseReason.NoMoney);*/
             }
 
         }
@@ -218,6 +210,13 @@ namespace RTS_1333
         {
 
             SetGameState(GameState.Gameplay);
+            
+        }
+
+        public void PauseGame()
+        {
+
+            SetGameState(GameState.Paused);
         }
 
         public void HandleResetGame()

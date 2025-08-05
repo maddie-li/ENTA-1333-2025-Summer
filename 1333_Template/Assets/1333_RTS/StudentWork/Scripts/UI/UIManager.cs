@@ -19,14 +19,13 @@ public class UIManager : MonoBehaviour
         Defeat
     }
 
-
     public TMP_Text GoldText;
     public TMP_Text VictoryMessage;
     public TMP_Text DefeatMessage;
 
-
     [SerializeField] private GameObject[] UIScreens;
-    private TimeStateDropdown timescaleDropdown;
+    
+    private TimescaleSlider timeSlider;
 
     public UIScreen CurrentScreen;
 
@@ -39,7 +38,7 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
 
-        timescaleDropdown = GetComponent<TimeStateDropdown>();
+        timeSlider = GetComponent<TimescaleSlider>();
     }
 
     private void Start()
@@ -99,6 +98,7 @@ public class UIManager : MonoBehaviour
     {
         FXManager.Instance.DoFX(FXType.Select);
         LoadingManager.Instance.LoadNewScene(1);
+        SetTimescale(1f);
     }
 
     public void RestartClicked()
@@ -114,17 +114,27 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.ResumeGame();
     }
 
+    public void PauseClicked()
+    {
+        GameManager.Instance.PauseGame();
+    }
     public void QuitClicked()
     {
         FXManager.Instance.DoFX(FXType.Select);
         GameManager.Instance.QuitGame();
     }
-
-    public void ForceTimescale(TimeState state)
+    public void SetTimescale(float scale)
     {
-        timescaleDropdown.ForceState(state);    
-    }  
+        Debug.Log($"Setting timescale to {scale}");
+        timeSlider.SetTimescale(scale);
+    }
 
+    public void Pause(bool pause)
+    {
+        if (pause) timeSlider.TimePause();
+        else timeSlider.TimePlay();
+
+    }
 
 }
 
