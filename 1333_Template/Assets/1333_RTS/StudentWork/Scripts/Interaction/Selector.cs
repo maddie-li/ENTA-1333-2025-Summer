@@ -19,6 +19,8 @@ public class Selector : MonoBehaviour
     [SerializeField] GameObject rallyPointPrefab;
     GameObject rallyPoint;
 
+    private Building openBuilding;
+
     public bool Enabled;
 
     private void Awake()
@@ -84,7 +86,7 @@ public class Selector : MonoBehaviour
 
     private void HandleLeftClick()
     {
-        Debug.Log("Left click detected!");
+        //Debug.Log("Left click detected!");
         selectorBox.BeginDrag(interactActions.UI.Point.ReadValue<Vector2>());
     }
 
@@ -108,33 +110,74 @@ public class Selector : MonoBehaviour
 
     private void HandleRightClick(InputAction.CallbackContext ctx)
     {
-        // Debug.Log("Right click detected!");
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        {
+            GameObject hitObject = hit.collider.gameObject;
+            Building building = hitObject.GetComponentInParent<Building>();
+
+            if (building != null)
+            {
+                Debug.Log("Hit a building component!");
+                building.OpenMenu();
+                openBuilding = building;
+                return;
+            }
+        }
+        if (openBuilding != null)
+        {
+            openBuilding.CloseMenu();
+            openBuilding = null;
+        }
+
         CommandUnits(interactActions.UI.Point.ReadValue<Vector2>());
     }
 
     private void SingleClickSelect(Vector2 screenPos)
     {
-        ClearSelection();
-
         if (cam == null) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
+
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
-            ISelectableObject selectable = hit.collider.GetComponentInParent<ISelectableObject>();
+            GameObject hitObject = hit.collider.gameObject;
+
+            Building building = hitObject.GetComponentInParent<Building>();
+            if (building != null)
+            {
+                //Debug.Log("Hit a building component!");
+                if (building.isSelected)
+                {
+                    openBuilding = null;
+                    building.Delete();
+                }
+                else Debug.Log("Building selected is not opn");
+                    return;
+            }
+
+            ISelectableObject selectable = hitObject.GetComponentInParent<ISelectableObject>();
             if (selectable is Unit unit)
             {
                 ClearSelection();
+
                 AddToSelection(unit);
                 Debug.Log($"Adding {unit} to selection");
                 return;
             }
-
-            ClearSelection();
         }
-
-        
+        else
+        {
+            if (openBuilding != null)
+            {
+                openBuilding.CloseMenu();
+                openBuilding = null;
+            }
+        }
     }
+
 
     private void DragSelect(Vector2 start, Vector2 end)
     {
@@ -192,6 +235,8 @@ public class Selector : MonoBehaviour
 
     private void ClearSelection()
     {
+        if(openBuilding != null) openBuilding.CloseMenu();
+        openBuilding = null;
 
         if (selectedUnits.Count == 0) return;    
 

@@ -28,6 +28,8 @@ public class FXManager : MonoBehaviour
 
     public void DoFX(FXType fxType, Vector3? pos = null)
     {
+        Debug.Log($"doing FX {fxType}");
+
         if (fxDict.TryGetValue(fxType, out FXData data))
         {
             if (data.HasAudio && data.audioClip)

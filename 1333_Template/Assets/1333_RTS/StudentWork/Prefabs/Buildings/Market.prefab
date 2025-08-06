@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: {fileID: 11400000, guid: 8f6d88e72765d6042bf5c3c769a1c6a5, type: 2}
   Name: Market
+  Army: 0
   isGhost: 0
   Spawner: {fileID: 0}
   data: []
@@ -289,8 +290,6 @@ MonoBehaviour:
   SpawnInterval: 1
   UnitPrefab: {fileID: 0}
   SpawnPoint: {fileID: 0}
-  RallyPoint: {fileID: 0}
-  CanMoveRallyPoint: 0
   goldAmount: 1
 --- !u!1 &8319157199361844040
 GameObject:
@@ -422,8 +421,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: e80371d003bd70d439af07f3facb22ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4149465107997047909}
   m_SourcePrefab: {fileID: 100100000, guid: e80371d003bd70d439af07f3facb22ea, type: 3}
+--- !u!1 &1790623558030350873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: e80371d003bd70d439af07f3facb22ea, type: 3}
+  m_PrefabInstance: {fileID: 1790623558030449849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4149465107997047909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790623558030350873}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.7628427, y: 6.7192073, z: 4.0424213}
+  m_Center: {x: -0.007974148, y: 0.021095997, z: 1.2880807}
 --- !u!4 &1790623558030837305 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e80371d003bd70d439af07f3facb22ea, type: 3}

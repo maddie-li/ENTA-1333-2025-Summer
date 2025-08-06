@@ -5,6 +5,8 @@ using System.Security;
 using RTS_1333;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Building : Unit
 {
@@ -19,6 +21,7 @@ public class Building : Unit
 
     private Renderer[] renderers;
     public bool isGhost = true;
+    public bool isSelected = false;
 
     private Material validMat;
     private Material invalidMat;
@@ -32,6 +35,20 @@ public class Building : Unit
     {
         Spawner = GetComponent<SpawnFromBuilding>();
         InitDamage();
+    }
+    private void Update()
+    {
+        if (!isGhost) return;
+
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            transform.Rotate(Vector3.up, -90f, Space.World);
+        }
+
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            transform.Rotate(Vector3.up, 90f, Space.World);
+        }
     }
 
     public void SetupMat(Material regular, Material valid, Material invalid)
@@ -83,6 +100,34 @@ public class Building : Unit
             if (rend.material != null)
                 rend.material = defaultMat;
         }
+    }
+
+    public void OpenMenu()
+    {
+        UpdateColor(false);
+        //Debug.Log("Setting open to true");
+        isSelected = true;
+    }
+
+    public void CloseMenu()
+    {
+        UpdateColor();
+        //Debug.Log("setting open to false");
+        isSelected = false;
+    }
+
+    public virtual void Delete()
+    {
+        if (!TryGetComponent<Unit>(out Unit thisUnit)) return;
+
+        //Debug.Log("Deregistering building");
+        BuildingManager.Instance.UnregisterUnit(this);
+        FXManager.Instance.DoFX(FXType.BuildingDestroy, this.WorldPosition);
+
+        CurrencyManager.Instance.EarnGold(Army.Player, thisUnit.Cost / 2);
+
+        Destroy(gameObject);
+
     }
 
 }

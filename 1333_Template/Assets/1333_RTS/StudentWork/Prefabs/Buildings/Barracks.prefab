@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 5799095526684530328}
   - component: {fileID: 5575067752310391795}
   - component: {fileID: 3168791940178751178}
+  - component: {fileID: 16153947525322417}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -175,6 +176,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &16153947525322417
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646533259328119319}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.6162887, y: 6.6356874, z: 5.4101963}
+  m_Center: {x: 0.012111425, y: 0.011778596, z: 1.9719679}
 --- !u!1 &3488657237327139683
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: {fileID: 11400000, guid: 84c3150aec908ed439b7c8d7554db94a, type: 2}
   Name: Barracks
+  Army: 0
   isGhost: 0
   Spawner: {fileID: 0}
   data: []
@@ -393,8 +416,6 @@ MonoBehaviour:
   SpawnInterval: 5
   UnitPrefab: {fileID: 4513347065308714618, guid: c709eaf7c257c9a4a8a5b93f8c112489, type: 3}
   SpawnPoint: {fileID: 7502231378408684423}
-  RallyPoint: {fileID: 0}
-  CanMoveRallyPoint: 0
   goldAmount: 1
 --- !u!114 &1800080644943825039
 MonoBehaviour:

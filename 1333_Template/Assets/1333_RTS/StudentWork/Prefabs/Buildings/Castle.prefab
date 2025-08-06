@@ -257,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: {fileID: 11400000, guid: 915ccea986f703846963fb748685eb36, type: 2}
   Name: Barracks
+  Army: 0
   isGhost: 0
   Spawner: {fileID: 0}
   data: []

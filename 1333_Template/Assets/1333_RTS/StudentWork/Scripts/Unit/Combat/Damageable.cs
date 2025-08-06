@@ -85,11 +85,11 @@ public class Damageable : MonoBehaviour
 
         if (thisUnit.Army == Army.Enemy)
         {
-            CurrencyManager.Instance.EarnGold(Army.Player, thisUnit.Cost);
+            CurrencyManager.Instance.EarnGold(Army.Player, thisUnit.Cost/2);
         }
         else
         {
-            CurrencyManager.Instance.EarnGold(Army.Enemy, thisUnit.Cost);
+            CurrencyManager.Instance.EarnGold(Army.Enemy, thisUnit.Cost/2);
         }
 
         if (thisUnit is Combatant combatantToDestroy)
@@ -102,6 +102,7 @@ public class Damageable : MonoBehaviour
         }
 
     }
+
 
     private void UpdateHealthBar()
     {

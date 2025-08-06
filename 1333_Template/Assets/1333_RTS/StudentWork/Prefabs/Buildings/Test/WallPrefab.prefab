@@ -65,6 +65,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 1bff8eeac62bd944c9d12ef7cccc745d, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6993427883982457632}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 1bff8eeac62bd944c9d12ef7cccc745d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9041630420930865491}
   m_SourcePrefab: {fileID: 100100000, guid: 1bff8eeac62bd944c9d12ef7cccc745d, type: 3}
 --- !u!4 &632733733720463370 stripped
 Transform:
@@ -90,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: {fileID: 11400000, guid: 329a1be814543194fa1a3500a82c13e4, type: 2}
   Name: Cheaper Town Wall
+  Army: 0
   isGhost: 0
   Spawner: {fileID: 0}
   data: []
@@ -106,6 +110,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7014020300187718012}
+--- !u!65 &9041630420930865491
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632733733720884266}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1626952, y: 2.2132254, z: 4.6630697}
+  m_Center: {x: 0, y: 0.009983423, z: 2.3315349}
 --- !u!1001 &3455807205384448003
 PrefabInstance:
   m_ObjectHideFlags: 0
