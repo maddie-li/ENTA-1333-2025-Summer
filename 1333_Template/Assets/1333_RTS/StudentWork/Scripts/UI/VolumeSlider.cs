@@ -23,15 +23,17 @@ public class VolumeSlider : MonoBehaviour
         slider.value = slider.maxValue;
     }
 
-    public void SetVolume(float volume)
+    public void SetVolume(float sliderValue)
     {
-        float dB;
+        float curvedValue = Mathf.Pow(sliderValue, 3f);
 
-        if (volume <= 0.0001f)
-            dB = -80f;
+        float dB;
+        if (curvedValue <= 0.0001f)
+            dB = -80f; 
         else
-            dB = Mathf.Log10(volume) * 20;
+            dB = 20f * Mathf.Log10(curvedValue);
 
         mixer.SetFloat(channel.ToString(), dB);
     }
+
 }
