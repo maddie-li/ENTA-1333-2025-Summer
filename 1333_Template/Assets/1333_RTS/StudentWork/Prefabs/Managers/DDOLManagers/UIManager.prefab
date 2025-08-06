@@ -209,7 +209,9 @@ MonoBehaviour:
     Right click - select for deletion
 
     Left click - confirm
-    delete'
+    delete
+
+    Q and E - rotate'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 83ed381cb0f40e24e994c72ec4621286, type: 2}
   m_sharedMaterial: {fileID: -6867731958863214114, guid: 83ed381cb0f40e24e994c72ec4621286, type: 2}
