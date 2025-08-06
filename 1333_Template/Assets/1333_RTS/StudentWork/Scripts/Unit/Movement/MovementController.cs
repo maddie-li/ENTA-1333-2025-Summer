@@ -27,11 +27,11 @@ public class MovementController : MonoBehaviour
 
     public void SetTarget(GridNode targetNode)
     {
-        ////Debug.Log($"Movement: Setting new target to {targetNode.Name}");
+        //Debug.Log($"Movement: Setting new target to {targetNode.Name}");
 
-        ////Debug.Log($"Combatant: Commanding {unit.name} to node{targetNode.Name}");
+        //Debug.Log($"Combatant: Commanding {unit.name} to node{targetNode.Name}");
 
-        ////Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {unit == null}");
+        //Debug.Log($"Pathfinder null? {pathfinder == null} Unit null? {unit == null}");
 
         if (pathfinder == null || unit == null) return;
 
@@ -40,50 +40,50 @@ public class MovementController : MonoBehaviour
         if (targetNode.IsOccupied())
         {
             currentTargetNode = GridManager.Instance.GetClosestReachableNeighbour(unit.CurrentNode, targetNode, pathfinder);
-            ////Debug.Log($"Movement: Changed target {currentTargetNode.Name}");
+            //Debug.Log($"Movement: Changed target {currentTargetNode.Name}");
 
             // this may be null if it recursions too much
         }
         else
         {
             currentTargetNode = targetNode;
-            ////Debug.Log($"Movement: Kept target {currentTargetNode.Name}");
+            //Debug.Log($"Movement: Kept target {currentTargetNode.Name}");
         }
 
             
 
-        ////Debug.Log($"Start node: {unit.CurrentNode?.Name}, End node: {targetNode?.Name}");
+        //Debug.Log($"Start node: {unit.CurrentNode?.Name}, End node: {targetNode?.Name}");
         currentPath = pathfinder.FindPath(unit.CurrentNode, currentTargetNode);
         pathIndex = 0;
 
-        ////Debug.Log($"Movement: currentPath.Count = {currentPath.Count}, coroutine = {movementCoroutine}");
+        //Debug.Log($"Movement: currentPath.Count = {currentPath.Count}, coroutine = {movementCoroutine}");
 
         if (currentPath.Count == 0)
-            //Debug.LogWarning("Movement: Path was not found or is empty!");
+            Debug.LogWarning("Movement: Path was not found or is empty!");
 
         if (currentPath.Count > 0)
         {
-            ////Debug.Log($"Movement: Current path length is {currentPath.Count}");
+            //Debug.Log($"Movement: Current path length is {currentPath.Count}");
 
             if (movementCoroutine != null)
             {
-                ////Debug.Log($"Movement: Stopping last coroutine");
+                //Debug.Log($"Movement: Stopping last coroutine");
                 StopCoroutine(movementCoroutine);
                 isMoving = false;
             }
             else
             {
-                ////Debug.Log("Movement: No coroutine was running.");
+                //Debug.Log("Movement: No coroutine was running.");
             }
 
-            ////Debug.Log($"Movement: Starting new coroutine");
+            //Debug.Log($"Movement: Starting new coroutine");
             movementCoroutine = StartCoroutine(WalkPath());
         }
     }
 
     private IEnumerator WalkPath()
     {
-        ////Debug.Log($"Movement: Walking path");
+        //Debug.Log($"Movement: Walking path");
 
         DrawPath();
         isMoving = true;
@@ -98,7 +98,7 @@ public class MovementController : MonoBehaviour
 
                 if (nextIndex == currentPath.Count - 1 && GridManager.Instance.IsFootprintOccupied(nextNode))
                 {
-                    ////Debug.Log($"Final node ({currentPath[nextIndex].Name})is occupied. Finding neighbour");
+                    //Debug.Log($"Final node ({currentPath[nextIndex].Name})is occupied. Finding neighbour");
 
                     GridNode newTarget = GridManager.Instance.GetClosestReachableNeighbour(unit.CurrentNode, nextNode, pathfinder);
                     SetTarget(newTarget);
@@ -106,7 +106,7 @@ public class MovementController : MonoBehaviour
                 }
                 else if (GridManager.Instance.IsFootprintOccupied(nextNode))
                 {
-                    ////Debug.Log($"Next node ({nextNode.Name}) is occupied. Recalculating path.");
+                    //Debug.Log($"Next node ({nextNode.Name}) is occupied. Recalculating path.");
                     SetTarget(currentTargetNode);
                     yield break;
                 }
@@ -132,7 +132,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                ////Debug.Log($"Path complete! Unit has reached the final destination of {currentTargetNode.Name}");
+                //Debug.Log($"Path complete! Unit has reached the final destination of {currentTargetNode.Name}");
                 break;
             }
         }
