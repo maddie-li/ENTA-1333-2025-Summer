@@ -54,7 +54,7 @@ public class Combatant : Unit, ISelectableObject
     {
         if (movement == null || atk == null)
         {
-            //Debug.LogError("Combatant missing movement and attack components");
+            ////Debug.LogError("Combatant missing movement and attack components");
             return;
         }
 
@@ -70,7 +70,7 @@ public class Combatant : Unit, ISelectableObject
         }
         else
         {
-            //Debug.LogWarning("Wrong unit type on Combatant");
+            ////Debug.LogWarning("Wrong unit type on Combatant");
         }
 
             movement.Initialize(_pathfinder, this, moveSpeed);
@@ -105,7 +105,7 @@ public class Combatant : Unit, ISelectableObject
     {
         UpdateAnimator();
 
-        //Debug.LogWarning($"{name} entering Idle");
+        ////Debug.LogWarning($"{name} entering Idle");
         // every 1 second check for enemy
 
         while (currentState == CombatantState.Idle)
@@ -114,7 +114,7 @@ public class Combatant : Unit, ISelectableObject
 
             if (target != null && atk.TargetInRange(target, sensingRange))
             {
-                //Debug.Log($"{target.name} in sensing range");
+                ////Debug.Log($"{target.name} in sensing range");
                 currentState = CombatantState.Chasing;
                 yield break;
             }
@@ -127,7 +127,7 @@ public class Combatant : Unit, ISelectableObject
     {
         UpdateAnimator();
 
-        //Debug.LogWarning($"{name} entering Chase");
+        ////Debug.LogWarning($"{name} entering Chase");
         // every 0.5 second try to go to target
 
         while (currentState == CombatantState.Chasing)
@@ -142,14 +142,14 @@ public class Combatant : Unit, ISelectableObject
 
             if (atk.TargetInRange(target, attackRange))
             {
-                //Debug.Log($"{target.name} in attacking range");
+                ////Debug.Log($"{target.name} in attacking range");
                 currentState = CombatantState.Attacking;
                 yield break;
             }
 
             if (target.CurrentNode != null)
             {
-                //Debug.Log($"In sensing range of {target.name} at {target.CurrentNode.Name}, begin chase");
+                ////Debug.Log($"In sensing range of {target.name} at {target.CurrentNode.Name}, begin chase");
                 SetTarget(target.CurrentNode);
             }
 
@@ -161,7 +161,7 @@ public class Combatant : Unit, ISelectableObject
     {
         UpdateAnimator();
 
-        //Debug.LogWarning($"{name} entering Attack");
+        ////Debug.LogWarning($"{name} entering Attack");
         // every 0.5 second do attack
 
         while (currentState == CombatantState.Attacking)
@@ -232,12 +232,12 @@ public class Combatant : Unit, ISelectableObject
     {
         if (Army == Army.Enemy)
         {
-            //Debug.Log("Getting Player units as enemies (current unit is Enemy)");
+            ////Debug.Log("Getting Player units as enemies (current unit is Enemy)");
             return UnitManager.Instance.unitsByArmy[Army.Player];
         }
         else
         {
-            //Debug.Log("Getting Enemy units as enemies (current unit is Player)");
+            ////Debug.Log("Getting Enemy units as enemies (current unit is Player)");
             return UnitManager.Instance.unitsByArmy[Army.Enemy];
         }
     }
@@ -307,14 +307,14 @@ public class Combatant : Unit, ISelectableObject
     // VISUALISATION ---------------------------------------------------------------
     public void SetupMat(Material regular, Material selected)
     {
-        //Debug.Log("Setting up materials");
+        ////Debug.Log("Setting up materials");
         renderers = GetComponentsInChildren<Renderer>();
-        //Debug.Log(renderers.Length);
+        ////Debug.Log(renderers.Length);
         //defaultMat = GetComponentInChildren<Renderer>().material;
         defaultMat = regular;
         selectedMat = selected;
 
-        if (renderers == null) Debug.Log("Renderers are null");
+        if (renderers == null) //Debug.Log("Renderers are null");
 
         foreach (var rend in renderers)
         {
@@ -325,11 +325,11 @@ public class Combatant : Unit, ISelectableObject
 
     public void SetSelected(bool selected)
     {
-        if (renderers == null) Debug.Log("Renderers are null");
+        //if (renderers == null) //Debug.Log("Renderers are null");
 
         Material mat = selected ? selectedMat : defaultMat;
 
-        Debug.Log($"Selected? {selected} : Updating unit material to material {mat}");
+        //Debug.Log($"Selected? {selected} : Updating unit material to material {mat}");
         foreach (var rend in renderers)
         {
             if (rend.material != null)
@@ -340,7 +340,7 @@ public class Combatant : Unit, ISelectableObject
 
     private void UpdateAnimator()
     {
-        //Debug.Log($"Updating animator {animator.name}");
+        ////Debug.Log($"Updating animator {animator.name}");
 
         animator.SetBool("isIdle", false);
         animator.SetBool("isMoving", false); 
@@ -364,7 +364,7 @@ public class Combatant : Unit, ISelectableObject
     {
         if (IsDead) return;
 
-        //Debug.LogWarning($"{name} has died.");
+        ////Debug.LogWarning($"{name} has died.");
 
         IsDead = true;
 

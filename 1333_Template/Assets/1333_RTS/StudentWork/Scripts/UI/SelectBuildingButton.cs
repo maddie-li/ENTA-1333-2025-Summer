@@ -19,7 +19,7 @@ public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
         button.onClick.AddListener(() =>
         {
-            Debug.Log($"Selected building {buildingType} add listener");
+            //Debug.Log($"Selected building {buildingType} add listener");
             BuildingManager.Instance.NewGhost(buildingType);
         });
 
@@ -28,7 +28,7 @@ public class SelectBuildingButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnClick()
     {
-        Debug.Log($"Selected building {buildingType} via onclick");
+        //Debug.Log($"Selected building {buildingType} via onclick");
         FXManager.Instance.DoFX(FXType.Select);
         BuildingManager.Instance.NewGhost(buildingType);
     }

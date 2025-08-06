@@ -61,8 +61,8 @@ public class BuildingManager : MonoBehaviour
             Destroy(currentGhost.gameObject);
         }
 
-        Debug.Log(buildingTypes[0]);
-        Debug.Log(typeToBuild.UnitPrefab);
+        //Debug.Log(buildingTypes[0]);
+        //Debug.Log(typeToBuild.UnitPrefab);
         GameObject building = Instantiate(typeToBuild.UnitPrefab, this.transform);
 
         currentGhost = building.GetComponent<Building>();
@@ -166,7 +166,7 @@ public class BuildingManager : MonoBehaviour
 
     public void RegisterUnit(Building building)
     {
-        Debug.Log($"Registering building of army {building.Army}");
+        //Debug.Log($"Registering building of army {building.Army}");
 
         // add mainlist
         if (building != null && !allBuildings.Contains(building))

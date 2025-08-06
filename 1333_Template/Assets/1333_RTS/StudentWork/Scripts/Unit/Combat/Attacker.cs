@@ -23,7 +23,7 @@ public class Attacker : MonoBehaviour
             return false;   
         }
         float distance = Vector3.Distance(transform.position, target.transform.position);
-        //Debug.Log(distance);
+        ////Debug.Log(distance);
 
         return distance <= range;
     }*/
@@ -53,7 +53,7 @@ public class Attacker : MonoBehaviour
     {
         if (target == null || Time.time - lastAttackTime < c.AttackCooldown) return;
 
-        //Debug.Log($"{name} attacks {target.name} {target.Army} for {c.Damage} damage.", target);
+        ////Debug.Log($"{name} attacks {target.name} {target.Army} for {c.Damage} damage.", target);
         FXManager.Instance.DoFX(FXType.CombatantAttack);
         target?.TakeDamage(c.Damage); 
 

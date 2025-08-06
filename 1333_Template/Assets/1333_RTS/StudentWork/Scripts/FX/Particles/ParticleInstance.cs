@@ -4,6 +4,7 @@ public class ParticleInstance : MonoBehaviour
 {
     private GameObject currentInstance;
 
+    // START PARTICLES
     public void Play(GameObject prefab, Vector3 position)
     {
         currentInstance = Instantiate(prefab, position, Quaternion.identity, transform);
@@ -12,6 +13,7 @@ public class ParticleInstance : MonoBehaviour
         ps.Play();
     }
 
+    // STOP PARTICLES 
     public void StopCurrentParticles()
     {
         if (currentInstance != null)

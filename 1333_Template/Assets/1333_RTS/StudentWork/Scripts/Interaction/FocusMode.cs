@@ -42,13 +42,13 @@ public class FocusMode : MonoBehaviour
 
     private void OnFocusPerformed(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Focusing");
+        //Debug.Log("Focusing");
         isFocusActive = true;
     }
 
     private void OnFocusCanceled(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Not focusing");
+        //Debug.Log("Not focusing");
         isFocusActive = false;
     }
 }

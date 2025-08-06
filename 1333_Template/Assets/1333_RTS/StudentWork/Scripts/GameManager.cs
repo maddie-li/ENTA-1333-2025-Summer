@@ -79,7 +79,7 @@ namespace RTS_1333
                 if (interactActions.Game.Pause.WasPressedThisFrame())
                 {
                     SetGameState(GameState.Paused);
-                    Debug.LogError("Pausing game");
+                    //Debug.LogError("Pausing game");
                 }
             }
             else if (currentState == GameState.Paused)
@@ -87,14 +87,14 @@ namespace RTS_1333
                 if (interactActions.Game.Pause.WasPressedThisFrame())
                 {
                     SetGameState(GameState.Gameplay);
-                    Debug.LogError("Resumiing game");
+                    //Debug.LogError("Resumiing game");
                 }
             }
         }
         public void SetGameState(GameState newState)
         {
             currentState = newState;
-            Debug.Log($"Game state changed to: {newState}");
+            //Debug.Log($"Game state changed to: {newState}");
 
             switch (newState)
             {
@@ -135,7 +135,7 @@ namespace RTS_1333
 
         public void SetupGame()
         {
-            Debug.Log("Setting up game");
+            //Debug.Log("Setting up game");
 
             //Instantiate(cameraManager);
 
@@ -158,7 +158,7 @@ namespace RTS_1333
 
         public void QuitGame()
         {
-            Debug.LogError("Quit game");
+            //Debug.LogError("Quit game");
             Application.Quit();
         }
 
@@ -194,11 +194,11 @@ namespace RTS_1333
                 switch (army)
                 {
                     case Army.Player:
-                        Debug.Log("Player lost");
+                        //Debug.Log("Player lost");
                         SetGameState(GameState.Defeat);
                         break;
                     case Army.Enemy:
-                        Debug.Log("Player won");
+                        //Debug.Log("Player won");
                         SetGameState(GameState.Victory);
                         break;
                 }
@@ -225,11 +225,11 @@ namespace RTS_1333
 
             foreach (GameObject manager in destroyableManagers)
             {
-                Debug.Log($"Destroying: {manager.name}");
+                //Debug.Log($"Destroying: {manager.name}");
                 Destroy(manager);
             }
 
-            Debug.Log("Resetting game");
+            //Debug.Log("Resetting game");
             SceneManager.LoadScene(1);
 
             SetupGame();

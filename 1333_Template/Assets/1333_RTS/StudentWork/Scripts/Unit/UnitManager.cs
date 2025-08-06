@@ -48,7 +48,7 @@ namespace RTS_1333
             Combatant unit = unitObject.GetComponent<Combatant>();
 
             unit.Army = army;
-            //Debug.Log($"Switched {unit} to army {army}");
+            ////Debug.Log($"Switched {unit} to army {army}");
 
             if (unit != null)
             {
@@ -71,7 +71,7 @@ namespace RTS_1333
                 if (defaultMat != null) unit.SetupMat(defaultMat, selectedMat);
 
                 armyActivated[unit.Army] = true;
-                //Debug.Log("Initialised new unit");
+                ////Debug.Log("Initialised new unit");
 
                 return unit;
             }
@@ -81,7 +81,7 @@ namespace RTS_1333
 
         public void RegisterUnit(Combatant unit)
         {
-            //Debug.Log($"Registering {unit} to army {unit.Army}");
+            ////Debug.Log($"Registering {unit} to army {unit.Army}");
 
             // add mainlist
             if (unit != null && !allUnits.Contains(unit))

@@ -73,7 +73,7 @@ public class CurrencyManager : MonoBehaviour
         }
         else if (army == Army.Enemy)
         {
-            Debug.Log($"Enemy Gold: {currentGoldByArmy[army]}");
+            //Debug.Log($"Enemy Gold: {currentGoldByArmy[army]}");
         }*/
 
         UIManager.Instance.GoldText.text = $"Your Gold: {currentGoldByArmy[Army.Player].ToString()} \n Enemy Gold: {currentGoldByArmy[Army.Enemy].ToString()}";

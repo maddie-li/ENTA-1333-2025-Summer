@@ -28,7 +28,7 @@ public class LoadingManager : MonoBehaviour
     }
     public void LoadNewScene(int id)
     {
-        Debug.Log($"Loading scene: {id}");
+        //Debug.Log($"Loading scene: {id}");
         loadingScreen.SetActive(true);
         loadingBar.value = 0;
         StartCoroutine(SwitchToSceneAsync(id));

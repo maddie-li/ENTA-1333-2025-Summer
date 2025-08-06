@@ -27,6 +27,7 @@ public class TimescaleSlider : MonoBehaviour
 
     public void TimePlay()
     {
+        // keeps old value
         Time.timeScale = slider.value;
     }
 }

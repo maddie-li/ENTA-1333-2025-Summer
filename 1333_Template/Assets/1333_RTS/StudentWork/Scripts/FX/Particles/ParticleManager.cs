@@ -22,6 +22,7 @@ public class ParticleManager : MonoBehaviour
         }
         Instance = this;
 
+        // OBJECT POOLING
         particlePool = new ObjectPool<ParticleInstance>(
             createFunc: () => Instantiate(particleInstancePrefab, this.transform.position, Quaternion.identity, transform),
             actionOnGet: (particles) => particles.gameObject.SetActive(true),

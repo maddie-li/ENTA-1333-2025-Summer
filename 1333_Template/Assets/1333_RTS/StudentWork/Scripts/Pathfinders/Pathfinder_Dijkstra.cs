@@ -15,7 +15,7 @@ namespace RTS_1333
             // check if null
             if (start == null || goal == null)
             {
-                Debug.LogError("Can't find path: Start or end is null");
+                //Debug.LogError("Can't find path: Start or end is null");
                 return new List<GridNode>();
             }
 

@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
             s.SetActive(false);
         }
 
-        Debug.Log($"Setting active {screen}");
+        ////Debug.Log($"Setting active {screen}");
 
         UIScreens[(int)screen].SetActive(true);
 
@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
     public void RestartClicked()
     {
         FXManager.Instance.DoFX(FXType.Select);
-        Debug.Log("UI: Resetting game");
+        ////Debug.Log("UI: Resetting game");
         GameManager.Instance.HandleResetGame();
     }
 
@@ -125,7 +125,7 @@ public class UIManager : MonoBehaviour
     }
     public void SetTimescale(float scale)
     {
-        Debug.Log($"Setting timescale to {scale}");
+        ////Debug.Log($"Setting timescale to {scale}");
         timeSlider.SetTimescale(scale);
     }
 

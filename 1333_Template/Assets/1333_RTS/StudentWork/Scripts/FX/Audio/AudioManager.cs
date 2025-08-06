@@ -29,6 +29,7 @@ public class AudioManager : MonoBehaviour
         PlayMusic();
     }
 
+    // STARTING MUSIC
     public void PlayMusic()
     {
         musicSource.clip = musicTest;
@@ -43,6 +44,7 @@ public class AudioManager : MonoBehaviour
         uiSource.PlayOneShot(clip);
     }
 
+    // STOPPING MUSIC
     public void StopMusic() => musicSource.Stop();
     public void StopSFX() => sfxSource.Stop();
 }

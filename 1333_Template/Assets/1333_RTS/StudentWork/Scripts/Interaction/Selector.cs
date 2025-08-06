@@ -54,6 +54,7 @@ public class Selector : MonoBehaviour
         interactActions.UI.Disable();
     }
 
+    // LISTEN FOR INPUT
     private void Update()
     {
         if (interactActions == null || Enabled == false)
@@ -84,12 +85,16 @@ public class Selector : MonoBehaviour
         }
     }
 
+    // ADD TO SELECTION
+
+    // Starts drag
     private void HandleLeftClick()
     {
-        //Debug.Log("Left click detected!");
+        ////Debug.Log("Left click detected!");
         selectorBox.BeginDrag(interactActions.UI.Point.ReadValue<Vector2>());
     }
 
+    // On end drag, if it's too short to count as a drag, do single select, otherwise complete full drag and do multi select
     private void HandleLeftRelease()
     {
         if (selectorBox.IsDragging)
@@ -108,6 +113,7 @@ public class Selector : MonoBehaviour
 
     }
 
+    // On right click, if hit building, select building for deletion, if hit grid node, command units to grid node
     private void HandleRightClick(InputAction.CallbackContext ctx)
     {
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -119,7 +125,7 @@ public class Selector : MonoBehaviour
 
             if (building != null)
             {
-                Debug.Log("Hit a building component!");
+                //Debug.Log("Hit a building component!");
                 building.OpenMenu();
                 openBuilding = building;
                 return;
@@ -133,7 +139,7 @@ public class Selector : MonoBehaviour
 
         CommandUnits(interactActions.UI.Point.ReadValue<Vector2>());
     }
-
+    // On left click, if hit building and is selected for deletion, delete, if hit unit add it to selection
     private void SingleClickSelect(Vector2 screenPos)
     {
         if (cam == null) return;
@@ -148,13 +154,13 @@ public class Selector : MonoBehaviour
             Building building = hitObject.GetComponentInParent<Building>();
             if (building != null)
             {
-                //Debug.Log("Hit a building component!");
+                ////Debug.Log("Hit a building component!");
                 if (building.isSelected)
                 {
                     openBuilding = null;
                     building.Delete();
                 }
-                else Debug.Log("Building selected is not opn");
+                else //Debug.Log("Building selected is not opn");
                     return;
             }
 
@@ -164,7 +170,7 @@ public class Selector : MonoBehaviour
                 ClearSelection();
 
                 AddToSelection(unit);
-                Debug.Log($"Adding {unit} to selection");
+                //Debug.Log($"Adding {unit} to selection");
                 return;
             }
         }
@@ -178,7 +184,7 @@ public class Selector : MonoBehaviour
         }
     }
 
-
+    // add all units in drag box to selection list
     private void DragSelect(Vector2 start, Vector2 end)
     {
         if (cam == null ) return;
@@ -206,20 +212,20 @@ public class Selector : MonoBehaviour
 
     }
 
-    //SELECTION
+    // SELECTION
     private void AddToSelection(Unit unit)
     {
-        //Debug.Log($"Attempt add {unit} army {unit.Army} to selection");
+        ////Debug.Log($"Attempt add {unit} army {unit.Army} to selection");
 
         if (unit.Army != Army.Player)
         {
-            Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Failed due to not player");
+            //Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Failed due to not player");
             return;
         }
 
         if (selectedUnits.Contains(unit))
         {
-            Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Failed due to already selected");
+            //Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Failed due to already selected");
             return;
         }
         
@@ -230,7 +236,7 @@ public class Selector : MonoBehaviour
         FXManager.Instance.DoFX(FXType.Select);
         unit.GetComponent<Combatant>().SetSelected(true);
 
-        Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Succeeded");
+        //Debug.Log($"Attempt add {unit} army {unit.Army} to selection: Succeeded");
     }
 
     private void ClearSelection()
@@ -251,7 +257,7 @@ public class Selector : MonoBehaviour
 
         // change colors
         selectedUnits.Clear();
-        Debug.Log($"Cleared selection");
+        //Debug.Log($"Cleared selection");
     }
 
     public bool UnitInSelection(Unit unitToCheck)
@@ -279,7 +285,7 @@ public class Selector : MonoBehaviour
 
             if (!node.Walkable)
             {
-                Debug.Log("SelectionManager: Target node is not walkable.");
+                //Debug.Log("SelectionManager: Target node is not walkable.");
                 return;
             }
 

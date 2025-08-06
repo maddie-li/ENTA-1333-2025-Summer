@@ -105,14 +105,14 @@ public class Building : Unit
     public void OpenMenu()
     {
         UpdateColor(false);
-        //Debug.Log("Setting open to true");
+        ////Debug.Log("Setting open to true");
         isSelected = true;
     }
 
     public void CloseMenu()
     {
         UpdateColor();
-        //Debug.Log("setting open to false");
+        ////Debug.Log("setting open to false");
         isSelected = false;
     }
 
@@ -120,7 +120,7 @@ public class Building : Unit
     {
         if (!TryGetComponent<Unit>(out Unit thisUnit)) return;
 
-        //Debug.Log("Deregistering building");
+        ////Debug.Log("Deregistering building");
         BuildingManager.Instance.UnregisterUnit(this);
         FXManager.Instance.DoFX(FXType.BuildingDestroy, this.WorldPosition);
 

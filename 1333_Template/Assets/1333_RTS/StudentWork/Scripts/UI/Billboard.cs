@@ -21,6 +21,7 @@ public class Billboard : MonoBehaviour
         float distance = Vector3.Distance(mainCamera.transform.position, transform.position);
         Vector3 scaledSize = distance * (Vector3.one * SizeMultiplier);
 
+        // clamps size so that it doesn't get too big when you're close and there's lots of them
         if (scaledSize.x < 1f)
         {
             transform.localScale = scaledSize;

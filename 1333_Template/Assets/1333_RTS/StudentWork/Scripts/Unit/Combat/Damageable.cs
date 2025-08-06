@@ -33,13 +33,13 @@ public class Damageable : MonoBehaviour
     {
         if (animator != null)
         {
-            //Debug.Log("Animate take damage");
+            ////Debug.Log("Animate take damage");
             animator.SetTrigger("hasBeenDamaged");
         }
 
         if (TryGetComponent<Combatant>(out Combatant combatant))
         {
-            //Debug.Log("Got damaged, stopping coroutine");
+            ////Debug.Log("Got damaged, stopping coroutine");
             //combatant.StopCoroutine(combatant.stateRoutine);
             FXManager.Instance.DoFX(FXType.CombatantDamage);
         }
@@ -72,13 +72,13 @@ public class Damageable : MonoBehaviour
         if (thisUnit is Combatant combatant)
         {
             combatant.Die();
-            Debug.Log("Deregistering combatant");
+            //Debug.Log("Deregistering combatant");
             UnitManager.Instance.UnregisterUnit(combatant);
             FXManager.Instance.DoFX(FXType.CombatantDie);
         }
         else if (thisUnit is Building building)
         {
-            Debug.Log("Deregistering building");
+            //Debug.Log("Deregistering building");
             BuildingManager.Instance.UnregisterUnit(building);
             FXManager.Instance.DoFX(FXType.BuildingDestroy);
         }

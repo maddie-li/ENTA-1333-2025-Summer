@@ -90,8 +90,8 @@ namespace RTS_1333
                 goalNode = GridManager.Instance.GetNode(goalPos);
             }
 
-            Debug.Log($"Start Set: {startNode.GridPosition} at {startNode.WorldPosition}");
-            Debug.Log($"Goal Set: {goalNode.GridPosition} at {goalNode.WorldPosition}");
+            //Debug.Log($"Start Set: {startNode.GridPosition} at {startNode.WorldPosition}");
+            //Debug.Log($"Goal Set: {goalNode.GridPosition} at {goalNode.WorldPosition}");
 
             // spawn markers
             SpawnMarker(startPrefab, startNode, ref startMarker);
@@ -134,11 +134,11 @@ namespace RTS_1333
 
             if (path == null || path.Count == 0)
             {
-                Debug.LogWarning($"{pathfinder.GetType().Name} found no path :)");
+                //Debug.LogWarning($"{pathfinder.GetType().Name} found no path :)");
             }
             else
             {
-                Debug.Log($"{pathfinder.GetType().Name} found a path! {path.Count} nodes long");
+                //Debug.Log($"{pathfinder.GetType().Name} found a path! {path.Count} nodes long");
             }
         }
 

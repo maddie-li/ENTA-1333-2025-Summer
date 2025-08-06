@@ -7,8 +7,8 @@ public class FXManager : MonoBehaviour
 
     public List<FXData> fxTypes;
 
+    // Assigns the serialisable effect group to the effect enum
     private Dictionary<FXType, FXData> fxDict;
-
 
     private void Awake()
     {
@@ -26,9 +26,10 @@ public class FXManager : MonoBehaviour
         }
     }
 
+    // PLAYS FX
     public void DoFX(FXType fxType, Vector3? pos = null)
     {
-        Debug.Log($"doing FX {fxType}");
+        //Debug.Log($"doing FX {fxType}");
 
         if (fxDict.TryGetValue(fxType, out FXData data))
         {

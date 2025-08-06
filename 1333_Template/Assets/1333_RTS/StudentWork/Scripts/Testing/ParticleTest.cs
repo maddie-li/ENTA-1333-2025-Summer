@@ -20,7 +20,7 @@ public class ParticleTest : MonoBehaviour
 
     private void PlayParticles()
     {
-        Debug.Log($"Playing particles {particleSystemPrefab}");
+        //Debug.Log($"Playing particles {particleSystemPrefab}");
         GameObject instance = Instantiate(particleSystemPrefab, transform.position, Quaternion.identity);
         ParticleSystem ps = instance.GetComponent<ParticleSystem>();
         ps.Play();

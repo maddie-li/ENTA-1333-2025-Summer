@@ -70,7 +70,7 @@ public class SpawnFromBuilding : MonoBehaviour
 
         if (spawnedUnit != null)
         {
-            //Debug.LogWarning("Spawning unit from building", spawnedUnit);
+            ////Debug.LogWarning("Spawning unit from building", spawnedUnit);
             //spawnedUnit.SetTarget(GridManager.Instance.GetNodeFromWorldPosition(RallyPoint.position));
             spawnedUnit.GoToClosestTarget();
         }
@@ -78,7 +78,7 @@ public class SpawnFromBuilding : MonoBehaviour
 
     private void SpawnGold()
     {
-        //Debug.Log($"Spawning gold for {army}");
+        ////Debug.Log($"Spawning gold for {army}");
         CurrencyManager.Instance.EarnGold(army, goldAmount);
     }
 

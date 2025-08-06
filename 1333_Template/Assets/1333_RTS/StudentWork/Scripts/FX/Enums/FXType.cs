@@ -1,3 +1,4 @@
+// Used to communicate with FXManager on which effect to play
 public enum FXType
 {
     Select,

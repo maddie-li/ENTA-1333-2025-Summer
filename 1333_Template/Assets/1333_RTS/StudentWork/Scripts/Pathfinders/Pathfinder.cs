@@ -50,7 +50,7 @@ namespace RTS_1333
 
             if (frontier.Count == 0)
             {
-                Debug.Log("Unable to dequeue - frontier empty");
+                //Debug.Log("Unable to dequeue - frontier empty");
                 return null;
             }
 
@@ -66,7 +66,7 @@ namespace RTS_1333
 
             if (frontier.Count == 0)
             {
-                Debug.Log("Unable to dequeue - frontier empty");
+                //Debug.Log("Unable to dequeue - frontier empty");
                 return null;
             }
 

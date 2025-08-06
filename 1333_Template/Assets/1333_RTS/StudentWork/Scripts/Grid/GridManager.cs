@@ -34,12 +34,13 @@ namespace RTS_1333
 
         public bool IsInitialized { get; private set; } = false;
 
+        // SETUP
         public void InitializeGrid()
         {
             gridNodes = new GridNode[gridSettings.GridSizeX, gridSettings.GridSizeY];
             AllNodes = new List<GridNode>();
 
-            Debug.Log($"Initializing grid: {gridSettings.GridSizeX}x{gridSettings.GridSizeY}");
+            //Debug.Log($"Initializing grid: {gridSettings.GridSizeX}x{gridSettings.GridSizeY}");
 
             for (int x = 0; x < gridSettings.GridSizeX; x++)
             {
@@ -65,11 +66,12 @@ namespace RTS_1333
             IsInitialized = true;
         }
 
+        // GRIDNODE HELPER FUNCTIONS
         public GridNode GetNode(int x, int y)
         {
             if (x < 0 || y < 0 || x >= gridSettings.GridSizeX || y >= gridSettings.GridSizeY)
             {
-                Debug.LogWarning($"GetNode out of bounds: ({x}, {y}) not inside grid size ({gridSettings.GridSizeX}, {gridSettings.GridSizeY})");
+                //Debug.LogWarning($"GetNode out of bounds: ({x}, {y}) not inside grid size ({gridSettings.GridSizeX}, {gridSettings.GridSizeY})");
                 return null;
             }
             return gridNodes[x, y];
@@ -91,7 +93,7 @@ namespace RTS_1333
             x = Mathf.Clamp(x, 0, gridSettings.GridSizeX - 1);
             y = Mathf.Clamp(y, 0, gridSettings.GridSizeY - 1);
 
-            //Debug.Log($"Converted World Position {position} to  Grid Position ({x}, {y})"); 
+            ////Debug.Log($"Converted World Position {position} to  Grid Position ({x}, {y})"); 
 
             return GetNode(x, y);
         }
@@ -107,17 +109,15 @@ namespace RTS_1333
 
                 GridNode node =GetNodeFromWorldPosition(hitPoint);
 
-                //Debug.Log("Got node from mouse position!");
+                ////Debug.Log("Got node from mouse position!");
                 return node;
             }
             else
             {
-                //Debug.Log("DID NOT GET node from mouse position!");
+                ////Debug.Log("DID NOT GET node from mouse position!");
                 return null;
             }
         }
-
-
         public void SetWalkable(int x, int y, bool walkable)
         {
             GridNode node = GetNode(x, y);
@@ -221,6 +221,7 @@ namespace RTS_1333
             return currentLevel; 
         }
 
+        // FOOTPRINTS
         public bool IsFootprintOccupied(GridNode startnode)
         {
             return IsFootprintOccupied(startnode, 1, 1);
@@ -228,7 +229,7 @@ namespace RTS_1333
 
         public bool IsFootprintOccupied(GridNode startNode, int width, int length)
         {
-            //Debug.Log($"Checking {width}x{length}");
+            ////Debug.Log($"Checking {width}x{length}");
 
             for (int x = 0; x < width; x++)
             {
@@ -238,22 +239,22 @@ namespace RTS_1333
 
                     if (node == null)
                     {
-                        //Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{ startNode.GridPosition.y + y})");
+                        ////Debug.LogWarning($"Node is null at ({startNode.GridPosition.x + x},{ startNode.GridPosition.y + y})");
                         return true;
                     }
                     if (node.CurrentUnit != null)
                     {
-                        //Debug.Log($"Node {node.Name} is occupied by {node.CurrentUnit.Name}");
+                        ////Debug.Log($"Node {node.Name} is occupied by {node.CurrentUnit.Name}");
                         return true;
                     }
                     if (!node.Walkable)
                     {
-                        //Debug.Log($"Node {node.Name} is not walkable");
+                        ////Debug.Log($"Node {node.Name} is not walkable");
                         return true;
                     }
                     else
                     {
-                        //Debug.Log($"Node {node.Name} is AVAILABLE");
+                        ////Debug.Log($"Node {node.Name} is AVAILABLE");
                     }
                 }
             }
@@ -300,6 +301,7 @@ namespace RTS_1333
             }
         }
 
+        // GET RANDOM NODE
         public GridNode GetRandomFreeNode(int maxAttempts = 100)
         {
             if (!IsInitialized) return null;
@@ -319,6 +321,7 @@ namespace RTS_1333
             return null;
         }
 
+        // GIZMOS
         private void OnDrawGizmos()
         {
             if (gridNodes == null || gridSettings == null) return;

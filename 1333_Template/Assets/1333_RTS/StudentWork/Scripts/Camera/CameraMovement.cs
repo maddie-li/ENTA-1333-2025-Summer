@@ -154,7 +154,7 @@ public class CameraMovement : MonoBehaviour
             transform.position += horizontalVelocity * Time.unscaledDeltaTime;
            
         }
-        //Debug.Log($"targetPosition: {targetPosition}, speed: {speed}, deltaTime: {Time.unscaledDeltaTime}, horizontalVelocity: {horizontalVelocity}");
+        ////Debug.Log($"targetPosition: {targetPosition}, speed: {speed}, deltaTime: {Time.unscaledDeltaTime}, horizontalVelocity: {horizontalVelocity}");
 
         targetPosition = Vector3.zero;
 

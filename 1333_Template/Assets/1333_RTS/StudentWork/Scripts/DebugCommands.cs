@@ -14,7 +14,7 @@ public class DebugCommands : MonoBehaviour
 
     private void HelloWorld(int obj)
     {
-        Debug.Log("Hello world!");
+        //Debug.Log("Hello world!");
     }
 
     private void OnDisable()
