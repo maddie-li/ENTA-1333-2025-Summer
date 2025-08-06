@@ -39,7 +39,9 @@ public class Combatant : Unit, ISelectableObject
     }
     private void Start()
     {
+        currentState = CombatantState.Chasing;
         stateRoutine = StartCoroutine(StateMachine());
+        UpdateAnimator();
 
         /*if (this.army == Army.Player)
         {
